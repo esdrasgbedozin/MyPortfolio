@@ -16,9 +16,18 @@
 1. **Parallélisation** : Frontend et Edge Functions développés en parallèle
 2. **Mock-First** : Frontend consomme un mock server dès le départ
 3. **TDD Strict** : Tests d'abord, code ensuite, refactoring
-4. **Déploiement Continu** : Preview deployments sur chaque PR
+4. **Observabilité Intégrée** : Sentry + Lighthouse CI dès le départ
+5. **Contract Testing** : Validation automatique du contrat OpenAPI
+6. **Déploiement Continu** : Preview deployments sur chaque PR
 
-**Durée Totale Estimée** : ~91h (11-12 jours de travail effectif)
+**Durée Totale Estimée** : ~100h30 (12-13 jours de travail effectif)
+
+**Nouvelles Additions (vs version initiale)** :
+- ✅ Monitoring avec Sentry (7h)
+- ✅ Retry policy EmailService (2h)
+- ✅ Contract Testing OpenAPI (3h30)
+- ✅ Performance Testing Lighthouse CI (3h)
+- ✅ Internationalisation dates/nombres (1h40)
 
 ---
 
@@ -42,9 +51,13 @@ gantt
     Content Collections (MDX)       :pages2, after pages1, 1d
     
     section Edge Functions
-    Services Base (Validation)      :edge1, after setup1, 2d
+    Services Base (+ Retry)         :edge1, after setup1, 2.5d
     Service Email (Factory)         :edge2, after edge1, 1d
     API Contact (TDD)               :edge3, after edge2, 2d
+    
+    section Monitoring & Observabilité
+    Sentry Integration              :monitor1, after edge3, 1d
+    Lighthouse CI                   :monitor2, after monitor1, 0.5d
     
     section React Islands
     Theme Toggle & Filtres          :react1, after pages2, 1d
@@ -52,14 +65,17 @@ gantt
     
     section i18n & Traductions
     Configuration i18n              :i18n1, after react2, 1d
-    Traductions FR/EN               :i18n2, after i18n1, 1d
+    Traductions FR/EN + dates/nombres :i18n2, after i18n1, 1d
+    
+    section Contract Testing
+    OpenAPI Contract Tests          :contract1, after edge3 i18n2, 0.5d
     
     section Optimisations
-    Performance & A11y              :perf1, after i18n2, 1d
+    Performance & A11y              :perf1, after contract1, 1d
     SEO & Structured Data           :perf2, after perf1, 1d
     
     section Intégration
-    Switch Mock → API Réelle        :crit, milestone, after edge3 perf2, 0d
+    Switch Mock → API Réelle        :crit, milestone, after perf2, 0d
     Tests e2e Production            :test1, after perf2, 1d
     
     section Déploiement
@@ -194,13 +210,16 @@ gantt
 
 ### 🎯 Milestone 6 : i18n Complete (Jour 12)
 
-**Objectif** : Bilingue FR/EN fonctionnel + SEO i18n
+**Objectif** : Bilingue FR/EN fonctionnel + SEO i18n + Formatage localisé
 
 **Tâches Frontend** :
 - ✅ FE-085 à FE-095 : Configuration i18n + Traductions + hreflang
+- ✅ FE-091a à FE-091c : **NOUVEAU** - Internationalisation dates/nombres (Intl API)
 
 **Critères de Validation** :
 - [ ] Traductions FR/EN complètes (UI + content)
+- [ ] **Dates formatées selon locale** (15 janvier 2026 vs January 15, 2026)
+- [ ] **Nombres formatés selon locale** (1 234,56 vs 1,234.56)
 - [ ] Détection langue navigateur fonctionne
 - [ ] hreflang tags présents sur toutes les pages
 - [ ] Sitemap.xml multilingue généré
@@ -208,6 +227,7 @@ gantt
 
 **Livrables** :
 - `src/i18n/fr.json` + `src/i18n/en.json` (toutes clés)
+- `src/utils/i18n.ts` (fonctions `formatDate()`, `formatNumber()` avec Intl API)
 - Routing i18n Astro configuré
 - SEO tags hreflang + sitemap
 
@@ -215,28 +235,40 @@ gantt
 
 ### 🎯 Milestone 7 : Production Ready (Jour 14)
 
-**Objectif** : Optimisations + Lighthouse >90 + Switch API réelle
+**Objectif** : Observabilité + Optimisations + Lighthouse >90 + Switch API réelle
 
 **Tâches Frontend** :
 - ✅ FE-096 à FE-111 : Performance + A11y + SEO + CI/CD
 
 **Tâches Edge Functions** :
-- ✅ EF-056 à EF-063 : Tests intégration + Documentation + Monitoring
+- ✅ EF-046 à EF-055d : Health + **Sentry** + Contract Testing
+- ✅ EF-056 à EF-067 : Tests intégration + Documentation + **Lighthouse CI** + Monitoring
+
+**Nouvelles Additions** :
+- 🆕 **Sentry** : Monitoring erreurs production (alertes automatiques)
+- 🆕 **Lighthouse CI** : Tests performance automatisés (budgets)
+- 🆕 **Contract Testing** : Validation automatique OpenAPI (Prism/Portman)
+- 🆕 **Retry Policy** : EmailService avec exponential backoff
 
 **Critères de Validation** :
-- [ ] Lighthouse >90 toutes catégories
+- [ ] Lighthouse >90 toutes catégories (validé par CI)
+- [ ] **Performance budgets respectés** (FCP <2s, bundle <50KB)
 - [ ] Audit axe DevTools 0 erreurs
 - [ ] Navigation clavier 100% fonctionnelle
 - [ ] Test lecteur d'écran (NVDA) passé
 - [ ] Contrastes couleurs ≥4.5:1
-- [ ] CI/CD passe (lint, test, build)
+- [ ] **Sentry capture erreurs** (test avec erreur intentionnelle)
+- [ ] **Contract tests passent** (API respecte openapi.yaml)
+- [ ] CI/CD passe (lint, test, build, perf, contract)
 - [ ] Deploy production OK
 
 **Livrables** :
 - Performance optimisée (LCP <2s, images lazy-load, fonts preload)
 - Accessibilité WCAG 2.1 AA validée
 - SEO optimisé (meta tags, OG images, JSON-LD)
-- CI/CD GitHub Actions + Vercel
+- CI/CD GitHub Actions + Vercel + Lighthouse CI
+- **Monitoring Sentry actif** (dashboard configuré, alertes email)
+- **Contract testing automatisé** (suite tests OpenAPI dans CI)
 
 ---
 
@@ -244,14 +276,16 @@ gantt
 
 **Objectif** : Basculer du Mock Server vers API Edge Functions réelle
 
-**Point de Synchronisation** : Frontend (M7) + Edge Functions (M4) terminés
+**Point de Synchronisation** : Frontend (M7) + Edge Functions (M7) terminés
 
 **Pré-requis** :
 - [ ] Backend Edge Functions déployées en production (EF-063 terminé)
 - [ ] Health check `/api/health` retourne 200 OK
+- [ ] **Contract tests passent** (EF-055b, EF-055c terminés)
 - [ ] Tests e2e Backend passent (EF-056, EF-057, EF-058)
 - [ ] Frontend en production (FE-111 terminé)
-- [ ] Contrat OpenAPI validé (Dredd/Postman)
+- [ ] **Sentry monitoring actif** (EF-049d terminé)
+- [ ] **Lighthouse CI passe** (EF-066 terminé)
 
 **Tâches** :
 - ✅ FE-112 : Configurer env var `PUBLIC_API_URL` (production)
@@ -479,7 +513,38 @@ Tests Intégration (EF-056 à EF-063)
 2. Milestones validation stricte (pas de drift)
 3. Priorisation MVP (V2 features exclues)
 4. Time tracking par tâche (détection dérives)
-5. Buffer 20% ajouté (91h → 110h réel potentiel)
+5. Buffer 20% ajouté (100h30 → 120h réel potentiel)
+
+**MISE À JOUR** : Budget temps augmenté à ~100h30 (+9h30) pour :
+- Monitoring Sentry (7h)
+- Contract Testing (3h30)
+- Performance Testing Lighthouse CI (3h)
+- Retry Policy (2h)
+- i18n dates/nombres (1h40)
+
+### Risque 6 : Sentry Integration Complexe
+
+**Probabilité** : Faible  
+**Impact** : Moyen (délai monitoring)
+
+**Mitigation** :
+1. Documentation officielle Sentry pour Vercel Edge (suivre exactement)
+2. Tester avec erreur intentionnelle (catch fonctionne)
+3. Mock Sentry en tests unitaires (pas d'appels réels en CI)
+4. Fallback vers console.error si Sentry indisponible
+5. Epic séparé EF-049a à EF-049f (6 tâches dédiées)
+
+### Risque 7 : Contract Testing False Positives
+
+**Probabilité** : Moyenne  
+**Impact** : Faible (bruit dans CI, perte de temps)
+
+**Mitigation** :
+1. Utiliser Prism (génération officielle depuis OpenAPI)
+2. Valider openapi.yaml avec spectral linter AVANT génération tests
+3. Review manuelle des tests générés (EF-055b)
+4. Tests de contrat séparés des tests e2e (pas de blocage mutuel)
+5. Documentation exemples dans openapi.yaml (reduce ambiguïté)
 
 ---
 
@@ -528,10 +593,13 @@ Tests Intégration (EF-056 à EF-063)
 - [ ] Aucune erreur TypeScript
 - [ ] Tests unitaires ≥80% couverture
 - [ ] Tests e2e Playwright passent
-- [ ] Contrat OpenAPI respecté (Dredd)
+- [ ] **Contract tests OpenAPI passent** (Prism/Portman)
+- [ ] **Lighthouse CI passe** (budgets respectés)
 - [ ] Health check /api/health = 200
-- [ ] Monitoring actif (Vercel Logs + Alertes)
-- [ ] Env vars configurées (production)
+- [ ] **Sentry capture erreurs** (test avec erreur intentionnelle OK)
+- [ ] **Retry policy EmailService fonctionne** (test réseau fail → retry)
+- [ ] **Monitoring actif** (Vercel Logs + Sentry + Alertes configurées)
+- [ ] Env vars configurées (production + SENTRY_DSN)
 
 ### Sécurité
 

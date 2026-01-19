@@ -27,9 +27,11 @@
 ## Ordre d'Exécution Impératif
 
 ### Phase 1 : Setup & Infrastructure
-### Phase 2 : Services de Base
+### Phase 2 : Services de Base (avec Retry Policy)
 ### Phase 3 : API Contact (TDD)
-### Phase 4 : Intégration & Déploiement
+### Phase 4 : Observabilité & Monitoring (Sentry)
+### Phase 5 : Contract Testing & Intégration
+### Phase 6 : Performance & Déploiement
 
 ---
 
@@ -82,7 +84,7 @@
 | **EF-017** | 🔵 REFACTOR : Extraire interface service | EF-016 | 20min | Interface `AntiSpamService`, classe `TurnstileService` |
 | **EF-018** | ✅ TEST : Mock Turnstile pour tests | EF-017 | 30min | Mock service Turnstile pour CI (GREEN) |
 
-### Epic 2.3 : Service Email (Factory Pattern)
+### Epic 2.3 : Service Email (Factory Pattern + Retry Policy)
 
 | ID | Titre | Dépendance | Durée | Critère de Fin |
 |----|-------|-----------|-------|----------------|
@@ -94,6 +96,9 @@
 | **EF-024** | ✅ TEST : Créer test factory pattern | EF-021, EF-023 | 30min | Test `createEmailService()` retourne bon service (RED) |
 | **EF-025** | ✅ CODE : Implémenter factory email | EF-024 | 30min | Factory retourne Resend ou SendGrid selon env var (GREEN) |
 | **EF-026** | 🔵 REFACTOR : Stratégie fallback | EF-025 | 40min | Si Resend fail, retry avec SendGrid (tests passent) |
+| **EF-026a** | ✅ TEST : Test retry avec exponential backoff | EF-026 | 40min | Test retry 3 fois sur échec réseau (RED) |
+| **EF-026b** | ✅ CODE : Implémenter retry policy | EF-026a | 50min | Fonction `retry()` avec exponential backoff, max 3 tentatives (GREEN) |
+| **EF-026c** | 🔵 REFACTOR : Intégrer retry dans EmailService | EF-026b | 30min | EmailService utilise retry automatiquement, tests passent |
 
 ### Epic 2.4 : Service Rate Limiting
 
@@ -140,7 +145,7 @@
 
 ---
 
-## PHASE 4 : HEALTH CHECK & FINITIONS
+## PHASE 4 : OBSERVABILITÉ & MONITORING
 
 ### Epic 4.1 : Endpoint Health
 
@@ -151,16 +156,34 @@
 | **EF-048** | ✅ TEST : Test checks dépendances | EF-047 | 40min | Test vérification Resend + Turnstile UP/DOWN (RED) |
 | **EF-049** | ✅ CODE : Implémenter checks | EF-048 | 50min | Handler ping services, retourne détails (GREEN) |
 
-### Epic 4.2 : Variables d'Environnement
+### Epic 4.2 : Monitoring avec Sentry
 
 | ID | Titre | Dépendance | Durée | Critère de Fin |
 |----|-------|-----------|-------|----------------|
-| **EF-050** | Créer fichier .env.example | EF-001 | 10min | Template avec toutes les vars nécessaires |
+| **EF-049a** | Installer Sentry SDK | EF-001 | 15min | `@sentry/nextjs` installé (compatible Vercel Edge) |
+| **EF-049b** | Configurer Sentry projet | EF-049a | 20min | Projet créé sur sentry.io, DSN configuré dans env vars |
+| **EF-049c** | ✅ TEST : Test capture d'erreur Sentry | EF-049b | 30min | Test mock Sentry capture error (RED) |
+| **EF-049d** | ✅ CODE : Intégrer Sentry dans handler | EF-049c | 40min | Erreurs catchées envoyées à Sentry avec context (GREEN) |
+| **EF-049e** | 🔵 REFACTOR : Breadcrumbs + tags | EF-049d | 30min | Ajout requestId, userAgent, IP dans context Sentry |
+| **EF-049f** | Configurer alertes Sentry | EF-049d | 20min | Règles alerting : >5 erreurs/min → email notification |
+
+### Epic 4.3 : Structured Logging avec Destination
+
+| ID | Titre | Dépendance | Durée | Critère de Fin |
+|----|-------|-----------|-------|----------------|
+| **EF-049g** | Configurer destination logs | EF-043 | 20min | Logs JSON envoyés à Vercel Log Drains (ou Datadog) |
+| **EF-049h** | Créer dashboard monitoring | EF-049g | 30min | Dashboard Vercel/Sentry avec métriques clés (req/min, erreurs, latence) |
+
+### Epic 4.4 : Variables d'Environnement
+
+| ID | Titre | Dépendance | Durée | Critère de Fin |
+|----|-------|-----------|-------|----------------|
+| **EF-050** | Créer fichier .env.example | EF-001 | 10min | Template avec toutes les vars nécessaires (incl. SENTRY_DSN) |
 | **EF-051** | Documenter variables Vercel | EF-050 | 15min | README avec instructions config Vercel env vars |
-| **EF-052** | ✅ TEST : Test env vars manquantes | - | 30min | Test throw error si RESEND_API_KEY absent (RED) |
+| **EF-052** | ✅ TEST : Test env vars manquantes | - | 30min | Test throw error si RESEND_API_KEY ou SENTRY_DSN absent (RED) |
 | **EF-053** | ✅ CODE : Valider env vars au startup | EF-052 | 30min | Fonction `validateEnv()` avec Zod (GREEN) |
 
-### Epic 4.3 : Sécurité Headers
+### Epic 4.5 : Sécurité Headers
 
 | ID | Titre | Dépendance | Durée | Critère de Fin |
 |----|-------|-----------|-------|----------------|
@@ -169,30 +192,52 @@
 
 ---
 
-## PHASE 5 : INTÉGRATION & DÉPLOIEMENT
+## PHASE 5 : CONTRACT TESTING & INTÉGRATION
 
-### Epic 5.1 : Tests d'Intégration
+### Epic 5.1 : Contract Testing (API ↔ OpenAPI)
+
+| ID | Titre | Dépendance | Durée | Critère de Fin |
+|----|-------|-----------|-------|----------------|
+| **EF-055a** | Installer outil contract testing | EF-001 | 15min | `@stoplight/prism-cli` ou `portman` installé |
+| **EF-055b** | ✅ TEST : Générer tests depuis OpenAPI | EF-055a | 60min | Suite tests auto-générés depuis openapi.yaml (RED) |
+| **EF-055c** | ✅ CODE : Corriger API pour respecter contrat | EF-055b | 90min | Tous les tests de contrat passent (GREEN) |
+| **EF-055d** | Intégrer contract tests dans CI | EF-055c | 30min | GitHub Actions exécute tests contrat, fail si breaking change |
+
+### Epic 5.2 : Tests d'Intégration E2E
 
 | ID | Titre | Dépendance | Durée | Critère de Fin |
 |----|-------|-----------|-------|----------------|
 | **EF-056** | Créer tests e2e avec Playwright | EF-031 | 60min | Suite Playwright teste workflow complet contact |
-| **EF-057** | Tester contrat OpenAPI | EF-031 | 40min | Validation avec Dredd ou Postman, contrat respecté |
+| **EF-057** | Valider mock vs API réelle | EF-055c, EF-056 | 40min | Test que API réelle = comportement mock Prism |
 | **EF-058** | Tester rate limiting e2e | EF-028, EF-056 | 40min | Test e2e envoie 6 requêtes, 6ème = 429 |
 
-### Epic 5.2 : Documentation
+### Epic 5.3 : Documentation
 
 | ID | Titre | Dépendance | Durée | Critère de Fin |
 |----|-------|-----------|-------|----------------|
 | **EF-059** | Générer documentation API | EF-057 | 30min | Swagger UI déployé sur /api-docs (via openapi.yaml) |
-| **EF-060** | Documenter architecture services | EF-026 | 40min | README.md section Architecture avec diagrammes |
-| **EF-061** | Créer guide déploiement Vercel | EF-009 | 30min | Guide step-by-step deploy + config env vars |
+| **EF-060** | Documenter architecture services | EF-026c | 40min | README.md section Architecture avec diagrammes (incl. retry policy) |
+| **EF-061** | Créer guide déploiement Vercel | EF-009 | 30min | Guide step-by-step deploy + config env vars (incl. Sentry) |
 
-### Epic 5.3 : Monitoring Production
+---
+
+## PHASE 6 : PERFORMANCE & DÉPLOIEMENT
+
+### Epic 6.1 : Performance Testing
 
 | ID | Titre | Dépendance | Durée | Critère de Fin |
 |----|-------|-----------|-------|----------------|
-| **EF-062** | Configurer alertes Vercel | EF-009 | 20min | Alertes email si /api/health DOWN ou erreur rate élevé |
-| **EF-063** | Créer dashboard logs | EF-043 | 40min | Dashboard Vercel logs filtrés par niveau ERROR |
+| **EF-064** | Installer Lighthouse CI | EF-008 | 20min | `@lhci/cli` installé, config créée |
+| **EF-065** | Configurer performance budgets | EF-064 | 30min | Fichier `lighthouse-budget.json` avec limites (FCP <2s, etc.) |
+| **EF-066** | Intégrer Lighthouse dans GitHub Actions | EF-065 | 40min | Workflow CI exécute Lighthouse sur preview deploy |
+| **EF-067** | ✅ TEST : Test perf budgets respectés | EF-066 | 20min | Test fail si bundle >50KB ou FCP >2s |
+
+### Epic 6.2 : Monitoring Production
+
+| ID | Titre | Dépendance | Durée | Critère de Fin |
+|----|-------|-----------|-------|----------------|
+| **EF-062** | Configurer alertes Vercel + Sentry | EF-049f | 30min | Alertes email si /api/health DOWN ou erreur rate élevé |
+| **EF-063** | Créer dashboard monitoring final | EF-049h | 40min | Dashboard consolidé Vercel/Sentry avec toutes métriques |
 
 ---
 
@@ -200,12 +245,21 @@
 
 | Phase | Tâches | Durée Totale | Dépendances |
 |-------|--------|--------------|-------------|
-| **Phase 1** : Setup | 9 | ~2h30 | - |
-| **Phase 2** : Services | 21 | ~10h30 | Phase 1 |
-| **Phase 3** : API Contact | 16 | ~8h | Phase 2 |
-| **Phase 4** : Health & Finitions | 10 | ~5h | Phase 3 |
-| **Phase 5** : Intégration | 8 | ~5h | Phase 4 |
-| **TOTAL** | **64 tâches** | **~31h** | Séquentielles |
+| **Phase 1** : Setup & Infrastructure | 9 | ~2h30 | - |
+| **Phase 2** : Services de Base (+ Retry) | 24 | ~12h | Phase 1 |
+| **Phase 3** : API Contact (TDD) | 16 | ~8h | Phase 2 |
+| **Phase 4** : Observabilité & Monitoring | 18 | ~7h | Phase 3 |
+| **Phase 5** : Contract Testing & Intégration | 12 | ~6h30 | Phase 4 |
+| **Phase 6** : Performance & Déploiement | 6 | ~3h | Phase 5 |
+| **TOTAL** | **85 tâches** | **~39h** | Séquentielles |
+
+**Note** : Ajout de 21 tâches (+8h) pour :
+- Retry policy avec exponential backoff (3 tâches)
+- Monitoring Sentry (6 tâches)
+- Contract Testing depuis OpenAPI (4 tâches)
+- Performance Testing Lighthouse CI (4 tâches)
+- Structured logging avec destination (2 tâches)
+- Mise à jour documentation (2 tâches)
 
 ---
 

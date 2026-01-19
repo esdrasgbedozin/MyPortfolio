@@ -261,7 +261,10 @@
 | **FE-089** | Appliquer traductions Header | FE-088, FE-029 | 30min | Nav links traduits FR/EN |
 | **FE-090** | Appliquer traductions Footer | FE-088, FE-031 | 20min | Footer traduit FR/EN |
 | **FE-091** | Appliquer traductions pages | FE-088 | 60min | Tous les titres/labels traduits |
-| **FE-092** | ✅ TEST : Test switch langue | FE-007, FE-091 | 40min | Test e2e clic FR → EN change contenu (RED → GREEN) |
+| **FE-091a** | ✅ TEST : Test formatage dates i18n | FE-006 | 30min | Test formatDate() FR vs EN (RED) |
+| **FE-091b** | ✅ CODE : Créer utils i18n dates/nombres | FE-091a | 40min | Fonctions `formatDate()`, `formatNumber()` avec Intl API (GREEN) |
+| **FE-091c** | 🔵 REFACTOR : Intégrer dans composants | FE-091b | 30min | Toutes dates/nombres utilisent Intl, tests passent |
+| **FE-092** | ✅ TEST : Test switch langue | FE-007, FE-091c | 40min | Test e2e clic FR → EN change contenu + format dates (RED → GREEN) |
 
 ### Epic 7.3 : Détection Langue & SEO
 
@@ -331,9 +334,12 @@
 | **Phase 4** : Content Collections | 12 | ~6h30 | Phase 3 |
 | **Phase 5** : React Islands | 9 | ~6h30 | Phase 4 |
 | **Phase 6** : API Mock | 10 | ~6h30 | Phase 5 |
-| **Phase 7** : i18n | 11 | ~6h | Phase 6 |
+| **Phase 7** : i18n (+ dates/nombres) | 14 | ~7h40 | Phase 6 |
 | **Phase 8** : Optimisations | 17 | ~8h | Phase 7 |
-| **TOTAL** | **114 tâches** | **~60h** | Séquentielles |
+| **TOTAL** | **117 tâches** | **~61h40** | Séquentielles |
+
+**Note** : Ajout de 3 tâches (+1h40) pour :
+- Internationalisation dates/nombres avec Intl API (3 tâches)
 
 ---
 

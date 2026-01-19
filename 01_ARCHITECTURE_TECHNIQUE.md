@@ -745,6 +745,178 @@ export default defineConfig({
 
 ---
 
+## 6.3 Stratégie Vendor Lock-in & Plan de Mitigation
+
+### 6.3.1 Analyse du Lock-in Vercel
+
+Le projet utilise plusieurs services **Vercel-natifs** qui créent une dépendance forte :
+
+| Service | Lock-in Level | Alternative Possible | Effort Migration |
+|---------|---------------|----------------------|------------------|
+| **Edge Functions** | 🟠 Moyen | Cloudflare Workers, Netlify Edge | ~3 jours |
+| **Image Optimization** | 🟡 Faible | Cloudinary, imgix, self-hosted | ~1 jour |
+| **Edge Config (KV Store)** | 🔴 Fort | Redis, Upstash, Cloudflare KV | ~2 jours |
+| **Analytics** | 🟢 Nul | Plausible, Google Analytics | ~2h |
+| **Deployment Pipeline** | 🟡 Faible | GitHub Actions + Cloudflare Pages | ~1 jour |
+
+**Total Effort Migration Estimé** : ~7 jours ouvrés
+
+### 6.3.2 Points Critiques de Lock-in
+
+#### 1. **Edge Functions Runtime (🟠 Moyen)**
+
+**Problème** :
+- Code Edge Functions écrit pour Vercel Runtime (V8 isolates)
+- API Request/Response non-standard (pas Node.js natif)
+
+**Mitigation** :
+```typescript
+// ✅ Abstraction Runtime
+// services/runtime/adapter.ts
+export interface RuntimeAdapter {
+  getRequest(): Request;
+  sendResponse(data: any, status: number): Response;
+  getEnv(key: string): string;
+}
+
+// services/runtime/vercel.ts
+export class VercelAdapter implements RuntimeAdapter {
+  // Implémentation Vercel-spécifique
+}
+
+// services/runtime/cloudflare.ts (préparé pour future migration)
+export class CloudflareAdapter implements RuntimeAdapter {
+  // Implémentation Cloudflare Workers
+}
+
+// api/contact.ts - UTILISE l'abstraction
+import { createAdapter } from '@/services/runtime/factory';
+
+const adapter = createAdapter(); // Détection automatique runtime
+export default async function handler(req: Request) {
+  const request = adapter.getRequest();
+  // Logique métier indépendante du runtime
+  return adapter.sendResponse({ success: true }, 200);
+}
+```
+
+**Règle** : TOUJOURS utiliser l'abstraction `RuntimeAdapter`, jamais accès direct Vercel APIs.
+
+#### 2. **Edge Config KV Store (🔴 Fort)**
+
+**Problème** :
+- Rate limiting stocké dans Vercel Edge Config
+- API propriétaire non-compatible avec Redis/autres KV stores
+
+**Mitigation** :
+```typescript
+// ✅ Abstraction KV Store
+// services/storage/types.ts
+export interface KVStore {
+  get(key: string): Promise<string | null>;
+  set(key: string, value: string, ttl?: number): Promise<void>;
+  delete(key: string): Promise<void>;
+}
+
+// services/storage/vercel-edge-config.ts
+import { get } from '@vercel/edge-config';
+export class VercelKVStore implements KVStore {
+  async get(key: string): Promise<string | null> {
+    return await get(key);
+  }
+  // ...
+}
+
+// services/storage/upstash.ts (alternative prête)
+import { Redis } from '@upstash/redis';
+export class UpstashKVStore implements KVStore {
+  private client = new Redis({ /* config */ });
+  async get(key: string): Promise<string | null> {
+    return await this.client.get(key);
+  }
+  // ...
+}
+
+// services/storage/factory.ts
+export function createKVStore(): KVStore {
+  const provider = process.env.KV_PROVIDER || 'vercel';
+  return provider === 'upstash' 
+    ? new UpstashKVStore() 
+    : new VercelKVStore();
+}
+```
+
+**Règle** : Utiliser `KVStore` interface, tester avec Upstash en dev pour garantir portabilité.
+
+#### 3. **Image Optimization (🟡 Faible)**
+
+**Problème** :
+- `@astrojs/vercel` utilise Vercel Image Optimization API
+
+**Mitigation** :
+```astro
+<!-- ✅ Utiliser Astro Image (agnostique) -->
+<Image 
+  src={import('../assets/project.jpg')} 
+  alt="Projet" 
+  format="webp" 
+  loading="lazy"
+/>
+<!-- Généré au build, pas de dépendance runtime Vercel -->
+```
+
+**Règle** : Préférer build-time optimization (Astro Image) à runtime optimization (Vercel).
+
+### 6.3.3 Plan de Sortie (Exit Strategy)
+
+**Scénario** : Vercel augmente ses prix ou politique free tier change.
+
+**Actions à prendre (par priorité)** :
+
+1. **Jour 1** : Créer repo mirror sur GitLab/Bitbucket (backup)
+2. **Jour 2-3** : Migrer Edge Functions vers Cloudflare Workers
+   - Adapter `RuntimeAdapter` Cloudflare
+   - Déployer sur Cloudflare Pages
+3. **Jour 4** : Migrer KV Store vers Upstash Redis
+   - Switcher `KV_PROVIDER=upstash` dans env vars
+   - Tester rate limiting
+4. **Jour 5** : Configurer CI/CD GitHub Actions
+   - Workflow build + deploy Cloudflare
+5. **Jour 6-7** : Tests e2e + validation production
+
+**Coût Migration** : ~0€ (Cloudflare Free Tier + Upstash Free Tier suffisants pour portfolio)
+
+### 6.3.4 Documentation du Lock-in (Transparence)
+
+**Points à documenter dans README.md** :
+
+```markdown
+## ⚠️ Dépendances Infrastructure
+
+Ce projet utilise **Vercel** comme plateforme principale :
+
+- ✅ **Avantages** : Zero-config, performance optimale, DX excellente
+- ⚠️ **Lock-in modéré** : Edge Functions + Edge Config KV
+- 🔄 **Mitigation** : Abstractions prêtes pour migration (7 jours effort)
+- 📦 **Alternative testée** : Cloudflare Pages + Workers + Upstash
+
+**Recommandation** : Acceptable pour un MVP portfolio. Réévaluer si traffic >100K/mois.
+```
+
+### 6.3.5 Tests de Portabilité
+
+**Epic à ajouter (optionnel, post-V1)** :
+
+| ID | Titre | Durée |
+|----|-------|-------|
+| PORT-001 | Spike migration Cloudflare | 1 jour |
+| PORT-002 | Valider Edge Functions sur Workers | 1 jour |
+| PORT-003 | Documenter différences runtime | 3h |
+
+**Objectif** : Valider que l'abstraction fonctionne réellement (pas juste théorique).
+
+---
+
 ## 7. Recommandations & Best Practices
 
 ### 7.1 Performance
