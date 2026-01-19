@@ -55,6 +55,15 @@ export default [
     },
   },
 
+  // Configuration pour les fichiers de test (règles assouplies)
+  {
+    files: ['**/*.test.ts', '**/*.spec.ts'],
+    rules: {
+      'max-lines-per-function': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+
   // Configuration Astro
   ...eslintPluginAstro.configs.recommended,
   {
