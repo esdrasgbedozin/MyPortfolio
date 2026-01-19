@@ -17,6 +17,7 @@
 **Justification par rapport à la Vision** :
 
 Le projet est un **portfolio professionnel MVP** avec les caractéristiques suivantes :
+
 - Contenu quasi-statique (mise à jour mensuelle)
 - 15 projets max, 20 certifications max
 - Pas d'authentification utilisateur multi-tenant
@@ -40,7 +41,7 @@ Le projet est un **portfolio professionnel MVP** avec les caractéristiques suiv
 ✅ **Coût zéro** : Vercel free tier généreux pour portfolio  
 ✅ **Scalabilité automatique** : CDN + Edge Functions scale sans configuration  
 ✅ **DX optimale** : Deploy sur git push, preview branches automatiques  
-✅ **Serverless pour logique métier** : Formulaire de contact isolé dans une fonction  
+✅ **Serverless pour logique métier** : Formulaire de contact isolé dans une fonction
 
 ### 1.2 Diagramme C4 - Niveau Conteneur
 
@@ -53,11 +54,11 @@ C4Container
 
     System_Boundary(portfolio, "Portfolio System") {
         Container(cdn, "CDN Global", "Vercel Edge Network", "Distribue les assets statiques et pages HTML pré-générées")
-        
+
         Container(webapp, "Application Web", "Astro SSG + React Islands", "Interface utilisateur bilingue (FR/EN), affichage projets/certifications/compétences")
-        
+
         Container(edge_functions, "Edge Functions", "Vercel Serverless", "API pour formulaire de contact, validation, anti-spam")
-        
+
         ContainerDb(content, "Content Store", "Git Repository (Markdown/MDX)", "Stocke le contenu versionné (projets, certifications, profil)")
     }
 
@@ -72,7 +73,7 @@ C4Container
     Rel(edge_functions, antispam, "Vérifie token", "HTTPS")
     Rel(edge_functions, email_service, "Envoie email", "API")
     Rel(webapp, analytics, "Track events", "HTTPS")
-    
+
     Rel(admin, github, "Push contenu/code", "Git over SSH")
     Rel(github, cdn, "Trigger build & deploy", "Webhook")
     Rel(cdn, content, "Build: Lit contenu", "File System")
@@ -106,57 +107,57 @@ C4Container
 
 ### 2.1 Frontend
 
-| Composant | Technologie | Version | Justification |
-|-----------|-------------|---------|---------------|
-| **Framework** | Astro | 4.x | SSG avec Islands Architecture, Zero JS par défaut, support MDX natif |
-| **UI Library** | React | 18.x | Composants interactifs uniquement (formulaire, filtres, theme toggle) |
-| **Styling** | Tailwind CSS | 3.x | Utility-first, PurgeCSS intégré, design tokens, DX rapide |
-| **Language** | TypeScript | 5.x (Strict) | Type safety, meilleure DX, documentation vivante |
-| **i18n** | astro-i18next | 1.x | Standard Astro pour i18n, support routes localisées |
-| **Forms** | React Hook Form | 7.x | Validation performante, DX optimale |
-| **Validation** | Zod | 3.x | Type-safe validation, intégration TypeScript |
-| **Icons** | Lucide React | Latest | Icons modernes, tree-shakeable |
-| **Animations** | Tailwind + CSS | Native | Micro-interactions légères, pas de lib JS lourde |
+| Composant      | Technologie     | Version      | Justification                                                         |
+| -------------- | --------------- | ------------ | --------------------------------------------------------------------- |
+| **Framework**  | Astro           | 4.x          | SSG avec Islands Architecture, Zero JS par défaut, support MDX natif  |
+| **UI Library** | React           | 18.x         | Composants interactifs uniquement (formulaire, filtres, theme toggle) |
+| **Styling**    | Tailwind CSS    | 3.x          | Utility-first, PurgeCSS intégré, design tokens, DX rapide             |
+| **Language**   | TypeScript      | 5.x (Strict) | Type safety, meilleure DX, documentation vivante                      |
+| **i18n**       | astro-i18next   | 1.x          | Standard Astro pour i18n, support routes localisées                   |
+| **Forms**      | React Hook Form | 7.x          | Validation performante, DX optimale                                   |
+| **Validation** | Zod             | 3.x          | Type-safe validation, intégration TypeScript                          |
+| **Icons**      | Lucide React    | Latest       | Icons modernes, tree-shakeable                                        |
+| **Animations** | Tailwind + CSS  | Native       | Micro-interactions légères, pas de lib JS lourde                      |
 
 **Package Manager** : pnpm (performance, workspace monorepo-ready)
 
 ### 2.2 Backend / Edge
 
-| Composant | Technologie | Justification |
-|-----------|-------------|---------------|
-| **Runtime** | Vercel Edge Functions | Serverless, cold start <50ms, déploiement automatique |
-| **API Contact** | TypeScript | Type-safe, code partagé avec frontend |
-| **Email Service** | Resend (primary) / SendGrid (fallback) | API moderne, templates, logs, délivrabilité élevée |
-| **Anti-Spam** | Cloudflare Turnstile | Gratuit, privacy-friendly, remplacement reCAPTCHA |
-| **Rate Limiting** | Vercel Edge Middleware | Protection native contre abus API |
+| Composant         | Technologie                            | Justification                                         |
+| ----------------- | -------------------------------------- | ----------------------------------------------------- |
+| **Runtime**       | Vercel Edge Functions                  | Serverless, cold start <50ms, déploiement automatique |
+| **API Contact**   | TypeScript                             | Type-safe, code partagé avec frontend                 |
+| **Email Service** | Resend (primary) / SendGrid (fallback) | API moderne, templates, logs, délivrabilité élevée    |
+| **Anti-Spam**     | Cloudflare Turnstile                   | Gratuit, privacy-friendly, remplacement reCAPTCHA     |
+| **Rate Limiting** | Vercel Edge Middleware                 | Protection native contre abus API                     |
 
 **Pas de base de données** : Contenu 100% statique (Markdown/MDX dans Git)
 
 ### 2.3 Infrastructure & DevOps
 
-| Composant | Technologie | Justification |
-|-----------|-------------|---------------|
-| **Hosting** | Vercel | CDN global, Edge Functions, preview deployments, analytics intégré |
-| **DNS** | Vercel DNS / Cloudflare | Gestion simplifiée, DNSSEC, DDoS protection |
-| **CI/CD** | Vercel (intégré) | Deploy sur git push, preview branches automatiques |
-| **Version Control** | GitHub | Source de vérité, workflows, issues |
-| **Content Source** | Git (Markdown/MDX) | Versionning, review process, aucune infra additionnelle |
-| **Analytics** | Plausible Analytics | RGPD-compliant, privacy-first, <1KB, pas de cookies |
-| **Monitoring** | Vercel Analytics + Logs | Uptime, performance, erreurs Edge Functions |
-| **Secrets** | Vercel Environment Variables | API keys sécurisées, différenciation env (dev/prod) |
+| Composant           | Technologie                  | Justification                                                      |
+| ------------------- | ---------------------------- | ------------------------------------------------------------------ |
+| **Hosting**         | Vercel                       | CDN global, Edge Functions, preview deployments, analytics intégré |
+| **DNS**             | Vercel DNS / Cloudflare      | Gestion simplifiée, DNSSEC, DDoS protection                        |
+| **CI/CD**           | Vercel (intégré)             | Deploy sur git push, preview branches automatiques                 |
+| **Version Control** | GitHub                       | Source de vérité, workflows, issues                                |
+| **Content Source**  | Git (Markdown/MDX)           | Versionning, review process, aucune infra additionnelle            |
+| **Analytics**       | Plausible Analytics          | RGPD-compliant, privacy-first, <1KB, pas de cookies                |
+| **Monitoring**      | Vercel Analytics + Logs      | Uptime, performance, erreurs Edge Functions                        |
+| **Secrets**         | Vercel Environment Variables | API keys sécurisées, différenciation env (dev/prod)                |
 
 **Pas de Docker/Kubernetes** : Inutile pour Jamstack statique (Vercel gère l'infrastructure)
 
 ### 2.4 Outils de Développement
 
-| Outil | Usage |
-|-------|-------|
-| **IDE** | VS Code | Avec extensions Astro, Tailwind, ESLint, Prettier |
-| **Linting** | ESLint + Prettier | Code quality, formatting automatique |
-| **Type Checking** | TypeScript (strict) | CI check avant deploy |
-| **Testing** | Vitest (unit) + Playwright (e2e) | Fast, compatible Vite ecosystem |
-| **Accessibility** | axe DevTools + Lighthouse | Audit automatique WCAG 2.1 AA |
-| **Git Hooks** | Husky + lint-staged | Pre-commit checks (lint, format, types) |
+| Outil             | Usage                            |
+| ----------------- | -------------------------------- | ------------------------------------------------- |
+| **IDE**           | VS Code                          | Avec extensions Astro, Tailwind, ESLint, Prettier |
+| **Linting**       | ESLint + Prettier                | Code quality, formatting automatique              |
+| **Type Checking** | TypeScript (strict)              | CI check avant deploy                             |
+| **Testing**       | Vitest (unit) + Playwright (e2e) | Fast, compatible Vite ecosystem                   |
+| **Accessibility** | axe DevTools + Lighthouse        | Audit automatique WCAG 2.1 AA                     |
+| **Git Hooks**     | Husky + lint-staged              | Pre-commit checks (lint, format, types)           |
 
 ---
 
@@ -170,24 +171,26 @@ Le portfolio nécessite une performance maximale (Lighthouse >90, FCP <2s) avec 
 **Décision** : **Astro SSG**
 
 **Alternatives considérées** :
+
 - Next.js (SSG mode)
 - Gatsby
 - SvelteKit
 
 **Justification** :
 
-| Critère | Astro | Next.js |
-|---------|-------|---------|
-| **JS Client** | ~0KB (HTML pur) | ~85KB (React runtime) |
-| **Performance** | Native, zero-config | Nécessite optimisations |
-| **MDX Support** | Natif, première classe | Plugin, config additionnelle |
-| **Islands Arch.** | Natif (hydratation partielle) | Pas natif (tout React) |
-| **Learning Curve** | Spécifique Astro | React standard |
-| **Écosystème** | Jeune mais solide | Très mature |
+| Critère            | Astro                         | Next.js                      |
+| ------------------ | ----------------------------- | ---------------------------- |
+| **JS Client**      | ~0KB (HTML pur)               | ~85KB (React runtime)        |
+| **Performance**    | Native, zero-config           | Nécessite optimisations      |
+| **MDX Support**    | Natif, première classe        | Plugin, config additionnelle |
+| **Islands Arch.**  | Natif (hydratation partielle) | Pas natif (tout React)       |
+| **Learning Curve** | Spécifique Astro              | React standard               |
+| **Écosystème**     | Jeune mais solide             | Très mature                  |
 
 **Conséquences** :
 
 ✅ **Avantages gagnés** :
+
 - Score Lighthouse 100 garanti sur Performance
 - HTML pur = SEO optimal, accessibilité maximale
 - Pas de runtime JS à télécharger/parser/exécuter
@@ -195,11 +198,13 @@ Le portfolio nécessite une performance maximale (Lighthouse >90, FCP <2s) avec 
 - Intégration MDX native (pas de configuration complexe)
 
 ⚠️ **Inconvénients acceptés** :
+
 - Écosystème moins mature que React/Next.js
 - Moins de ressources communautaires (Stack Overflow, tutorials)
 - Pas de SSR/ISR si besoin futur (migration nécessaire)
 
 💳 **Dette technique** :
+
 - Si passage à un blog avec milliers d'articles → Évaluer migration vers Next.js ISR
 - Si besoin d'authentification complexe → Astro moins adapté
 
@@ -213,24 +218,26 @@ Le contenu (projets, certifications, profil) doit être géré de manière maint
 **Décision** : **Git-based Content (Markdown/MDX)**
 
 **Alternatives considérées** :
+
 - Contentful (SaaS)
 - Sanity (SaaS)
 - Strapi (self-hosted)
 
 **Justification** :
 
-| Critère | Git + MDX | Headless CMS |
-|---------|-----------|--------------|
-| **Coût** | Gratuit | 0-200$/mois |
-| **Latence Build** | Lecture locale | API externe |
-| **Sécurité** | Aucune surface d'attaque | API exposée |
-| **Versioning** | Git natif | CMS custom |
-| **Review Process** | Pull Requests | CMS workflow |
-| **Infrastructure** | Zéro | API service externe |
+| Critère            | Git + MDX                | Headless CMS        |
+| ------------------ | ------------------------ | ------------------- |
+| **Coût**           | Gratuit                  | 0-200$/mois         |
+| **Latence Build**  | Lecture locale           | API externe         |
+| **Sécurité**       | Aucune surface d'attaque | API exposée         |
+| **Versioning**     | Git natif                | CMS custom          |
+| **Review Process** | Pull Requests            | CMS workflow        |
+| **Infrastructure** | Zéro                     | API service externe |
 
 **Conséquences** :
 
 ✅ **Avantages gagnés** :
+
 - Zéro coût (pas d'abonnement CMS)
 - Performance maximale (pas de call API au build)
 - Sécurité maximale (pas de base de données à pirater)
@@ -239,11 +246,13 @@ Le contenu (projets, certifications, profil) doit être géré de manière maint
 - Le code source démontre la compétence Git
 
 ⚠️ **Inconvénients acceptés** :
+
 - Pas d'interface visuelle WYSIWYG pour édition
 - Nécessite connaissance Git/Markdown
 - Preview avant merge via PR preview (pas instantané)
 
 💳 **Dette technique** :
+
 - Si besoin d'éditeurs non-techniques → Ajouter Decap CMS (Git-based UI)
 - Si >100 contenus → Considérer CMS pour UX édition
 
@@ -257,25 +266,27 @@ Le portfolio nécessite un hébergement avec CDN global, Edge Functions pour le 
 **Décision** : **Vercel**
 
 **Alternatives considérées** :
+
 - Netlify
 - Cloudflare Pages
 - AWS Amplify
 
 **Justification** :
 
-| Critère | Vercel | Netlify | Cloudflare Pages |
-|---------|--------|---------|------------------|
-| **CDN Global** | ✅ (140+ villes) | ✅ (116+ villes) | ✅ (300+ villes) |
-| **Edge Functions** | ✅ V8 isolates | ✅ Deno runtime | ✅ Workers |
-| **Astro Support** | ✅ Optimisé | ✅ Bon | ✅ Bon |
-| **Free Tier** | 100GB bandwidth | 100GB bandwidth | Unlimited bandwidth |
-| **Image Optimization** | ✅ Natif | ❌ Plugin | ❌ Manuel |
-| **Analytics** | ✅ Intégré | ✅ Intégré | ✅ Intégré |
-| **DX (Preview)** | ✅ Automatique | ✅ Automatique | ✅ Automatique |
+| Critère                | Vercel           | Netlify          | Cloudflare Pages    |
+| ---------------------- | ---------------- | ---------------- | ------------------- |
+| **CDN Global**         | ✅ (140+ villes) | ✅ (116+ villes) | ✅ (300+ villes)    |
+| **Edge Functions**     | ✅ V8 isolates   | ✅ Deno runtime  | ✅ Workers          |
+| **Astro Support**      | ✅ Optimisé      | ✅ Bon           | ✅ Bon              |
+| **Free Tier**          | 100GB bandwidth  | 100GB bandwidth  | Unlimited bandwidth |
+| **Image Optimization** | ✅ Natif         | ❌ Plugin        | ❌ Manuel           |
+| **Analytics**          | ✅ Intégré       | ✅ Intégré       | ✅ Intégré          |
+| **DX (Preview)**       | ✅ Automatique   | ✅ Automatique   | ✅ Automatique      |
 
 **Conséquences** :
 
 ✅ **Avantages gagnés** :
+
 - Image optimization native (améliore LCP automatiquement)
 - Edge Functions cold start <50ms (le plus rapide)
 - Support Astro de première classe (team Vercel contributeurs)
@@ -284,10 +295,12 @@ Le portfolio nécessite un hébergement avec CDN global, Edge Functions pour le 
 - Intégration GitHub parfaite
 
 ⚠️ **Inconvénients acceptés** :
+
 - Vendor lock-in modéré (mais migration possible)
 - Free tier limité à 100GB/mois (largement suffisant pour portfolio)
 
 💳 **Dette technique** :
+
 - Si dépassement bandwidth → Migrer vers Cloudflare Pages (unlimited)
 - Si besoin multi-cloud → Utiliser Docker + self-hosting
 
@@ -301,6 +314,7 @@ Le formulaire de contact nécessite l'envoi d'emails transactionnels. Service do
 **Décision** : **Resend (primary) avec fallback SendGrid**
 
 **Alternatives considérées** :
+
 - SendGrid
 - AWS SES
 - Mailgun
@@ -308,18 +322,19 @@ Le formulaire de contact nécessite l'envoi d'emails transactionnels. Service do
 
 **Justification** :
 
-| Critère | Resend | SendGrid |
-|---------|--------|----------|
-| **Free Tier** | 100 emails/jour | 100 emails/jour |
-| **API Design** | Moderne (fetch) | Legacy (REST) |
-| **DX** | Excellente | Moyenne |
-| **Délivrabilité** | Élevée | Très élevée |
-| **Templates** | React components | HTML/Handlebars |
-| **Logs** | Dashboard clair | Dashboard complexe |
+| Critère           | Resend           | SendGrid           |
+| ----------------- | ---------------- | ------------------ |
+| **Free Tier**     | 100 emails/jour  | 100 emails/jour    |
+| **API Design**    | Moderne (fetch)  | Legacy (REST)      |
+| **DX**            | Excellente       | Moyenne            |
+| **Délivrabilité** | Élevée           | Très élevée        |
+| **Templates**     | React components | HTML/Handlebars    |
+| **Logs**          | Dashboard clair  | Dashboard complexe |
 
 **Conséquences** :
 
 ✅ **Avantages gagnés** :
+
 - API moderne ultra-simple (2 lignes de code)
 - Templates en React (cohérence avec la stack)
 - Logs détaillés et lisibles
@@ -327,10 +342,12 @@ Le formulaire de contact nécessite l'envoi d'emails transactionnels. Service do
 - Gratuit pour portfolio (<100 emails/jour largement suffisant)
 
 ⚠️ **Inconvénients acceptés** :
+
 - Service relativement récent (moins mature que SendGrid)
 - Pas de features avancées (A/B testing emails, etc.) - pas nécessaires
 
 💳 **Dette technique** :
+
 - Implémenter fallback sur SendGrid si Resend indisponible
 - Si besoin d'envoi massif → Migrer vers AWS SES (coût au volume)
 
@@ -343,27 +360,29 @@ Le formulaire de contact nécessite l'envoi d'emails transactionnels. Service do
 Le portfolio est une **application publique sans authentification multi-utilisateurs en V1**. Il n'y a donc pas de système RBAC traditionnel (pas de login/sessions).
 
 **Deux acteurs distincts** :
+
 1. **Visiteur** : Utilisateur anonyme (lecture publique)
 2. **Admin** : Propriétaire du portfolio (accès via Git + Vercel Dashboard)
 
 ### 4.2 Tableau RBAC
 
-| Ressource / Action | Visiteur (Anonyme) | Admin (Propriétaire) |
-|-------------------|-------------------|---------------------|
-| **Page d'Accueil** | ✅ Read | ✅ Read / ✏️ Update (Git) |
-| **Projets (Liste)** | ✅ Read (filtrés "Public") | ✅ Read (tous) / ✏️ Update |
-| **Projet (Détail)** | ✅ Read (si "Public") | ✅ Read / ✏️ Update / 🗑️ Delete |
-| **Certifications** | ✅ Read | ✅ Read / ✏️ Update / 🗑️ Delete |
-| **Compétences** | ✅ Read | ✅ Read / ✏️ Update |
-| **Profil/Bio** | ✅ Read | ✅ Read / ✏️ Update |
-| **Formulaire Contact** | ✅ Read / 📤 Submit | ✅ Read (emails reçus) |
-| **Analytics Dashboard** | ❌ Denied | ✅ Read (Plausible) |
-| **Vercel Dashboard** | ❌ Denied | ✅ Full Access |
-| **GitHub Repository** | ✅ Read (code public) | ✅ Full Access (private) |
-| **Environment Variables** | ❌ Denied | ✅ Full Access |
-| **Edge Functions Logs** | ❌ Denied | ✅ Read |
+| Ressource / Action        | Visiteur (Anonyme)         | Admin (Propriétaire)            |
+| ------------------------- | -------------------------- | ------------------------------- |
+| **Page d'Accueil**        | ✅ Read                    | ✅ Read / ✏️ Update (Git)       |
+| **Projets (Liste)**       | ✅ Read (filtrés "Public") | ✅ Read (tous) / ✏️ Update      |
+| **Projet (Détail)**       | ✅ Read (si "Public")      | ✅ Read / ✏️ Update / 🗑️ Delete |
+| **Certifications**        | ✅ Read                    | ✅ Read / ✏️ Update / 🗑️ Delete |
+| **Compétences**           | ✅ Read                    | ✅ Read / ✏️ Update             |
+| **Profil/Bio**            | ✅ Read                    | ✅ Read / ✏️ Update             |
+| **Formulaire Contact**    | ✅ Read / 📤 Submit        | ✅ Read (emails reçus)          |
+| **Analytics Dashboard**   | ❌ Denied                  | ✅ Read (Plausible)             |
+| **Vercel Dashboard**      | ❌ Denied                  | ✅ Full Access                  |
+| **GitHub Repository**     | ✅ Read (code public)      | ✅ Full Access (private)        |
+| **Environment Variables** | ❌ Denied                  | ✅ Full Access                  |
+| **Edge Functions Logs**   | ❌ Denied                  | ✅ Read                         |
 
 **Légende** :
+
 - ✅ Autorisé
 - ❌ Interdit
 - ✏️ Modification
@@ -384,14 +403,16 @@ visibility: "public" | "private" | "on-demand"
 ```
 
 **Logique de filtrage** :
+
 ```typescript
 // src/utils/filterProjects.ts
 export function filterPublicProjects(projects: Project[]) {
-  return projects.filter(p => p.visibility === 'public');
+  return projects.filter((p) => p.visibility === 'public');
 }
 ```
 
 **Règles** :
+
 - Visiteur : Voit uniquement `visibility: "public"`
 - Admin : Voit tous les projets dans le repo Git
 - Build : Ne génère des pages que pour `public` (optimisation)
@@ -406,6 +427,7 @@ export function filterPublicProjects(projects: Project[]) {
    - Désactivation bouton après soumission (prevent double-submit)
 
 2. **Edge Function** :
+
    ```typescript
    // api/contact.ts
    export default async function handler(req: Request) {
@@ -414,19 +436,19 @@ export function filterPublicProjects(projects: Project[]) {
      if (isRateLimited(ip)) {
        return new Response('Too many requests', { status: 429 });
      }
-     
+
      // 2. Validation Turnstile token
      const isValid = await verifyTurnstile(req.body.token);
      if (!isValid) {
        return new Response('Invalid captcha', { status: 403 });
      }
-     
+
      // 3. Validation Zod
      const data = contactSchema.parse(req.body);
-     
+
      // 4. Envoi email
      await sendEmail(data);
-     
+
      return new Response('Success', { status: 200 });
    }
    ```
@@ -437,6 +459,7 @@ export function filterPublicProjects(projects: Project[]) {
    - Règle : Max 5 soumissions/heure par IP
 
 **Headers de sécurité** (Vercel config) :
+
 ```json
 {
   "headers": [
@@ -458,16 +481,17 @@ export function filterPublicProjects(projects: Project[]) {
 
 **Variables d'environnement** (Vercel) :
 
-| Variable | Usage | Exposition |
-|----------|-------|------------|
-| `RESEND_API_KEY` | Envoi emails | ❌ Server-only |
-| `SENDGRID_API_KEY` | Fallback emails | ❌ Server-only |
-| `TURNSTILE_SECRET_KEY` | Vérification anti-spam | ❌ Server-only |
-| `TURNSTILE_SITE_KEY` | Widget client | ✅ Public |
-| `PLAUSIBLE_DOMAIN` | Analytics tracking | ✅ Public |
-| `ADMIN_EMAIL` | Destinataire formulaire | ❌ Server-only |
+| Variable               | Usage                   | Exposition     |
+| ---------------------- | ----------------------- | -------------- |
+| `RESEND_API_KEY`       | Envoi emails            | ❌ Server-only |
+| `SENDGRID_API_KEY`     | Fallback emails         | ❌ Server-only |
+| `TURNSTILE_SECRET_KEY` | Vérification anti-spam  | ❌ Server-only |
+| `TURNSTILE_SITE_KEY`   | Widget client           | ✅ Public      |
+| `PLAUSIBLE_DOMAIN`     | Analytics tracking      | ✅ Public      |
+| `ADMIN_EMAIL`          | Destinataire formulaire | ❌ Server-only |
 
 **Règles** :
+
 - Aucun secret dans le code source (Git)
 - Variables sensibles préfixées `SECRET_` (convention)
 - Différenciation dev/preview/production
@@ -476,7 +500,9 @@ export function filterPublicProjects(projects: Project[]) {
 #### 4.3.4 Content Security Policy (CSP)
 
 ```html
-<meta http-equiv="Content-Security-Policy" content="
+<meta
+  http-equiv="Content-Security-Policy"
+  content="
   default-src 'self';
   script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://plausible.io;
   style-src 'self' 'unsafe-inline';
@@ -484,20 +510,21 @@ export function filterPublicProjects(projects: Project[]) {
   font-src 'self';
   connect-src 'self' https://challenges.cloudflare.com https://plausible.io;
   frame-src https://challenges.cloudflare.com;
-">
+"
+/>
 ```
 
 ### 4.4 Threat Model & Mitigations
 
-| Menace | Probabilité | Impact | Mitigation |
-|--------|-------------|--------|------------|
-| **Spam via formulaire** | Haute | Moyen | Turnstile + Rate Limiting |
-| **XSS (Cross-Site Scripting)** | Faible | Élevé | CSP strict + React auto-escape + sanitization MDX |
-| **DDoS sur Edge Functions** | Moyenne | Moyen | Vercel DDoS protection + Rate Limiting |
-| **Injection SQL** | Nulle | - | Pas de base de données |
-| **Credential Stuffing** | Nulle | - | Pas d'authentification utilisateur |
-| **API Key Leak** | Faible | Élevé | Secrets dans env vars + Git secrets scanning |
-| **Dependency Vulnerabilities** | Moyenne | Moyen | Dependabot alerts + `pnpm audit` |
+| Menace                         | Probabilité | Impact | Mitigation                                        |
+| ------------------------------ | ----------- | ------ | ------------------------------------------------- |
+| **Spam via formulaire**        | Haute       | Moyen  | Turnstile + Rate Limiting                         |
+| **XSS (Cross-Site Scripting)** | Faible      | Élevé  | CSP strict + React auto-escape + sanitization MDX |
+| **DDoS sur Edge Functions**    | Moyenne     | Moyen  | Vercel DDoS protection + Rate Limiting            |
+| **Injection SQL**              | Nulle       | -      | Pas de base de données                            |
+| **Credential Stuffing**        | Nulle       | -      | Pas d'authentification utilisateur                |
+| **API Key Leak**               | Faible      | Élevé  | Secrets dans env vars + Git secrets scanning      |
+| **Dependency Vulnerabilities** | Moyenne     | Moyen  | Dependabot alerts + `pnpm audit`                  |
 
 ### 4.5 Checklist Sécurité Pré-Deploy
 
@@ -524,35 +551,35 @@ graph TB
         Dev[Développeur]
         Git[Git Local]
     end
-    
+
     subgraph github["GitHub"]
         Repo[Repository]
         Actions[GitHub Actions - Optional]
     end
-    
+
     subgraph vercel["Vercel Platform"]
         Build[Build Process<br/>astro build]
         CDN[CDN Global<br/>140+ Edge Locations]
         Edge[Edge Functions<br/>Contact API]
         Config[Edge Config<br/>Rate Limiting]
     end
-    
+
     subgraph external["External Services"]
         Resend[Resend API]
         Turnstile[Cloudflare Turnstile]
         Plausible[Plausible Analytics]
     end
-    
+
     subgraph users["End Users"]
         Visitor[Visiteur]
     end
-    
+
     Dev -->|git push| Git
     Git -->|sync| Repo
     Repo -->|webhook| Build
     Build -->|deploy| CDN
     Build -->|deploy| Edge
-    
+
     Visitor -->|HTTPS Request| CDN
     CDN -->|Static Assets| Visitor
     Visitor -->|Form Submit| Edge
@@ -560,11 +587,11 @@ graph TB
     Edge -->|Send Email| Resend
     Edge -->|Check Limit| Config
     Visitor -->|Pageview| Plausible
-    
+
     classDef buildStyle fill:#E8F4F8,stroke:#2196F3,stroke-width:2px,color:#000
     classDef cdnStyle fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px,color:#000
     classDef edgeStyle fill:#FFF3E0,stroke:#FF9800,stroke-width:2px,color:#000
-    
+
     class Build buildStyle
     class CDN cdnStyle
     class Edge edgeStyle
@@ -579,7 +606,7 @@ sequenceDiagram
     participant Vercel as Vercel Platform
     participant CDN as CDN Global
     participant User as Visiteur
-    
+
     Dev->>Git: git push origin main
     Git->>Vercel: Webhook (push event)
     Vercel->>Vercel: Clone repository
@@ -591,10 +618,10 @@ sequenceDiagram
     Vercel->>CDN: Deploy to 140+ locations
     Vercel->>Git: Update deployment status
     Vercel->>Dev: Email notification (success)
-    
+
     User->>CDN: GET /fr/projets
     CDN->>User: Return cached HTML (instant)
-    
+
     Note over Vercel: Build time: ~1-2 minutes<br/>Response time: <100ms
 ```
 
@@ -693,6 +720,7 @@ portfolio/
 ### 6.2 Configuration Clés
 
 **astro.config.mjs** :
+
 ```javascript
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
@@ -704,22 +732,23 @@ export default defineConfig({
   integrations: [react(), tailwind(), mdx()],
   adapter: vercel({
     imageService: true, // Vercel Image Optimization
-    edgeMiddleware: true
+    edgeMiddleware: true,
   }),
   i18n: {
     defaultLocale: 'fr',
     locales: ['fr', 'en'],
     routing: {
-      prefixDefaultLocale: true // URLs: /fr/projets, /en/projects
-    }
+      prefixDefaultLocale: true, // URLs: /fr/projets, /en/projects
+    },
   },
   output: 'static', // SSG
   site: 'https://votre-domaine.dev',
-  trailingSlash: 'ignore'
+  trailingSlash: 'ignore',
 });
 ```
 
 **vercel.json** :
+
 ```json
 {
   "buildCommand": "pnpm build",
@@ -737,9 +766,7 @@ export default defineConfig({
       ]
     }
   ],
-  "rewrites": [
-    { "source": "/api/contact", "destination": "/api/contact" }
-  ]
+  "rewrites": [{ "source": "/api/contact", "destination": "/api/contact" }]
 }
 ```
 
@@ -751,13 +778,13 @@ export default defineConfig({
 
 Le projet utilise plusieurs services **Vercel-natifs** qui créent une dépendance forte :
 
-| Service | Lock-in Level | Alternative Possible | Effort Migration |
-|---------|---------------|----------------------|------------------|
-| **Edge Functions** | 🟠 Moyen | Cloudflare Workers, Netlify Edge | ~3 jours |
-| **Image Optimization** | 🟡 Faible | Cloudinary, imgix, self-hosted | ~1 jour |
-| **Edge Config (KV Store)** | 🔴 Fort | Redis, Upstash, Cloudflare KV | ~2 jours |
-| **Analytics** | 🟢 Nul | Plausible, Google Analytics | ~2h |
-| **Deployment Pipeline** | 🟡 Faible | GitHub Actions + Cloudflare Pages | ~1 jour |
+| Service                    | Lock-in Level | Alternative Possible              | Effort Migration |
+| -------------------------- | ------------- | --------------------------------- | ---------------- |
+| **Edge Functions**         | 🟠 Moyen      | Cloudflare Workers, Netlify Edge  | ~3 jours         |
+| **Image Optimization**     | 🟡 Faible     | Cloudinary, imgix, self-hosted    | ~1 jour          |
+| **Edge Config (KV Store)** | 🔴 Fort       | Redis, Upstash, Cloudflare KV     | ~2 jours         |
+| **Analytics**              | 🟢 Nul        | Plausible, Google Analytics       | ~2h              |
+| **Deployment Pipeline**    | 🟡 Faible     | GitHub Actions + Cloudflare Pages | ~1 jour          |
 
 **Total Effort Migration Estimé** : ~7 jours ouvrés
 
@@ -766,10 +793,12 @@ Le projet utilise plusieurs services **Vercel-natifs** qui créent une dépendan
 #### 1. **Edge Functions Runtime (🟠 Moyen)**
 
 **Problème** :
+
 - Code Edge Functions écrit pour Vercel Runtime (V8 isolates)
 - API Request/Response non-standard (pas Node.js natif)
 
 **Mitigation** :
+
 ```typescript
 // ✅ Abstraction Runtime
 // services/runtime/adapter.ts
@@ -805,10 +834,12 @@ export default async function handler(req: Request) {
 #### 2. **Edge Config KV Store (🔴 Fort)**
 
 **Problème** :
+
 - Rate limiting stocké dans Vercel Edge Config
 - API propriétaire non-compatible avec Redis/autres KV stores
 
 **Mitigation** :
+
 ```typescript
 // ✅ Abstraction KV Store
 // services/storage/types.ts
@@ -830,7 +861,9 @@ export class VercelKVStore implements KVStore {
 // services/storage/upstash.ts (alternative prête)
 import { Redis } from '@upstash/redis';
 export class UpstashKVStore implements KVStore {
-  private client = new Redis({ /* config */ });
+  private client = new Redis({
+    /* config */
+  });
   async get(key: string): Promise<string | null> {
     return await this.client.get(key);
   }
@@ -840,9 +873,7 @@ export class UpstashKVStore implements KVStore {
 // services/storage/factory.ts
 export function createKVStore(): KVStore {
   const provider = process.env.KV_PROVIDER || 'vercel';
-  return provider === 'upstash' 
-    ? new UpstashKVStore() 
-    : new VercelKVStore();
+  return provider === 'upstash' ? new UpstashKVStore() : new VercelKVStore();
 }
 ```
 
@@ -851,17 +882,14 @@ export function createKVStore(): KVStore {
 #### 3. **Image Optimization (🟡 Faible)**
 
 **Problème** :
+
 - `@astrojs/vercel` utilise Vercel Image Optimization API
 
 **Mitigation** :
+
 ```astro
 <!-- ✅ Utiliser Astro Image (agnostique) -->
-<Image 
-  src={import('../assets/project.jpg')} 
-  alt="Projet" 
-  format="webp" 
-  loading="lazy"
-/>
+<Image src={import('../assets/project.jpg')} alt="Projet" format="webp" loading="lazy" />
 <!-- Généré au build, pas de dépendance runtime Vercel -->
 ```
 
@@ -907,11 +935,11 @@ Ce projet utilise **Vercel** comme plateforme principale :
 
 **Epic à ajouter (optionnel, post-V1)** :
 
-| ID | Titre | Durée |
-|----|-------|-------|
-| PORT-001 | Spike migration Cloudflare | 1 jour |
+| ID       | Titre                              | Durée  |
+| -------- | ---------------------------------- | ------ |
+| PORT-001 | Spike migration Cloudflare         | 1 jour |
 | PORT-002 | Valider Edge Functions sur Workers | 1 jour |
-| PORT-003 | Documenter différences runtime | 3h |
+| PORT-003 | Documenter différences runtime     | 3h     |
 
 **Objectif** : Valider que l'abstraction fonctionne réellement (pas juste théorique).
 
@@ -922,6 +950,7 @@ Ce projet utilise **Vercel** comme plateforme principale :
 ### 7.1 Performance
 
 ✅ **DO** :
+
 - Utiliser `@astrojs/image` pour optimisation automatique des images
 - Lazy-load images hors viewport (`loading="lazy"`)
 - Précharger fonts critiques (`<link rel="preload">`)
@@ -930,6 +959,7 @@ Ce projet utilise **Vercel** comme plateforme principale :
 - Activer compression Brotli (Vercel par défaut)
 
 ❌ **DON'T** :
+
 - Charger React sur des pages 100% statiques
 - Utiliser `client:load` sur tous les composants React (préférer `client:idle`)
 - Ajouter des libs JS lourdes non-essentielles
@@ -937,6 +967,7 @@ Ce projet utilise **Vercel** comme plateforme principale :
 ### 7.2 Accessibilité
 
 ✅ **DO** :
+
 - Tester avec 3 lecteurs d'écran (NVDA, JAWS, VoiceOver)
 - Garantir navigation complète au clavier
 - Contraste ≥4.5:1 pour texte normal, ≥3:1 pour texte large
@@ -945,6 +976,7 @@ Ce projet utilise **Vercel** comme plateforme principale :
 - Support `prefers-reduced-motion`
 
 ❌ **DON'T** :
+
 - Utiliser uniquement la couleur pour transmettre l'information
 - Masquer le focus avec `outline: none` sans alternative
 - Oublier les attributs ARIA sur les composants custom
@@ -952,6 +984,7 @@ Ce projet utilise **Vercel** comme plateforme principale :
 ### 7.3 SEO
 
 ✅ **DO** :
+
 - Générer `sitemap.xml` automatiquement (plugin Astro)
 - Ajouter structured data JSON-LD (Schema.org)
 - Configurer Open Graph + Twitter Cards
@@ -960,6 +993,7 @@ Ce projet utilise **Vercel** comme plateforme principale :
 - Meta descriptions uniques par page
 
 ❌ **DON'T** :
+
 - Dupliquer content entre langues sans hreflang
 - Utiliser des URLs avec paramètres pour le contenu principal
 - Oublier `robots.txt`
@@ -967,6 +1001,7 @@ Ce projet utilise **Vercel** comme plateforme principale :
 ### 7.4 Sécurité
 
 ✅ **DO** :
+
 - Activer Dependabot sur GitHub
 - Scanner dependencies avec `pnpm audit` en CI
 - Utiliser HTTPS only (forcé par Vercel)
@@ -976,6 +1011,7 @@ Ce projet utilise **Vercel** comme plateforme principale :
 - Logger les erreurs Edge Functions
 
 ❌ **DON'T** :
+
 - Commit des secrets dans Git
 - Exposer des APIs sans authentication
 - Faire confiance aux données client (toujours valider server-side)

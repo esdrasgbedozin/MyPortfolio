@@ -1,0 +1,34 @@
+# EditorConfig: https://editorconfig.org
+
+# Configuration de base pour tous les fichiers
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Fichiers TypeScript/JavaScript/Astro
+[*.{ts,tsx,js,jsx,astro}]
+indent_size = 2
+max_line_length = 100
+
+# Fichiers JSON
+[*.json]
+indent_size = 2
+
+# Fichiers Markdown (conserver les espaces trailing pour les retours à la ligne)
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Fichiers YAML
+[*.{yml,yaml}]
+indent_size = 2
+
+# Fichiers de configuration
+[{package.json,tsconfig.json}]
+indent_size = 2
