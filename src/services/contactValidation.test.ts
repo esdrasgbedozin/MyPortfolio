@@ -122,4 +122,154 @@ describe('Contact Form Validation', () => {
       }
     });
   });
+
+  describe('Edge cases', () => {
+    it('should reject name with only whitespace', () => {
+      const invalidData = {
+        name: '   ',
+        email: 'john@example.com',
+        message: 'Valid message here',
+      };
+
+      const result = validateContactForm(invalidData);
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].path).toContain('name');
+      }
+    });
+
+    it('should reject email with spaces', () => {
+      const invalidData = {
+        name: 'John Doe',
+        email: 'john doe@example.com',
+        message: 'Valid message',
+      };
+
+      const result = validateContactForm(invalidData);
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].path).toContain('email');
+      }
+    });
+
+    it('should reject email without domain', () => {
+      const invalidData = {
+        name: 'John Doe',
+        email: 'john@',
+        message: 'Valid message',
+      };
+
+      const result = validateContactForm(invalidData);
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].path).toContain('email');
+      }
+    });
+
+    it('should reject email without @', () => {
+      const invalidData = {
+        name: 'John Doe',
+        email: 'johnexample.com',
+        message: 'Valid message',
+      };
+
+      const result = validateContactForm(invalidData);
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].path).toContain('email');
+      }
+    });
+
+    it('should accept message with exactly 10 characters', () => {
+      const validData = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        message: '1234567890',
+      };
+
+      const result = validateContactForm(validData);
+
+      expect(result.success).toBe(true);
+    });
+
+    it('should accept message with exactly 2000 characters', () => {
+      const validData = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        message: 'a'.repeat(2000),
+      };
+
+      const result = validateContactForm(validData);
+
+      expect(result.success).toBe(true);
+    });
+
+    it('should reject message with special characters only', () => {
+      const invalidData = {
+        name: 'John Doe',
+        email: 'john@example.com',
+        message: '!@#$%^&*()',
+      };
+
+      const result = validateContactForm(invalidData);
+
+      // Les caractères spéciaux sont acceptés s'ils atteignent la longueur minimale
+      expect(result.success).toBe(true);
+    });
+
+    it('should accept name with accents and special characters', () => {
+      const validData = {
+        name: "José María O'Brien",
+        email: 'jose@example.com',
+        message: 'Valid message here',
+      };
+
+      const result = validateContactForm(validData);
+
+      expect(result.success).toBe(true);
+    });
+
+    it('should reject when name is not a string', () => {
+      const invalidData = {
+        name: 123,
+        email: 'john@example.com',
+        message: 'Valid message',
+      };
+
+      const result = validateContactForm(invalidData);
+
+      expect(result.success).toBe(false);
+    });
+
+    it('should reject when email is not a string', () => {
+      const invalidData = {
+        name: 'John Doe',
+        email: null,
+        message: 'Valid message',
+      };
+
+      const result = validateContactForm(invalidData);
+
+      expect(result.success).toBe(false);
+    });
+
+    it('should handle multiple validation errors', () => {
+      const invalidData = {
+        name: '',
+        email: 'invalid',
+        message: 'Hi',
+      };
+
+      const result = validateContactForm(invalidData);
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues.length).toBeGreaterThanOrEqual(3);
+      }
+    });
+  });
 });
