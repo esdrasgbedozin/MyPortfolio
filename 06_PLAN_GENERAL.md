@@ -13,6 +13,7 @@
 **Architecture** : Jamstack SSG (Astro) + Edge Functions (Vercel Serverless)
 
 **Stratégie de Développement** :
+
 1. **Parallélisation** : Frontend et Edge Functions développés en parallèle
 2. **Mock-First** : Frontend consomme un mock server dès le départ
 3. **TDD Strict** : Tests d'abord, code ensuite, refactoring
@@ -23,6 +24,7 @@
 **Durée Totale Estimée** : ~100h30 (12-13 jours de travail effectif)
 
 **Nouvelles Additions (vs version initiale)** :
+
 - ✅ Monitoring avec Sentry (7h)
 - ✅ Retry policy EmailService (2h)
 - ✅ Contract Testing OpenAPI (3h30)
@@ -37,47 +39,47 @@
 gantt
     title Roadmap Portfolio Professionnel
     dateFormat  YYYY-MM-DD
-    
+
     section Setup & Config
     Setup Astro + Edge Functions    :setup1, 2026-01-18, 1d
     Config Linting & CI             :setup2, after setup1, 1d
-    
+
     section Design System
     Design Tokens & Composants UI   :design1, after setup2, 2d
     Layout Components               :design2, after design1, 1d
-    
+
     section Content & Pages
     Routing & Pages Statiques       :pages1, after design2, 2d
     Content Collections (MDX)       :pages2, after pages1, 1d
-    
+
     section Edge Functions
     Services Base (+ Retry)         :edge1, after setup1, 2.5d
     Service Email (Factory)         :edge2, after edge1, 1d
     API Contact (TDD)               :edge3, after edge2, 2d
-    
+
     section Monitoring & Observabilité
     Sentry Integration              :monitor1, after edge3, 1d
     Lighthouse CI                   :monitor2, after monitor1, 0.5d
-    
+
     section React Islands
     Theme Toggle & Filtres          :react1, after pages2, 1d
     Formulaire Contact              :react2, after react1, 1d
-    
+
     section i18n & Traductions
     Configuration i18n              :i18n1, after react2, 1d
     Traductions FR/EN + dates/nombres :i18n2, after i18n1, 1d
-    
+
     section Contract Testing
     OpenAPI Contract Tests          :contract1, after edge3 i18n2, 0.5d
-    
+
     section Optimisations
     Performance & A11y              :perf1, after contract1, 1d
     SEO & Structured Data           :perf2, after perf1, 1d
-    
+
     section Intégration
     Switch Mock → API Réelle        :crit, milestone, after perf2, 0d
     Tests e2e Production            :test1, after perf2, 1d
-    
+
     section Déploiement
     Deploy Production               :crit, milestone, after test1, 0d
 ```
@@ -91,18 +93,22 @@ gantt
 **Objectif** : Infrastructure de développement prête
 
 **Tâches Frontend** :
+
 - ✅ FE-001 à FE-013 : Setup Astro + Mock Server
 
 **Tâches Edge Functions** :
+
 - ✅ EF-001 à EF-009 : Setup projet + CI/CD
 
 **Critères de Validation** :
+
 - [ ] `pnpm dev` lance Astro sur localhost:4321
 - [ ] `pnpm run dev:mock` lance Mock Server sur localhost:4010
 - [ ] CI GitHub Actions passe (lint, typecheck)
 - [ ] Deploy preview Vercel fonctionne
 
 **Livrables** :
+
 - Repository Git initialisé
 - CI/CD configuré (GitHub Actions + Vercel)
 - Mock Server opérationnel (Prism + openapi.yaml)
@@ -114,18 +120,22 @@ gantt
 **Objectif** : Système de design et composants UI prêts
 
 **Tâches Frontend** :
+
 - ✅ FE-014 à FE-031 : Design Tokens + Composants atomiques + Layouts
 
 **Tâches Edge Functions** :
+
 - _(Parallèle : EF-010 à EF-029 - Services de base)_
 
 **Critères de Validation** :
+
 - [ ] Palette couleurs Dark Mode testée
 - [ ] Composants Button/Card/Badge/Input fonctionnent
 - [ ] BaseLayout + Header + Footer créés
 - [ ] Tests Vitest composants passent (≥80% couverture)
 
 **Livrables** :
+
 - Design tokens Tailwind configurés
 - 8 composants UI réutilisables (Astro)
 - Layouts Header/Footer responsive
@@ -137,20 +147,24 @@ gantt
 **Objectif** : Toutes les pages statiques + contenu dummy
 
 **Tâches Frontend** :
+
 - ✅ FE-032 à FE-065 : Routing + Pages + Content Collections
 
 **Tâches Edge Functions** :
+
 - _(Parallèle : EF-010 à EF-029 - Services terminés)_
 - _(Début : EF-030 à EF-045 - API Contact)_
 
 **Critères de Validation** :
+
 - [ ] 6 pages créées (Home, Projets, Projet détail, Certifications, Compétences, Contact)
 - [ ] Content Collections configurées (Zod schemas)
 - [ ] 3 projets dummy affichés (FR/EN)
 - [ ] Tests e2e Playwright passent
 
 **Livrables** :
-- Routing i18n fonctionnel (/fr/*, /en/*)
+
+- Routing i18n fonctionnel (/fr/_, /en/_)
 - Content Collections avec 3 projets + 5 certifications dummy
 - Page détail projet avec rendu MDX
 
@@ -161,13 +175,16 @@ gantt
 **Objectif** : Edge Functions API Contact prêtes (TDD complet)
 
 **Tâches Edge Functions** :
+
 - ✅ EF-030 à EF-045 : API Contact (cas nominal + erreurs + logs)
 - ✅ EF-046 à EF-055 : Health check + Env vars + Security headers
 
 **Tâches Frontend** :
+
 - _(Parallèle : FE-066 à FE-084 - React Islands)_
 
 **Critères de Validation** :
+
 - [ ] POST /api/contact fonctionne (validation + email + anti-spam)
 - [ ] Gestion erreurs RFC 7807 (400, 403, 429, 500)
 - [ ] Rate limiting actif (5 req/heure par IP)
@@ -175,6 +192,7 @@ gantt
 - [ ] Logs JSON structurés (requestId propagé)
 
 **Livrables** :
+
 - Edge Function `/api/contact` opérationnelle
 - Services Email (Resend + SendGrid fallback)
 - Service Turnstile anti-spam
@@ -188,13 +206,16 @@ gantt
 **Objectif** : React Islands fonctionnels + Formulaire contact (mock)
 
 **Tâches Frontend** :
+
 - ✅ FE-066 à FE-084 : Theme Toggle + Filtres Projets + Formulaire Contact
 
 **Tâches Edge Functions** :
+
 - _(Terminées : EF-001 à EF-055)_
 - _(Parallèle : EF-056 à EF-063 - Tests intégration + Monitoring)_
 
 **Critères de Validation** :
+
 - [ ] Theme Toggle fonctionne (localStorage + prefers-color-scheme)
 - [ ] Filtres projets fonctionnent (query params SEO)
 - [ ] Formulaire contact fonctionne avec mock API
@@ -202,6 +223,7 @@ gantt
 - [ ] Turnstile widget intégré (mock token)
 
 **Livrables** :
+
 - 3 composants React Islands (ThemeToggle, ProjectFilter, ContactForm)
 - Intégration avec Mock Server (Prism)
 - États UI (loading, success, error)
@@ -213,10 +235,12 @@ gantt
 **Objectif** : Bilingue FR/EN fonctionnel + SEO i18n + Formatage localisé
 
 **Tâches Frontend** :
+
 - ✅ FE-085 à FE-095 : Configuration i18n + Traductions + hreflang
 - ✅ FE-091a à FE-091c : **NOUVEAU** - Internationalisation dates/nombres (Intl API)
 
 **Critères de Validation** :
+
 - [ ] Traductions FR/EN complètes (UI + content)
 - [ ] **Dates formatées selon locale** (15 janvier 2026 vs January 15, 2026)
 - [ ] **Nombres formatés selon locale** (1 234,56 vs 1,234.56)
@@ -226,6 +250,7 @@ gantt
 - [ ] Tests e2e switch langue passent
 
 **Livrables** :
+
 - `src/i18n/fr.json` + `src/i18n/en.json` (toutes clés)
 - `src/utils/i18n.ts` (fonctions `formatDate()`, `formatNumber()` avec Intl API)
 - Routing i18n Astro configuré
@@ -238,19 +263,23 @@ gantt
 **Objectif** : Observabilité + Optimisations + Lighthouse >90 + Switch API réelle
 
 **Tâches Frontend** :
+
 - ✅ FE-096 à FE-111 : Performance + A11y + SEO + CI/CD
 
 **Tâches Edge Functions** :
+
 - ✅ EF-046 à EF-055d : Health + **Sentry** + Contract Testing
 - ✅ EF-056 à EF-067 : Tests intégration + Documentation + **Lighthouse CI** + Monitoring
 
 **Nouvelles Additions** :
+
 - 🆕 **Sentry** : Monitoring erreurs production (alertes automatiques)
 - 🆕 **Lighthouse CI** : Tests performance automatisés (budgets)
 - 🆕 **Contract Testing** : Validation automatique OpenAPI (Prism/Portman)
 - 🆕 **Retry Policy** : EmailService avec exponential backoff
 
 **Critères de Validation** :
+
 - [ ] Lighthouse >90 toutes catégories (validé par CI)
 - [ ] **Performance budgets respectés** (FCP <2s, bundle <50KB)
 - [ ] Audit axe DevTools 0 erreurs
@@ -263,6 +292,7 @@ gantt
 - [ ] Deploy production OK
 
 **Livrables** :
+
 - Performance optimisée (LCP <2s, images lazy-load, fonts preload)
 - Accessibilité WCAG 2.1 AA validée
 - SEO optimisé (meta tags, OG images, JSON-LD)
@@ -279,6 +309,7 @@ gantt
 **Point de Synchronisation** : Frontend (M7) + Edge Functions (M7) terminés
 
 **Pré-requis** :
+
 - [ ] Backend Edge Functions déployées en production (EF-063 terminé)
 - [ ] Health check `/api/health` retourne 200 OK
 - [ ] **Contract tests passent** (EF-055b, EF-055c terminés)
@@ -288,11 +319,13 @@ gantt
 - [ ] **Lighthouse CI passe** (EF-066 terminé)
 
 **Tâches** :
+
 - ✅ FE-112 : Configurer env var `PUBLIC_API_URL` (production)
 - ✅ FE-113 : Tester formulaire contact production
 - ✅ FE-114 : Valider contrat OpenAPI réel
 
 **Critères de Validation** :
+
 - [ ] Soumission formulaire contact envoie email réel (Resend)
 - [ ] Rate limiting fonctionne (6ème requête = 429)
 - [ ] Turnstile vérifié côté serveur (token réel)
@@ -301,6 +334,7 @@ gantt
 - [ ] Latence <500ms (Edge Functions)
 
 **Livrables** :
+
 - Frontend connecté à API réelle
 - Formulaire contact 100% fonctionnel
 - Monitoring actif (Vercel Logs + Alertes)
@@ -330,14 +364,17 @@ gantt
 ### Équipe Recommandée
 
 **Option 1** : 2 développeurs
+
 - Dev 1 : Frontend (Astro/React) - 60h
 - Dev 2 : Edge Functions (TypeScript) - 31h
 
 **Option 2** : 1 développeur full-stack
+
 - Séquentiel : 91h total (~12 jours)
 - Recommandation : Alterner Frontend/Backend pour éviter monotonie
 
 **Option 3** : IA Copilot (vous)
+
 - Tâches granulaires <2h chacune
 - Suivi strict du plan (ordre impératif)
 - Validation à chaque milestone
@@ -353,6 +390,7 @@ gantt
 **Objectif** : Valider que l'infra de dev fonctionne
 
 **Actions** :
+
 1. Tester `pnpm dev` (Astro) + `pnpm run dev:mock` (Prism)
 2. Vérifier CI passe (GitHub Actions)
 3. Tester deploy preview (Vercel)
@@ -368,6 +406,7 @@ gantt
 **Objectif** : Valider que le contrat OpenAPI est respecté
 
 **Actions** :
+
 1. Frontend développe contre mock (Prism + openapi.yaml)
 2. Edge Functions implémentent selon openapi.yaml
 3. Tests de contrat (Dredd/Postman) valident correspondance
@@ -383,6 +422,7 @@ gantt
 **Objectif** : Basculer du mock vers API réelle sans régression
 
 **Actions** :
+
 1. Deploy Edge Functions en production
 2. Health check vérifié (/api/health = 200)
 3. Changer env var `PUBLIC_API_URL` sur Vercel
@@ -390,6 +430,7 @@ gantt
 5. Monitoring (logs, erreurs, latence)
 
 **Bloqueur si** :
+
 - API réelle ne respecte pas contrat
 - CORS errors
 - Rate limiting ne fonctionne pas
@@ -397,6 +438,7 @@ gantt
 - Emails non envoyés
 
 **Rollback Plan** :
+
 1. Revenir à `PUBLIC_API_URL=mock-server` (si déployé)
 2. Ou désactiver formulaire contact temporairement
 3. Investiguer logs Vercel Edge Functions
@@ -446,11 +488,11 @@ Tests Intégration (EF-056 à EF-063)
 
 ### Dépendances Croisées
 
-| Tâche Frontend | Bloquée par Backend | Justification |
-|----------------|---------------------|---------------|
-| FE-112 (Switch API) | EF-063 (Monitoring OK) | API doit être stable en production |
-| FE-113 (Test form prod) | EF-031 (Handler contact OK) | Endpoint doit exister |
-| FE-114 (Contrat OpenAPI) | EF-057 (Tests contrat) | Contrat doit être respecté |
+| Tâche Frontend           | Bloquée par Backend         | Justification                      |
+| ------------------------ | --------------------------- | ---------------------------------- |
+| FE-112 (Switch API)      | EF-063 (Monitoring OK)      | API doit être stable en production |
+| FE-113 (Test form prod)  | EF-031 (Handler contact OK) | Endpoint doit exister              |
+| FE-114 (Contrat OpenAPI) | EF-057 (Tests contrat)      | Contrat doit être respecté         |
 
 ---
 
@@ -462,6 +504,7 @@ Tests Intégration (EF-056 à EF-063)
 **Impact** : Élevé (régressions au switch)
 
 **Mitigation** :
+
 1. Maintenir openapi.yaml à jour (source de vérité)
 2. Tests de contrat automatiques (Dredd CI)
 3. Validation Zod identique frontend/backend
@@ -473,6 +516,7 @@ Tests Intégration (EF-056 à EF-063)
 **Impact** : Moyen (objectif non atteint)
 
 **Mitigation** :
+
 1. Audit Lighthouse dès M2 (Design System)
 2. Budgets performance définis (<14KB CSS critique)
 3. Images optimisées Astro Image (lazy-load, webp)
@@ -485,6 +529,7 @@ Tests Intégration (EF-056 à EF-063)
 **Impact** : Critique (blocage légal potentiel)
 
 **Mitigation** :
+
 1. Tests axe DevTools dès M2 (composants)
 2. Navigation clavier testée chaque page (M3)
 3. Test lecteur d'écran NVDA (M7)
@@ -497,6 +542,7 @@ Tests Intégration (EF-056 à EF-063)
 **Impact** : Élevé (spam emails, coûts)
 
 **Mitigation** :
+
 1. Turnstile obligatoire (côté serveur vérifié)
 2. Rate limiting IP strict (5 req/heure)
 3. Logs monitoring (alertes Vercel)
@@ -509,6 +555,7 @@ Tests Intégration (EF-056 à EF-063)
 **Impact** : Moyen (retard livraison)
 
 **Mitigation** :
+
 1. Granularité <2h par tâche (pivots rapides)
 2. Milestones validation stricte (pas de drift)
 3. Priorisation MVP (V2 features exclues)
@@ -516,6 +563,7 @@ Tests Intégration (EF-056 à EF-063)
 5. Buffer 20% ajouté (100h30 → 120h réel potentiel)
 
 **MISE À JOUR** : Budget temps augmenté à ~100h30 (+9h30) pour :
+
 - Monitoring Sentry (7h)
 - Contract Testing (3h30)
 - Performance Testing Lighthouse CI (3h)
@@ -528,6 +576,7 @@ Tests Intégration (EF-056 à EF-063)
 **Impact** : Moyen (délai monitoring)
 
 **Mitigation** :
+
 1. Documentation officielle Sentry pour Vercel Edge (suivre exactement)
 2. Tester avec erreur intentionnelle (catch fonctionne)
 3. Mock Sentry en tests unitaires (pas d'appels réels en CI)
@@ -540,6 +589,7 @@ Tests Intégration (EF-056 à EF-063)
 **Impact** : Faible (bruit dans CI, perte de temps)
 
 **Mitigation** :
+
 1. Utiliser Prism (génération officielle depuis OpenAPI)
 2. Valider openapi.yaml avec spectral linter AVANT génération tests
 3. Review manuelle des tests générés (EF-055b)
