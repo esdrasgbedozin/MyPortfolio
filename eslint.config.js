@@ -57,7 +57,7 @@ export default [
 
   // Configuration pour les fichiers de test (règles assouplies)
   {
-    files: ['**/*.test.ts', '**/*.spec.ts'],
+    files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
     rules: {
       'max-lines-per-function': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
