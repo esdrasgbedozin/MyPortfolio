@@ -1,0 +1,66 @@
+---
+/**
+ * Footer Component : Footer avec liens sociaux et copyright
+ * Epic 2.3 - FE-031
+ *
+ * Features :
+ * - Copyright avec année dynamique
+ * - Liens sociaux (GitHub, LinkedIn, Email)
+ * - Accessible (aria-label, target="_blank" securisé)
+ * - Design tokens (Dark Mode First)
+ */
+
+interface Props {
+  lang?: 'fr' | 'en';
+}
+
+const { lang = 'fr' } = Astro.props;
+
+// Liens sociaux (à configurer avec vraies URLs plus tard)
+const socialLinks = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/username',
+    ariaLabel: lang === 'fr' ? 'Voir mon profil GitHub' : 'View my GitHub profile',
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/username',
+    ariaLabel: lang === 'fr' ? 'Voir mon profil LinkedIn' : 'View my LinkedIn profile',
+  },
+  {
+    name: 'Email',
+    url: 'mailto:contact@example.com',
+    ariaLabel: lang === 'fr' ? 'Me contacter par email' : 'Contact me by email',
+  },
+];
+
+const currentYear = new Date().getFullYear();
+const rightsText = lang === 'fr' ? 'Tous droits réservés' : 'All rights reserved';
+---
+
+<footer class="border-t border-[var(--color-neutral-800)] mt-16">
+  <div class="container mx-auto px-4 py-8 text-center">
+    <!-- Social Links -->
+    <div class="flex justify-center gap-6 mb-6">
+      {
+        socialLinks.map((link) => (
+          <a
+            href={link.url}
+            aria-label={link.ariaLabel}
+            target={link.name !== 'Email' ? '_blank' : undefined}
+            rel={link.name !== 'Email' ? 'noopener noreferrer' : undefined}
+            class="text-[var(--color-neutral-400)] hover:text-[var(--color-primary-500)] transition-colors text-lg"
+          >
+            {link.name}
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- Copyright -->
+    <p class="text-[var(--color-neutral-500)] text-sm">
+      &copy; {currentYear} Portfolio. {rightsText}.
+    </p>
+  </div>
+</footer>
