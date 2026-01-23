@@ -1,0 +1,58 @@
+---
+/**
+ * Header Component : Navigation principale responsive
+ * Epic 2.3 - FE-029
+ *
+ * Features :
+ * - Logo cliquable (retour accueil)
+ * - Navigation principale (3+ liens)
+ * - Accessible (aria-label, keyboard nav)
+ * - Design tokens (Dark Mode First)
+ */
+
+interface Props {
+  lang?: 'fr' | 'en';
+}
+
+const { lang = 'fr' } = Astro.props;
+
+// Navigation links (à internationaliser plus tard)
+const navLinks = [
+  { href: '/', label: lang === 'fr' ? 'Accueil' : 'Home' },
+  { href: '/projects', label: lang === 'fr' ? 'Projets' : 'Projects' },
+  { href: '/about', label: lang === 'fr' ? 'À propos' : 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<header class="border-b border-[var(--color-neutral-800)] bg-[var(--color-neutral-950)]">
+  <div class="container mx-auto px-4 py-6">
+    <nav aria-label="Main navigation" class="flex items-center justify-between">
+      <!-- Logo (h1 pour SEO) -->
+      <h1 class="text-2xl font-bold">
+        <a
+          href="/"
+          class="text-[var(--color-primary-500)] hover:text-[var(--color-primary-400)] transition-colors"
+        >
+          Portfolio
+        </a>
+      </h1>
+
+      <!-- Navigation Links -->
+      <ul class="flex gap-6 items-center">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-[var(--color-neutral-200)] hover:text-[var(--color-primary-500)] transition-colors font-medium"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
