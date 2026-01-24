@@ -1,0 +1,93 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Badge from '../../../components/Badge';
+---
+
+<Layout title="Mes Compétences - Portfolio" lang="fr">
+  <div class="container mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Compétences</h1>
+      <p class="text-lg text-[var(--color-neutral-400)] max-w-2xl mx-auto">
+        Technologies, frameworks et méthodologies que je maîtrise pour concevoir et développer des
+        solutions techniques innovantes.
+      </p>
+    </div>
+
+    {/* Catégories de compétences */}
+    <div class="space-y-12">
+      {/* Langages */}
+      <div>
+        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">
+          Langages de programmation
+        </h2>
+        <div class="flex flex-wrap gap-3">
+          <Badge variant="primary" client:load>TypeScript</Badge>
+          <Badge variant="primary" client:load>JavaScript</Badge>
+          <Badge variant="primary" client:load>Python</Badge>
+          <Badge variant="primary" client:load>Java</Badge>
+          <Badge variant="secondary" client:load>C#</Badge>
+          <Badge variant="secondary" client:load>SQL</Badge>
+        </div>
+      </div>
+
+      {/* Frameworks */}
+      <div>
+        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">
+          Frameworks & Bibliothèques
+        </h2>
+        <div class="flex flex-wrap gap-3">
+          <Badge variant="primary" client:load>React</Badge>
+          <Badge variant="primary" client:load>Astro</Badge>
+          <Badge variant="primary" client:load>Next.js</Badge>
+          <Badge variant="primary" client:load>Node.js</Badge>
+          <Badge variant="secondary" client:load>Express</Badge>
+          <Badge variant="secondary" client:load>Spring Boot</Badge>
+        </div>
+      </div>
+
+      {/* Cloud & DevOps */}
+      <div>
+        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">Cloud & DevOps</h2>
+        <div class="flex flex-wrap gap-3">
+          <Badge variant="primary" client:load>Azure</Badge>
+          <Badge variant="primary" client:load>AWS</Badge>
+          <Badge variant="primary" client:load>Vercel</Badge>
+          <Badge variant="secondary" client:load>Docker</Badge>
+          <Badge variant="secondary" client:load>Kubernetes</Badge>
+          <Badge variant="secondary" client:load>GitHub Actions</Badge>
+        </div>
+      </div>
+
+      {/* Bases de données */}
+      <div>
+        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">Bases de données</h2>
+        <div class="flex flex-wrap gap-3">
+          <Badge variant="primary" client:load>PostgreSQL</Badge>
+          <Badge variant="primary" client:load>MongoDB</Badge>
+          <Badge variant="secondary" client:load>Redis</Badge>
+          <Badge variant="secondary" client:load>SQL Server</Badge>
+        </div>
+      </div>
+
+      {/* Méthodologies */}
+      <div>
+        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">
+          Méthodologies & Pratiques
+        </h2>
+        <div class="flex flex-wrap gap-3">
+          <Badge variant="success" client:load>TDD</Badge>
+          <Badge variant="success" client:load>Agile / Scrum</Badge>
+          <Badge variant="success" client:load>CI/CD</Badge>
+          <Badge variant="success" client:load>SOLID Principles</Badge>
+          <Badge variant="secondary" client:load>Design Patterns</Badge>
+          <Badge variant="secondary" client:load>Clean Architecture</Badge>
+        </div>
+      </div>
+    </div>
+
+    {/* Note Content Collections */}
+    <div class="mt-12 text-center text-sm text-[var(--color-neutral-500)]">
+      <p>Note : Les compétences réelles seront chargées via Content Collections (Phase 4)</p>
+    </div>
+  </div>
+</Layout>

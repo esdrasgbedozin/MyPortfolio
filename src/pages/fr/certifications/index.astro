@@ -1,0 +1,67 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Badge from '../../../components/Badge';
+---
+
+<Layout title="Mes Certifications - Portfolio" lang="fr">
+  <div class="container mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Certifications</h1>
+      <p class="text-lg text-[var(--color-neutral-400)] max-w-2xl mx-auto">
+        Mes certifications professionnelles attestant de mes compétences techniques et de mon
+        engagement dans l'apprentissage continu.
+      </p>
+    </div>
+
+    {/* Grid responsive 1/2/3 colonnes */}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Certification 1 - Exemple */}
+      <article
+        class="bg-[var(--color-neutral-900)] border border-[var(--color-neutral-800)] rounded-lg p-6 hover:border-[var(--color-primary-500)] transition-colors"
+      >
+        <div class="flex items-start justify-between mb-4">
+          <h3 class="text-xl font-bold text-[var(--color-neutral-100)]">
+            Azure Solutions Architect Expert
+          </h3>
+          <Badge variant="success" client:load>Actif</Badge>
+        </div>
+        <p class="text-sm text-[var(--color-neutral-500)] mb-2">Microsoft</p>
+        <p class="text-sm text-[var(--color-neutral-400)] mb-4">Obtenue : Janvier 2024</p>
+        <p class="text-sm text-[var(--color-neutral-300)]">ID : AZ-305-2024-001</p>
+      </article>
+
+      {/* Certification 2 - Exemple */}
+      <article
+        class="bg-[var(--color-neutral-900)] border border-[var(--color-neutral-800)] rounded-lg p-6 hover:border-[var(--color-primary-500)] transition-colors"
+      >
+        <div class="flex items-start justify-between mb-4">
+          <h3 class="text-xl font-bold text-[var(--color-neutral-100)]">AWS Certified Developer</h3>
+          <Badge variant="success" client:load>Actif</Badge>
+        </div>
+        <p class="text-sm text-[var(--color-neutral-500)] mb-2">Amazon Web Services</p>
+        <p class="text-sm text-[var(--color-neutral-400)] mb-4">Obtenue : Mars 2023</p>
+        <p class="text-sm text-[var(--color-neutral-300)]">ID : AWS-DEV-2023-789</p>
+      </article>
+
+      {/* Certification 3 - Exemple */}
+      <article
+        class="bg-[var(--color-neutral-900)] border border-[var(--color-neutral-800)] rounded-lg p-6 hover:border-[var(--color-primary-500)] transition-colors"
+      >
+        <div class="flex items-start justify-between mb-4">
+          <h3 class="text-xl font-bold text-[var(--color-neutral-100)]">
+            Professional Scrum Master I
+          </h3>
+          <Badge variant="success" client:load>Actif</Badge>
+        </div>
+        <p class="text-sm text-[var(--color-neutral-500)] mb-2">Scrum.org</p>
+        <p class="text-sm text-[var(--color-neutral-400)] mb-4">Obtenue : Juin 2023</p>
+        <p class="text-sm text-[var(--color-neutral-300)]">ID : PSM1-2023-456</p>
+      </article>
+    </div>
+
+    {/* Note Content Collections */}
+    <div class="mt-12 text-center text-sm text-[var(--color-neutral-500)]">
+      <p>Note : Les certifications réelles seront chargées via Content Collections (Phase 4)</p>
+    </div>
+  </div>
+</Layout>
