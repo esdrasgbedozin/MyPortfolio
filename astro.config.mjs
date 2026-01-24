@@ -13,6 +13,16 @@ export default defineConfig({
     edgeMiddleware: true,
   }),
 
+  // i18n Configuration (FE-032)
+  i18n: {
+    defaultLocale: 'fr',
+    locales: ['fr', 'en'],
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: false,
+    },
+  },
+
   integrations: [react(), mdx()],
 
   vite: {
