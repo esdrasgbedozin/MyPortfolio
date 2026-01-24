@@ -1,28 +1,15 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero';
 ---
 
-<Layout title="Professional Portfolio - Home">
-  <div class="flex items-center justify-center min-h-screen">
-    <div class="text-center">
-      <h1 class="text-5xl font-bold mb-4">Professional Portfolio</h1>
-      <p class="text-xl text-[var(--color-neutral-400)] mb-8">
-        Welcome to my portfolio - English Version
-      </p>
-      <div class="flex gap-4 justify-center">
-        <a
-          href="/en/projects"
-          class="px-6 py-3 bg-[var(--color-primary-500)] text-white rounded-lg hover:bg-[var(--color-primary-600)] transition-colors"
-        >
-          View my projects
-        </a>
-        <a
-          href="/en/contact"
-          class="px-6 py-3 border border-[var(--color-primary-500)] text-[var(--color-primary-500)] rounded-lg hover:bg-[var(--color-primary-500)] hover:text-white transition-colors"
-        >
-          Contact me
-        </a>
-      </div>
-    </div>
-  </div>
+<Layout title="Professional Portfolio - Home" lang="en">
+  <Hero
+    client:load
+    title="Esdras GBEDOZIN"
+    tagline="Software Engineer"
+    description="Passionate about software architecture, cloud solutions, and scalable systems. I design and build high-performance web applications with Jamstack, TypeScript, and Azure."
+    primaryCta={{ label: 'View my projects', href: '/en/projects' }}
+    secondaryCta={{ label: 'Contact me', href: '/en/contact' }}
+  />
 </Layout>
