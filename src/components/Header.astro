@@ -16,12 +16,28 @@ interface Props {
 
 const { lang = 'fr' } = Astro.props;
 
-// Navigation links (à internationaliser plus tard)
+// Navigation links avec i18n routing
 const navLinks = [
-  { href: '/', label: lang === 'fr' ? 'Accueil' : 'Home' },
-  { href: '/projects', label: lang === 'fr' ? 'Projets' : 'Projects' },
-  { href: '/about', label: lang === 'fr' ? 'À propos' : 'About' },
-  { href: '/contact', label: 'Contact' },
+  {
+    href: `/${lang}`,
+    label: lang === 'fr' ? 'Accueil' : 'Home',
+  },
+  {
+    href: `/${lang}/${lang === 'fr' ? 'projets' : 'projects'}`,
+    label: lang === 'fr' ? 'Projets' : 'Projects',
+  },
+  {
+    href: `/${lang}/certifications`,
+    label: lang === 'fr' ? 'Certifications' : 'Certifications',
+  },
+  {
+    href: `/${lang}/${lang === 'fr' ? 'competences' : 'skills'}`,
+    label: lang === 'fr' ? 'Compétences' : 'Skills',
+  },
+  {
+    href: `/${lang}/contact`,
+    label: 'Contact',
+  },
 ];
 ---
 
