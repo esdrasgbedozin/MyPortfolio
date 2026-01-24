@@ -1,0 +1,78 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+---
+
+<Layout title="Me Contacter - Portfolio" lang="fr">
+  <div class="container mx-auto px-4 py-16 max-w-2xl">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Me Contacter</h1>
+      <p class="text-lg text-[var(--color-neutral-400)]">
+        Vous avez un projet, une opportunité ou une question ? N'hésitez pas à me contacter, je vous
+        répondrai dans les plus brefs délais.
+      </p>
+    </div>
+
+    {/* Placeholder - Le formulaire React viendra en Phase 6 */}
+    <div
+      class="bg-[var(--color-neutral-900)] border border-[var(--color-neutral-800)] rounded-lg p-8"
+    >
+      <div class="space-y-6">
+        <div>
+          <label for="name" class="block text-sm font-medium text-[var(--color-neutral-300)] mb-2">
+            Nom complet
+          </label>
+          <input
+            type="text"
+            id="name"
+            disabled
+            class="w-full px-4 py-3 bg-[var(--color-neutral-800)] border border-[var(--color-neutral-700)] rounded-lg text-[var(--color-neutral-100)] placeholder:text-[var(--color-neutral-500)] opacity-50"
+            placeholder="Jean Dupont"
+          />
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-[var(--color-neutral-300)] mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            disabled
+            class="w-full px-4 py-3 bg-[var(--color-neutral-800)] border border-[var(--color-neutral-700)] rounded-lg text-[var(--color-neutral-100)] placeholder:text-[var(--color-neutral-500)] opacity-50"
+            placeholder="jean@example.com"
+          />
+        </div>
+
+        <div>
+          <label
+            for="message"
+            class="block text-sm font-medium text-[var(--color-neutral-300)] mb-2"
+          >
+            Message
+          </label>
+          <textarea
+            id="message"
+            rows="6"
+            disabled
+            class="w-full px-4 py-3 bg-[var(--color-neutral-800)] border border-[var(--color-neutral-700)] rounded-lg text-[var(--color-neutral-100)] placeholder:text-[var(--color-neutral-500)] opacity-50 resize-none"
+            placeholder="Votre message..."></textarea>
+        </div>
+
+        <button
+          disabled
+          class="w-full px-8 py-4 bg-[var(--color-primary-500)] text-white rounded-lg font-semibold text-lg opacity-50 cursor-not-allowed"
+        >
+          Envoyer (Prochainement)
+        </button>
+      </div>
+
+      {/* Note */}
+      <div class="mt-6 p-4 bg-[var(--color-neutral-800)] rounded-lg">
+        <p class="text-sm text-[var(--color-neutral-400)] text-center">
+          💡 Le formulaire interactif avec validation et anti-spam sera disponible dans la Phase 6
+          (React Islands + API)
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

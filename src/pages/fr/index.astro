@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero';
+---
+
+<Layout title="Portfolio Professionnel - Accueil" lang="fr">
+  <Hero
+    client:load
+    title="Esdras GBEDOZIN"
+    tagline="Ingénieur Informatique"
+    description="Passionné par l'architecture logicielle, le cloud et les solutions évolutives. Je conçois et développe des applications web performantes avec Jamstack, TypeScript et Azure."
+    primaryCta={{ label: 'Voir mes projets', href: '/fr/projets' }}
+    secondaryCta={{ label: 'Me contacter', href: '/fr/contact' }}
+  />
+</Layout>
