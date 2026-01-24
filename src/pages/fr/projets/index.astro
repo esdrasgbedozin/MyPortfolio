@@ -1,0 +1,56 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ProjectCard from '../../../components/ProjectCard';
+---
+
+<Layout title="Mes Projets - Portfolio" lang="fr">
+  <div class="container mx-auto px-4 py-16">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Mes Projets</h1>
+      <p class="text-lg text-[var(--color-neutral-400)] max-w-2xl mx-auto">
+        Découvrez mes réalisations techniques : applications web, architectures cloud, et solutions
+        innovantes développées avec passion.
+      </p>
+    </div>
+
+    {/* Grid responsive 1/2/3 colonnes */}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Projet exemple 1 */}
+      <ProjectCard
+        client:visible
+        title="Portfolio Professionnel"
+        description="Portfolio moderne construit avec Astro, React et TailwindCSS. Architecture Jamstack avec Edge Functions pour le formulaire de contact."
+        technologies={['Astro', 'React', 'TypeScript', 'TailwindCSS']}
+        period="2024"
+        status="development"
+        repositoryUrl="https://github.com/esdrasgbedozin/MyPortfolio"
+      />
+
+      {/* Projet exemple 2 */}
+      <ProjectCard
+        client:visible
+        title="E-Commerce Platform"
+        description="Plateforme e-commerce full-stack avec gestion de panier, paiements sécurisés et dashboard admin."
+        technologies={['Next.js', 'Node.js', 'PostgreSQL', 'Stripe']}
+        period="2023"
+        status="production"
+        demoUrl="https://demo.example.com"
+      />
+
+      {/* Projet exemple 3 */}
+      <ProjectCard
+        client:visible
+        title="API RESTful"
+        description="API REST scalable avec authentification JWT, rate limiting et documentation OpenAPI."
+        technologies={['Node.js', 'Express', 'MongoDB', 'Redis']}
+        period="2023"
+        status="archived"
+      />
+    </div>
+
+    {/* Note Content Collections */}
+    <div class="mt-12 text-center text-sm text-[var(--color-neutral-500)]">
+      <p>Note : Les projets réels seront chargés via Content Collections (Phase 4)</p>
+    </div>
+  </div>
+</Layout>
