@@ -1,18 +1,15 @@
 /**
  * API Endpoint : POST /api/contact.json
  * Epic 3.1 - EF-031 & EF-032
+ * Epic 3.2 - EF-034, EF-036, EF-038, EF-040 (Error Handling)
  *
  * Handler léger qui délègue la logique métier au ContactService.
- *
- * Responsabilités du handler :
- * - Parser la requête
- * - Extraire l'IP client
- * - Déléguer au service
- * - Formater la réponse HTTP
+ * Gère les exceptions RFC 7807 pour retourner des réponses structurées.
  */
 
 import type { APIContext } from 'astro';
 import { ContactService } from '../../services/ContactService';
+import { ApiError, InternalServerError } from '../../errors/ApiError';
 
 /**
  * POST /api/contact.json
@@ -25,43 +22,16 @@ export async function POST(context: APIContext): Promise<Response> {
     const { name, email, message, turnstileToken } = body;
     const clientIp = context.clientAddress || '0.0.0.0';
 
-    // Delegate to service
+    // Delegate to service (throws ApiError on failure)
     const contactService = new ContactService(import.meta.env.TURNSTILE_SECRET_KEY || '');
 
-    const result = await contactService.processContactRequest({
+    await contactService.processContactRequest({
       name,
       email,
       message,
       turnstileToken,
       clientIp,
     });
-
-    // Format response based on result
-    if (!result.success && result.error) {
-      const statusCodes = {
-        validation: 400,
-        turnstile: 403,
-        rateLimit: 429,
-        email: 500,
-        internal: 500,
-      };
-
-      const status = statusCodes[result.error.type];
-      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-
-      // Add Retry-After header for rate limit
-      if (result.error.type === 'rateLimit') {
-        headers['Retry-After'] = '3600'; // 1 hour
-      }
-
-      return new Response(
-        JSON.stringify({
-          error: result.error.message,
-          details: result.error.details,
-        }),
-        { status, headers }
-      );
-    }
 
     // Success response
     return new Response(
@@ -72,14 +42,14 @@ export async function POST(context: APIContext): Promise<Response> {
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    // Generic error handling (improved in Epic 3.2)
-    console.error('Error in POST /api/contact:', error);
-    return new Response(
-      JSON.stringify({
-        error: 'Internal server error',
-        message: 'An unexpected error occurred',
-      }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    // Handle ApiError (RFC 7807) exceptions
+    if (error instanceof ApiError) {
+      return error.toResponse();
+    }
+
+    // Handle unexpected errors
+    console.error('Unexpected error in POST /api/contact:', error);
+    const internalError = new InternalServerError('An unexpected error occurred', '/api/contact');
+    return internalError.toResponse();
   }
 }
