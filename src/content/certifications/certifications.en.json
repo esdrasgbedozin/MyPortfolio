@@ -1,0 +1,52 @@
+[
+  {
+    "title": "AWS Certified Solutions Architect – Professional",
+    "organization": "Amazon Web Services",
+    "date": "2025-06-15",
+    "expiryDate": "2028-06-15",
+    "credentialId": "AWS-PSA-123456",
+    "credentialUrl": "https://www.credly.com/badges/example-aws-pro",
+    "logo": "/images/certifications/aws-saa-pro.png",
+    "description": "Design and deployment of scalable, secure and resilient cloud architectures on AWS. Proficiency in EC2, S3, RDS, Lambda, VPC, IAM and CloudFormation services."
+  },
+  {
+    "title": "Google Professional Cloud Architect",
+    "organization": "Google Cloud",
+    "date": "2025-03-20",
+    "expiryDate": "2027-03-20",
+    "credentialId": "GCP-PCA-789012",
+    "credentialUrl": "https://www.credential.net/example-gcp",
+    "logo": "/images/certifications/gcp-architect.png",
+    "description": "Design of cloud-native infrastructures on Google Cloud Platform. Expertise in Compute Engine, Cloud Storage, BigQuery, Kubernetes Engine and Cloud Functions."
+  },
+  {
+    "title": "Microsoft Certified: Azure Solutions Architect Expert",
+    "organization": "Microsoft",
+    "date": "2024-11-10",
+    "expiryDate": "2026-11-10",
+    "credentialId": "MSFT-AZ305-345678",
+    "credentialUrl": "https://learn.microsoft.com/credentials/example-azure",
+    "logo": "/images/certifications/azure-architect.png",
+    "description": "Cloud solutions architecture on Azure. Skills in Azure App Services, Azure Functions, Cosmos DB, Azure DevOps and Azure Active Directory."
+  },
+  {
+    "title": "Certified Kubernetes Administrator (CKA)",
+    "organization": "Cloud Native Computing Foundation",
+    "date": "2025-01-05",
+    "expiryDate": "2028-01-05",
+    "credentialId": "CNCF-CKA-901234",
+    "credentialUrl": "https://www.credly.com/badges/example-cka",
+    "logo": "/images/certifications/cka.png",
+    "description": "Production Kubernetes cluster administration. Management of deployments, networking, storage, security and troubleshooting."
+  },
+  {
+    "title": "HashiCorp Certified: Terraform Associate",
+    "organization": "HashiCorp",
+    "date": "2024-09-18",
+    "expiryDate": "2026-09-18",
+    "credentialId": "HASHI-TF-567890",
+    "credentialUrl": "https://www.credly.com/badges/example-terraform",
+    "logo": "/images/certifications/terraform.png",
+    "description": "Infrastructure as Code with Terraform. Mastery of providers, modules, state management and best practices for provisioning cloud infrastructures."
+  }
+]
