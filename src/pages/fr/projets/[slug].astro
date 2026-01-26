@@ -1,0 +1,225 @@
+---
+/**
+ * Page détail projet FR
+ * Epic 4.3 - FE-064: Créer page [lang]/projets/[slug].astro
+ */
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Badge from '../../../components/Badge';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const projectEntries = await getCollection('projects', ({ id }) => {
+    return id.endsWith('.fr.mdx');
+  });
+
+  return projectEntries.map((entry) => ({
+    params: { slug: entry.id.replace('.fr.mdx', '') },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const project = entry.data;
+
+// Format dates
+const startDate = new Intl.DateTimeFormat('fr-FR', {
+  year: 'numeric',
+  month: 'long',
+}).format(project.startDate);
+
+const endDate = project.endDate
+  ? new Intl.DateTimeFormat('fr-FR', {
+      year: 'numeric',
+      month: 'long',
+    }).format(project.endDate)
+  : 'En cours';
+
+// Status labels
+const statusLabels = {
+  completed: 'Terminé',
+  'in-progress': 'En cours',
+  planned: 'Planifié',
+};
+
+// Category labels
+const categoryLabels = {
+  web: 'Web',
+  mobile: 'Mobile',
+  backend: 'Backend',
+  devops: 'DevOps',
+  data: 'Data',
+  other: 'Autre',
+};
+
+// FE-065: SEO Meta Tags (Open Graph + Twitter Cards)
+const siteUrl = Astro.site?.toString() || 'http://localhost:4321';
+const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImage = project.image
+  ? new URL(project.image, siteUrl).toString()
+  : new URL('/og-default.png', siteUrl).toString();
+---
+
+<Layout title={`${project.title} - Portfolio`} lang="fr">
+  <!-- FE-065: Open Graph Meta Tags -->
+  <meta slot="head" property="og:type" content="article" />
+  <meta slot="head" property="og:title" content={project.title} />
+  <meta slot="head" property="og:description" content={project.description} />
+  <meta slot="head" property="og:url" content={pageUrl} />
+  <meta slot="head" property="og:image" content={ogImage} />
+  <meta slot="head" property="og:image:alt" content={project.title} />
+  <meta slot="head" property="article:published_time" content={project.startDate.toISOString()} />
+  {
+    project.endDate && (
+      <meta slot="head" property="article:modified_time" content={project.endDate.toISOString()} />
+    )
+  }
+  <meta slot="head" property="article:author" content="Esdras G. Bedozin" />
+  {project.tags.map((tag) => <meta slot="head" property="article:tag" content={tag} />)}
+
+  <!-- FE-065: Twitter Card Meta Tags -->
+  <meta slot="head" name="twitter:card" content="summary_large_image" />
+  <meta slot="head" name="twitter:title" content={project.title} />
+  <meta slot="head" name="twitter:description" content={project.description} />
+  <meta slot="head" name="twitter:image" content={ogImage} />
+  <meta slot="head" name="twitter:image:alt" content={project.title} />
+
+  <!-- Canonical URL -->
+  <link slot="head" rel="canonical" href={pageUrl} />
+
+  <article class="container mx-auto px-4 py-16">
+    {/* Header */}
+    <header class="mb-12">
+      <div class="flex items-center gap-2 mb-4 text-sm text-[var(--color-neutral-400)]">
+        <a href="/fr/projets" class="hover:text-[var(--color-primary)]">← Retour aux projets</a>
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">{project.title}</h1>
+
+      <p class="text-xl text-[var(--color-neutral-400)] mb-6">{project.description}</p>
+
+      {/* Meta info */}
+      <div class="flex flex-wrap gap-4 mb-6 text-sm">
+        <div class="flex items-center gap-2">
+          <span class="text-[var(--color-neutral-400)]">Période:</span>
+          <span class="font-medium">
+            {startDate} - {endDate}
+          </span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[var(--color-neutral-400)]">Catégorie:</span>
+          <Badge variant="primary">{categoryLabels[project.category]}</Badge>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[var(--color-neutral-400)]">Statut:</span>
+          <Badge variant="secondary">{statusLabels[project.status]}</Badge>
+        </div>
+      </div>
+
+      {/* Technologies */}
+      <div class="flex flex-wrap gap-2 mb-6">
+        {project.technologies.map((tech) => <Badge>{tech}</Badge>)}
+      </div>
+
+      {/* Links */}
+      <div class="flex gap-4">
+        {
+          project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-neutral-800)] hover:bg-[var(--color-neutral-700)] rounded-lg transition-colors"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+              </svg>
+              Code Source
+            </a>
+          )
+        }
+        {
+          project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white rounded-lg transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+              Démo Live
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    {/* MDX Content */}
+    <div class="prose prose-lg dark:prose-invert max-w-none">
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  /* Prose styling for MDX content - Tailwind v4 compatible */
+  :global(.prose) {
+    color: var(--color-text);
+  }
+  :global(.prose h2) {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+  :global(.prose h3) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  :global(.prose p) {
+    margin-bottom: 1rem;
+    line-height: 1.75;
+  }
+  :global(.prose ul),
+  :global(.prose ol) {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+  :global(.prose li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.75;
+  }
+  :global(.prose code) {
+    background-color: var(--color-neutral-800);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+  }
+  :global(.prose pre) {
+    background-color: var(--color-neutral-900);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+  }
+  :global(.prose a) {
+    color: var(--color-primary);
+  }
+  :global(.prose a:hover) {
+    text-decoration: underline;
+  }
+</style>

@@ -27,34 +27,41 @@ const projectCollection = defineCollection({
 });
 
 // Schema Certification (FE-056)
+// Modified: Use array schema for certifications list
+// Use z.coerce.date() to transform JSON strings to Date objects
 const certificationCollection = defineCollection({
   type: 'data',
-  schema: z.object({
-    title: z.string(),
-    organization: z.string(),
-    date: z.date(),
-    expiryDate: z.date().optional(),
-    credentialId: z.string().optional(),
-    credentialUrl: z.string().url().optional(),
-    logo: z.string().optional(),
-    description: z.string().optional(),
-  }),
+  schema: z.array(
+    z.object({
+      title: z.string(),
+      organization: z.string(),
+      date: z.coerce.date(),
+      expiryDate: z.coerce.date().optional(),
+      credentialId: z.string().optional(),
+      credentialUrl: z.string().url().optional(),
+      logo: z.string().optional(),
+      description: z.string().optional(),
+    })
+  ),
 });
 
 // Schema Skill (FE-057)
+// Modified: Use array schema for skills list
 const skillCollection = defineCollection({
   type: 'data',
-  schema: z.object({
-    category: z.string(),
-    skills: z.array(
-      z.object({
-        name: z.string(),
-        level: z.enum(['beginner', 'intermediate', 'advanced', 'expert']),
-        years: z.number().optional(),
-        logo: z.string().optional(),
-      })
-    ),
-  }),
+  schema: z.array(
+    z.object({
+      category: z.string(),
+      skills: z.array(
+        z.object({
+          name: z.string(),
+          level: z.enum(['beginner', 'intermediate', 'advanced', 'expert']),
+          years: z.number().optional(),
+          logo: z.string().optional(),
+        })
+      ),
+    })
+  ),
 });
 
 // Export collections
