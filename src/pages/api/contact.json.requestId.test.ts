@@ -87,6 +87,11 @@ describe('POST /api/contact.json - Epic 3.3 EF-044 RequestId', () => {
           message: 'Test message',
           turnstileToken: 'test-token',
         }),
+        method: 'POST',
+        url: 'http://localhost:4321/api/contact.json',
+        headers: new Headers({
+          'User-Agent': 'test-agent',
+        }),
       },
       clientAddress: '127.0.0.1',
     } as unknown as APIContext;

@@ -3,16 +3,19 @@
  * Epic 3.1 - EF-031 & EF-032
  * Epic 3.2 - EF-034, EF-036, EF-038, EF-040 (Error Handling)
  * Epic 3.3 - EF-043, EF-044, EF-045 (Logging & RequestId)
+ * Epic 4.2 - EF-049d (Sentry Integration)
  *
  * Handler léger qui délègue la logique métier au ContactService.
  * Gère les exceptions RFC 7807 pour retourner des réponses structurées.
  * Logs structurés avec requestId pour traçabilité.
+ * Erreurs 5xx capturées dans Sentry pour monitoring.
  */
 
 import type { APIContext } from 'astro';
 import { ContactService } from '../../services/ContactService';
 import { ApiError, InternalServerError } from '../../errors/ApiError';
 import { logger } from '../../utils/logger';
+import { Sentry } from '../../utils/sentry';
 
 /**
  * POST /api/contact.json
@@ -74,10 +77,39 @@ export async function POST(context: APIContext): Promise<Response> {
         status: error.status,
       });
 
+      // Only capture 5xx errors in Sentry (server errors, not client errors)
+      if (error.status >= 500) {
+        Sentry.setContext('request', {
+          requestId,
+          clientIp: context.clientAddress || '0.0.0.0',
+          userAgent: context.request.headers.get('User-Agent') || 'unknown',
+        });
+        Sentry.captureException(error);
+      }
+
       return error.toResponse();
     }
 
     // Handle unexpected errors
+    // Set Sentry context with request details (EF-049d)
+    Sentry.setContext('request', {
+      requestId,
+      clientIp: context.clientAddress || '0.0.0.0',
+      userAgent: context.request.headers.get('User-Agent') || 'unknown',
+      method: context.request.method,
+      url: context.request.url,
+    });
+
+    // Capture exception in Sentry for monitoring (EF-049d)
+    Sentry.captureException(error, {
+      contexts: {
+        request: {
+          requestId,
+          clientIp: context.clientAddress || '0.0.0.0',
+        },
+      },
+    });
+
     logger.error('Unexpected error in POST /api/contact', error as Error, {
       context: 'api/contact',
       requestId,
