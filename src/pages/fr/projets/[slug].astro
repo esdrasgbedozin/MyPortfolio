@@ -106,11 +106,19 @@ const ogImage = project.image
 
       {/* Meta info */}
       <div class="flex flex-wrap gap-4 mb-6 text-sm">
-        <div class="flex items-center gap-2">
-          <span class="text-[var(--color-neutral-400)]">Période:</span>
-          <span class="font-medium">
-            {startDate} - {endDate}
-          </span>
+        <div class="flex flex-col gap-1">
+          <div class="flex items-center gap-2">
+            <span class="text-[var(--color-neutral-400)]">Démarré:</span>
+            <span class="font-medium">{startDate}</span>
+          </div>
+          {
+            project.endDate && (
+              <div class="flex items-center gap-2">
+                <span class="text-[var(--color-neutral-400)]">Terminé:</span>
+                <span class="font-medium">{endDate}</span>
+              </div>
+            )
+          }
         </div>
         <div class="flex items-center gap-2">
           <span class="text-[var(--color-neutral-400)]">Catégorie:</span>
@@ -168,9 +176,9 @@ const ogImage = project.image
     </header>
 
     {/* MDX Content */}
-    <div class="prose prose-lg dark:prose-invert max-w-none">
+    <article class="prose prose-lg dark:prose-invert max-w-none">
       <Content />
-    </div>
+    </article>
   </article>
 </Layout>
 

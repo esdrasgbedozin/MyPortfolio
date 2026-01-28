@@ -7,6 +7,8 @@ import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import ProjectCard from '../../../components/ProjectCard';
 
+export const prerender = true;
+
 // Fetch EN projects from Content Collections
 const allProjects = await getCollection('projects', ({ id }) => {
   return id.endsWith('.en.mdx');
@@ -59,11 +61,6 @@ const projects = allProjects.sort((a, b) => {
           );
         })
       }
-    </div>
-
-    {/* Content Collections note */}
-    <div class="mt-12 text-center text-sm text-[var(--color-neutral-500)]">
-      <p>Note: Real projects will be loaded via Content Collections (Phase 4)</p>
     </div>
   </div>
 </Layout>
