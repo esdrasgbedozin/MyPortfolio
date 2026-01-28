@@ -84,3 +84,17 @@ This project requires several environment variables for full functionality. See 
 - Performance monitoring (10% sample rate in production)
 - Breadcrumb tracking for request lifecycle
 - Context enrichment: requestId, IP, userAgent
+
+### Monitoring & Logs (Epic 4.3)
+
+For production monitoring setup, see **[MONITORING.md](./MONITORING.md)**:
+
+- Log aggregation with Vercel Log Drains (Datadog, Logtail, Axiom)
+- Custom dashboards for req/min, latency, error rates
+- Health check monitoring setup
+- Troubleshooting guide
+
+**Quick Links:**
+
+- [Vercel Log Drains Setup](./MONITORING.md#epic-43-log-aggregation-ef-049g)
+- [Monitoring Dashboard Config](./MONITORING.md#epic-43-monitoring-dashboard-ef-049h)
