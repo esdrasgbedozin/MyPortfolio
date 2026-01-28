@@ -19,6 +19,7 @@ vi.mock('../../utils/sentry', () => ({
     setContext: vi.fn(),
     setTag: vi.fn(),
     setUser: vi.fn(),
+    addBreadcrumb: vi.fn(),
   },
 }));
 
