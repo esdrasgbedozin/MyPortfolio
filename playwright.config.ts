@@ -8,8 +8,12 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:4321',
+    baseURL: 'http://localhost:4173',
     trace: 'on-first-retry',
+  },
+  timeout: 10000, // 10s par test (au lieu de 30s)
+  expect: {
+    timeout: 7000, // 7s pour les expect (assertions)
   },
   projects: [
     {
@@ -18,8 +22,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm dev',
-    url: 'http://localhost:4321',
-    reuseExistingServer: !process.env.CI,
+    command: 'npx serve dist/client -l 4173',
+    url: 'http://localhost:4173',
+    reuseExistingServer: true,
+    timeout: 120 * 1000,
   },
 });

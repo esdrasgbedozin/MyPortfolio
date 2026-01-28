@@ -26,15 +26,15 @@ test.describe('Projects Page (FR)', () => {
       page.getByRole('heading', { level: 3, name: 'Portfolio Professionnel' })
     ).toBeVisible();
 
-    // Use more specific selectors for tech badges
-    const astroBadge = page.getByTestId('tech-badge').filter({ hasText: 'Astro' });
-    await expect(astroBadge).toBeVisible();
+    // Use more specific selectors for tech badges - first() to avoid strict mode
+    const astroBadge = page.getByTestId('tech-badge').filter({ hasText: /^Astro$/ });
+    await expect(astroBadge.first()).toBeVisible();
 
-    const reactBadge = page.getByTestId('tech-badge').filter({ hasText: 'React' });
-    await expect(reactBadge).toBeVisible();
+    const reactBadge = page.getByTestId('tech-badge').filter({ hasText: /^React$/ });
+    await expect(reactBadge.first()).toBeVisible();
 
-    await expect(page.getByText('2024')).toBeVisible();
-    await expect(page.getByText('development')).toBeVisible();
+    await expect(page.getByText('2026').first()).toBeVisible(); // startDate année
+    await expect(page.getByText('development').first()).toBeVisible();
   });
 
   test('should display project links when provided', async ({ page }) => {
@@ -75,8 +75,118 @@ test.describe('Projects Page (EN)', () => {
   test('should display project with status badge', async ({ page }) => {
     await page.goto('/en/projects');
 
-    await expect(page.getByText('production')).toBeVisible();
-    await expect(page.getByText('development')).toBeVisible();
-    await expect(page.getByText('archived')).toBeVisible();
+    // Use first() to avoid strict mode violation
+    await expect(page.getByText('production').first()).toBeVisible();
+    await expect(page.getByText('development').first()).toBeVisible();
+    // Note: archived status removed - we only have production/development in dummy data
+  });
+});
+
+// FE-063: Test page détail projet
+test.describe('Project Detail Page (FR)', () => {
+  test('should display project detail page at /fr/projets/[slug]', async ({ page }) => {
+    await page.goto('/fr/projets/portfolio');
+
+    // Check page title matches project title - use first() as MDX also has H1
+    const heading = page.locator('main h1').filter({ hasText: 'Portfolio Professionnel' }).first();
+    await expect(heading).toBeVisible();
+  });
+
+  test('should display project metadata (dates, category, status)', async ({ page }) => {
+    await page.goto('/fr/projets/portfolio');
+
+    // Dates should be formatted in French
+    await expect(page.getByText(/Démarré/)).toBeVisible();
+
+    // Category badge - use first() as "web" appears in MDX content
+    await expect(page.getByText('Web').first()).toBeVisible();
+
+    // Status badge
+    await expect(page.getByText('En cours')).toBeVisible();
+  });
+
+  test('should display technologies badges', async ({ page }) => {
+    await page.goto('/fr/projets/portfolio');
+
+    // Tech badges are in header metadata section
+    // Since tech names appear in description/MDX, look in the article header
+    const article = page.locator('article.container');
+    await expect(article.getByText('Astro', { exact: true }).first()).toBeVisible();
+    await expect(article.getByText('React', { exact: true }).first()).toBeVisible();
+    await expect(article.getByText('Vercel', { exact: true }).first()).toBeVisible();
+  });
+
+  test('should render MDX content from project file', async ({ page }) => {
+    await page.goto('/fr/projets/portfolio');
+
+    // Check for content from MDX body
+    await expect(page.locator('article.prose')).toBeVisible();
+
+    // Verify MDX content is rendered (headings, lists, etc.)
+    const content = page.locator('article.prose');
+    const elements = await content.locator('h2, h3, p, ul').count();
+    expect(elements).toBeGreaterThan(0);
+  });
+
+  test('should display GitHub link when available', async ({ page }) => {
+    await page.goto('/fr/projets/portfolio');
+
+    const githubLink = page.getByRole('link', { name: /Code Source/i });
+    await expect(githubLink).toBeVisible();
+    await expect(githubLink).toHaveAttribute(
+      'href',
+      'https://github.com/esdrasgbedozin/MyPortfolio'
+    );
+  });
+
+  test('should display live demo link when available', async ({ page }) => {
+    await page.goto('/fr/projets/fitness-app'); // fitness-app has liveUrl
+
+    const demoLink = page.getByRole('link', { name: /Démo Live/i });
+    await expect(demoLink).toBeVisible();
+  });
+
+  test('should handle project without endDate (in-progress)', async ({ page }) => {
+    await page.goto('/fr/projets/portfolio');
+
+    // Should show "Démarré: [date]" without "Terminé:"
+    await expect(page.getByText(/Démarré/)).toBeVisible();
+    await expect(page.getByText(/Terminé/)).not.toBeVisible();
+  });
+});
+
+test.describe('Project Detail Page (EN)', () => {
+  test('should display project detail page at /en/projects/[slug]', async ({ page }) => {
+    await page.goto('/en/projects/portfolio');
+
+    const heading = page.getByRole('heading', { level: 1, name: 'Professional Portfolio' });
+    await expect(heading).toBeVisible();
+  });
+
+  test('should display project metadata in English', async ({ page }) => {
+    await page.goto('/en/projects/portfolio');
+
+    // English date format
+    await expect(page.getByText(/Started/)).toBeVisible();
+
+    // Status badge in English
+    await expect(page.getByText('In Progress')).toBeVisible();
+  });
+
+  test('should render MDX content from English project file', async ({ page }) => {
+    await page.goto('/en/projects/portfolio');
+
+    const content = page.locator('article.prose');
+    await expect(content).toBeVisible();
+    const elements = await content.locator('h2, h3, p, ul').count();
+    expect(elements).toBeGreaterThan(0);
+  });
+
+  test('should display completed project with endDate', async ({ page }) => {
+    await page.goto('/en/projects/api-ecommerce');
+
+    await expect(page.getByText(/Started/)).toBeVisible();
+    await expect(page.getByText(/Completed/).first()).toBeVisible(); // "Completed:" label
+    await expect(page.getByText('Completed', { exact: true }).last()).toBeVisible(); // Status badge
   });
 });

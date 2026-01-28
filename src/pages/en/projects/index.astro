@@ -1,6 +1,23 @@
 ---
+/**
+ * Projects Page EN
+ * Epic 4.3 - FE-062: Integrate getCollection in projects page
+ */
+import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import ProjectCard from '../../../components/ProjectCard';
+
+export const prerender = true;
+
+// Fetch EN projects from Content Collections
+const allProjects = await getCollection('projects', ({ id }) => {
+  return id.endsWith('.en.mdx');
+});
+
+// Sort by start date (most recent first)
+const projects = allProjects.sort((a, b) => {
+  return b.data.startDate.getTime() - a.data.startDate.getTime();
+});
 ---
 
 <Layout title="My Projects - Portfolio" lang="en">
@@ -15,42 +32,35 @@ import ProjectCard from '../../../components/ProjectCard';
 
     {/* Responsive grid 1/2/3 columns */}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {/* Example project 1 */}
-      <ProjectCard
-        client:visible
-        title="Professional Portfolio"
-        description="Modern portfolio built with Astro, React and TailwindCSS. Jamstack architecture with Edge Functions for contact form."
-        technologies={['Astro', 'React', 'TypeScript', 'TailwindCSS']}
-        period="2024"
-        status="development"
-        repositoryUrl="https://github.com/esdrasgbedozin/MyPortfolio"
-      />
+      {
+        projects.map((project) => {
+          // Format period (startDate - endDate or "ongoing")
+          const startYear = project.data.startDate.getFullYear();
+          const endYear = project.data.endDate ? project.data.endDate.getFullYear() : null;
+          const period =
+            endYear && endYear !== startYear ? `${startYear} - ${endYear}` : `${startYear}`;
 
-      {/* Example project 2 */}
-      <ProjectCard
-        client:visible
-        title="E-Commerce Platform"
-        description="Full-stack e-commerce platform with cart management, secure payments and admin dashboard."
-        technologies={['Next.js', 'Node.js', 'PostgreSQL', 'Stripe']}
-        period="2023"
-        status="production"
-        demoUrl="https://demo.example.com"
-      />
+          // Map status to English
+          const statusMap = {
+            completed: 'production' as const,
+            'in-progress': 'development' as const,
+            planned: 'development' as const,
+          };
 
-      {/* Example project 3 */}
-      <ProjectCard
-        client:visible
-        title="RESTful API"
-        description="Scalable REST API with JWT authentication, rate limiting and OpenAPI documentation."
-        technologies={['Node.js', 'Express', 'MongoDB', 'Redis']}
-        period="2023"
-        status="archived"
-      />
-    </div>
-
-    {/* Content Collections note */}
-    <div class="mt-12 text-center text-sm text-[var(--color-neutral-500)]">
-      <p>Note: Real projects will be loaded via Content Collections (Phase 4)</p>
+          return (
+            <ProjectCard
+              client:visible
+              title={project.data.title}
+              description={project.data.description}
+              technologies={project.data.technologies}
+              period={period}
+              status={statusMap[project.data.status]}
+              repositoryUrl={project.data.githubUrl}
+              demoUrl={project.data.liveUrl}
+            />
+          );
+        })
+      }
     </div>
   </div>
 </Layout>
