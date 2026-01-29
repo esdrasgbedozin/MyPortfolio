@@ -1,15 +1,16 @@
 /**
- * ProjectList Component - Epic 5.2 (FE-072)
+ * ProjectList Component - Epic 5.2 (FE-072, FE-074)
  *
  * Container React Island qui gère :
  * - State des filtres actifs
  * - Filtrage dynamique des projets
+ * - Persistence des filtres dans URL query params (SEO-friendly)
  * - Rendu de ProjectFilter + ProjectCards
  *
  * @module components/ProjectList
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ProjectFilter, type FilterValue } from './ProjectFilter';
 import ProjectCard from './ProjectCard';
 
@@ -30,6 +31,56 @@ interface ProjectListProps {
 
 export function ProjectList({ projects }: ProjectListProps) {
   const [activeFilter, setActiveFilter] = useState<FilterValue | null>(null);
+
+  // FE-074: Initialize filter from URL query params on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const tech = params.get('tech');
+    const cat = params.get('category');
+
+    if (tech) {
+      setActiveFilter({ type: 'technology', value: tech });
+    } else if (cat) {
+      setActiveFilter({ type: 'category', value: cat });
+    }
+  }, []);
+
+  // FE-074: Update URL when filter changes
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+
+    if (activeFilter) {
+      // Clear existing params
+      params.delete('tech');
+      params.delete('category');
+
+      // Set new param based on filter type
+      if (activeFilter.type === 'technology') {
+        params.set('tech', activeFilter.value);
+      } else if (activeFilter.type === 'category') {
+        params.set('category', activeFilter.value);
+      }
+    } else {
+      // Clear all filter params
+      params.delete('tech');
+      params.delete('category');
+    }
+
+    // Update URL without page reload
+    const newUrl = params.toString()
+      ? `${window.location.pathname}?${params.toString()}`
+      : window.location.pathname;
+
+    window.history.replaceState({}, '', newUrl);
+  }, [activeFilter]);
 
   // Extract unique technologies and categories from projects
   const technologies = useMemo(() => {
