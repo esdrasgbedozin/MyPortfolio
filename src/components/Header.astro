@@ -2,13 +2,17 @@
 /**
  * Header Component : Navigation principale responsive
  * Epic 2.3 - FE-029
+ * Epic 5.1 - FE-068 (Theme Toggle Integration)
  *
  * Features :
  * - Logo cliquable (retour accueil)
  * - Navigation principale (3+ liens)
+ * - Theme Toggle (dark/light mode)
  * - Accessible (aria-label, keyboard nav)
  * - Design tokens (Dark Mode First)
  */
+
+import { ThemeToggle } from './ThemeToggle';
 
 interface Props {
   lang?: 'fr' | 'en';
@@ -68,6 +72,11 @@ const navLinks = [
             </li>
           ))
         }
+
+        <!-- Theme Toggle (React Island) -->
+        <li>
+          <ThemeToggle client:load />
+        </li>
       </ul>
     </nav>
   </div>
