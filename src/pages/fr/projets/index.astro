@@ -2,10 +2,12 @@
 /**
  * Page Projets FR
  * Epic 4.3 - FE-062: Intégrer getCollection dans page projets
+ * Epic 5.2 - FE-073: Intégrer ProjectList avec filtres
  */
 import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
-import ProjectCard from '../../../components/ProjectCard';
+import { ProjectList } from '../../../components/ProjectList';
+import type { Project } from '../../../components/ProjectList';
 
 export const prerender = true;
 
@@ -15,8 +17,32 @@ const allProjects = await getCollection('projects', ({ id }) => {
 });
 
 // Trier par date de début (plus récent en premier)
-const projects = allProjects.sort((a, b) => {
+const sortedProjects = allProjects.sort((a, b) => {
   return b.data.startDate.getTime() - a.data.startDate.getTime();
+});
+
+// Transform to Project interface for ProjectList component
+const projects: Project[] = sortedProjects.map((project) => {
+  const startYear = project.data.startDate.getFullYear();
+  const endYear = project.data.endDate ? project.data.endDate.getFullYear() : null;
+  const period = endYear && endYear !== startYear ? `${startYear} - ${endYear}` : `${startYear}`;
+
+  const statusMap = {
+    completed: 'production' as const,
+    'in-progress': 'development' as const,
+    planned: 'development' as const,
+  };
+
+  return {
+    title: project.data.title,
+    description: project.data.description,
+    technologies: project.data.technologies,
+    category: project.data.category,
+    period,
+    status: statusMap[project.data.status],
+    repositoryUrl: project.data.githubUrl,
+    demoUrl: project.data.liveUrl,
+  };
 });
 ---
 
@@ -30,37 +56,7 @@ const projects = allProjects.sort((a, b) => {
       </p>
     </div>
 
-    {/* Grid responsive 1/2/3 colonnes */}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {
-        projects.map((project) => {
-          // Format period (startDate - endDate or "en cours")
-          const startYear = project.data.startDate.getFullYear();
-          const endYear = project.data.endDate ? project.data.endDate.getFullYear() : null;
-          const period =
-            endYear && endYear !== startYear ? `${startYear} - ${endYear}` : `${startYear}`;
-
-          // Map status to French
-          const statusMap = {
-            completed: 'production' as const,
-            'in-progress': 'development' as const,
-            planned: 'development' as const,
-          };
-
-          return (
-            <ProjectCard
-              client:visible
-              title={project.data.title}
-              description={project.data.description}
-              technologies={project.data.technologies}
-              period={period}
-              status={statusMap[project.data.status]}
-              repositoryUrl={project.data.githubUrl}
-              demoUrl={project.data.liveUrl}
-            />
-          );
-        })
-      }
-    </div>
+    {/* ProjectList React Island with filters - FE-073 */}
+    <ProjectList client:idle projects={projects} />
   </div>
 </Layout>
