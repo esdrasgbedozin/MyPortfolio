@@ -47,6 +47,21 @@ describe('ThemeToggle - Epic 5.1 FE-066', () => {
 
     // Reset document classes
     document.documentElement.className = '';
+
+    // FE-069: Mock window.matchMedia for system theme detection
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches: query === '(prefers-color-scheme: dark)', // Default: system prefers dark
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
   });
 
   afterEach(() => {
@@ -170,5 +185,32 @@ describe('ThemeToggle - Epic 5.1 FE-066', () => {
 
     // ASSERT - Light theme, button switches to dark
     expect(button.getAttribute('aria-label')).toContain('dark');
+  });
+
+  // FE-069: Test auto-detect system theme preference
+  it('should auto-detect system theme when no localStorage preference exists', () => {
+    // ARRANGE - Mock system prefers light mode
+    Object.defineProperty(window, 'matchMedia', {
+      writable: true,
+      value: vi.fn().mockImplementation((query: string) => ({
+        matches: query === '(prefers-color-scheme: light)', // System prefers light
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    });
+
+    // ACT
+    render(<ThemeToggle />);
+
+    // ASSERT - Should use system preference (light mode)
+    expect(document.documentElement.classList.contains('light')).toBe(true);
+    expect(document.documentElement.classList.contains('dark')).toBe(false);
+    const button = screen.getByRole('button', { name: /switch to dark theme/i });
+    expect(button.textContent).toContain('🌙'); // Moon icon for switching to dark
   });
 });
