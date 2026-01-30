@@ -194,4 +194,132 @@ describe('ContactForm - Epic 6.2 FE-078', () => {
       expect(mockOnSubmit).toHaveBeenCalled();
     });
   });
+
+  // ========================================
+  // Epic 6.2 FE-082: UI States Tests
+  // ========================================
+
+  it('should show loading state during form submission', async () => {
+    const user = userEvent.setup();
+    const mockOnSubmit = vi.fn(async () => {
+      // Simulate async delay
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    });
+
+    render(<ContactForm onSubmit={mockOnSubmit} />);
+
+    // Fill and submit form
+    await user.type(screen.getByLabelText(/nom/i), 'John Doe');
+    await user.type(screen.getByLabelText(/email/i), 'john@example.com');
+    await user.type(screen.getByLabelText(/message/i), 'Test message');
+
+    const submitButton = screen.getByRole('button', { name: /envoyer/i });
+    await user.click(submitButton);
+
+    // Button should show loading text
+    expect(screen.getByText(/envoi en cours/i)).toBeInTheDocument();
+
+    // Button should be disabled
+    expect(submitButton).toBeDisabled();
+
+    // Wait for submission to complete
+    await waitFor(() => {
+      expect(mockOnSubmit).toHaveBeenCalled();
+    });
+  });
+
+  it('should show success message after successful submission', async () => {
+    const user = userEvent.setup();
+    const mockOnSubmit = vi.fn();
+
+    render(<ContactForm onSubmit={mockOnSubmit} />);
+
+    // Fill and submit form
+    await user.type(screen.getByLabelText(/nom/i), 'John Doe');
+    await user.type(screen.getByLabelText(/email/i), 'john@example.com');
+    await user.type(screen.getByLabelText(/message/i), 'Test message');
+    await user.click(screen.getByRole('button', { name: /envoyer/i }));
+
+    // Success message should appear
+    expect(await screen.findByText(/message envoyé avec succès/i)).toBeInTheDocument();
+
+    // Form should be reset (fields should be empty)
+    await waitFor(() => {
+      expect(screen.getByLabelText(/nom/i)).toHaveValue('');
+      expect(screen.getByLabelText(/email/i)).toHaveValue('');
+      expect(screen.getByLabelText(/message/i)).toHaveValue('');
+    });
+  });
+
+  it('should show error message after failed submission', async () => {
+    const user = userEvent.setup();
+    const mockOnSubmit = vi.fn(async () => {
+      throw new Error('Network error');
+    });
+
+    render(<ContactForm onSubmit={mockOnSubmit} />);
+
+    // Fill and submit form
+    await user.type(screen.getByLabelText(/nom/i), 'John Doe');
+    await user.type(screen.getByLabelText(/email/i), 'john@example.com');
+    await user.type(screen.getByLabelText(/message/i), 'Test message');
+    await user.click(screen.getByRole('button', { name: /envoyer/i }));
+
+    // Error message should appear
+    expect(await screen.findByText(/network error/i)).toBeInTheDocument();
+
+    // Retry button should be visible
+    expect(screen.getByText(/réessayer/i)).toBeInTheDocument();
+  });
+
+  it('should allow retry after error', async () => {
+    const user = userEvent.setup();
+    const mockOnSubmit = vi.fn(async () => {
+      throw new Error('API Error');
+    });
+
+    render(<ContactForm onSubmit={mockOnSubmit} />);
+
+    // Fill and submit form (will fail)
+    await user.type(screen.getByLabelText(/nom/i), 'John Doe');
+    await user.type(screen.getByLabelText(/email/i), 'john@example.com');
+    await user.type(screen.getByLabelText(/message/i), 'Test message');
+    await user.click(screen.getByRole('button', { name: /envoyer/i }));
+
+    // Error should appear
+    expect(await screen.findByText(/api error/i)).toBeInTheDocument();
+
+    // Click retry button
+    const retryButton = screen.getByText(/réessayer/i);
+    await user.click(retryButton);
+
+    // Error should disappear
+    expect(screen.queryByText(/api error/i)).not.toBeInTheDocument();
+  });
+
+  it('should disable all form fields during submission', async () => {
+    const user = userEvent.setup();
+    const mockOnSubmit = vi.fn(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    });
+
+    render(<ContactForm onSubmit={mockOnSubmit} />);
+
+    const nameInput = screen.getByLabelText(/nom/i);
+    const emailInput = screen.getByLabelText(/email/i);
+    const messageInput = screen.getByLabelText(/message/i);
+    const submitButton = screen.getByRole('button', { name: /envoyer/i });
+
+    // Fill and submit form
+    await user.type(nameInput, 'John Doe');
+    await user.type(emailInput, 'john@example.com');
+    await user.type(messageInput, 'Test message');
+    await user.click(submitButton);
+
+    // All fields should be disabled during loading
+    expect(nameInput).toBeDisabled();
+    expect(emailInput).toBeDisabled();
+    expect(messageInput).toBeDisabled();
+    expect(submitButton).toBeDisabled();
+  });
 });

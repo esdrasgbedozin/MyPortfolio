@@ -1,8 +1,9 @@
 /**
- * Epic 6.2 - FE-079/081: Composant ContactForm
- * React Hook Form + Zod validation + API integration
+ * Epic 6.2 - FE-079/081/082: Composant ContactForm
+ * React Hook Form + Zod validation + API integration + UI states
  */
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -39,13 +40,22 @@ interface ContactFormProps {
 }
 
 /**
- * ContactForm component with validation and API integration
- * Handles form submission with Zod schema validation + API call
+ * État de soumission du formulaire
+ */
+type SubmissionStatus = 'idle' | 'loading' | 'success' | 'error';
+
+/**
+ * ContactForm component with validation, API integration and UI states
+ * Handles form submission with Zod schema validation + API call + loading/success/error states
  * @returns JSX.Element
  */
 // eslint-disable-next-line max-lines-per-function
 export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps): React.JSX.Element {
-  const { register, handleSubmit, formState } = useForm<ContactFormData>({
+  const [status, setStatus] = useState<SubmissionStatus>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
+
+  const { register, handleSubmit, formState, reset } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     mode: 'onSubmit',
     reValidateMode: 'onChange',
@@ -55,11 +65,21 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
   const { errors } = formState;
 
   const handleFormSubmit = async (data: ContactFormData): Promise<void> => {
+    // Reset messages et set loading
+    setStatus('loading');
+    setErrorMessage('');
+    setSuccessMessage('');
+
     // Si un handler custom est fourni, l'utiliser (pour les tests)
     if (onSubmit) {
       try {
         await onSubmit(data);
+        setStatus('success');
+        setSuccessMessage('Message envoyé avec succès !');
+        reset(); // Clear form après succès
       } catch (error) {
+        setStatus('error');
+        setErrorMessage(error instanceof Error ? error.message : 'Une erreur est survenue');
         // Avaler l'erreur silencieusement si pas de handler onError
         if (error instanceof ApiError && onError) {
           onError(error);
@@ -74,19 +94,66 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
     try {
       const response = await api.post<ContactFormResponse>('/contact', data);
 
+      setStatus('success');
+      setSuccessMessage(response.message || 'Votre message a été envoyé avec succès !');
+      reset(); // Clear form après succès
+
       if (onSuccess) {
         onSuccess(response);
       }
     } catch (error) {
-      if (error instanceof ApiError && onError) {
-        onError(error);
+      setStatus('error');
+
+      if (error instanceof ApiError) {
+        // Gérer les différents codes d'erreur
+        if (error.status === 429) {
+          setErrorMessage('Trop de requêtes. Veuillez réessayer dans quelques minutes.');
+        } else if (error.status === 400) {
+          setErrorMessage('Données invalides. Veuillez vérifier le formulaire.');
+        } else {
+          setErrorMessage(error.message || "Erreur lors de l'envoi du message.");
+        }
+
+        if (onError) {
+          onError(error);
+        }
+      } else {
+        setErrorMessage('Une erreur est survenue. Veuillez réessayer.');
       }
-      // Ne pas re-throw - l'erreur est gérée par onError callback
     }
   };
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6" noValidate>
+      {/* Success Message */}
+      {status === 'success' && (
+        <div
+          className="p-4 bg-green-50 border border-green-200 rounded-lg"
+          role="alert"
+          aria-live="polite"
+        >
+          <p className="text-green-800 text-sm font-medium">✓ {successMessage}</p>
+        </div>
+      )}
+
+      {/* Error Message */}
+      {status === 'error' && (
+        <div
+          className="p-4 bg-red-50 border border-red-200 rounded-lg"
+          role="alert"
+          aria-live="assertive"
+        >
+          <p className="text-red-800 text-sm font-medium">✗ {errorMessage}</p>
+          <button
+            type="button"
+            onClick={() => setStatus('idle')}
+            className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
+          >
+            Réessayer
+          </button>
+        </div>
+      )}
+
       {/* Nom */}
       <div>
         <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -96,7 +163,8 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
           id="name"
           type="text"
           {...register('name')}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          disabled={status === 'loading'}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
           aria-invalid={errors.name ? 'true' : 'false'}
           aria-describedby={errors.name ? 'name-error' : undefined}
         />
@@ -116,7 +184,8 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
           id="email"
           type="email"
           {...register('email')}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          disabled={status === 'loading'}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
           aria-invalid={errors.email ? 'true' : 'false'}
           aria-describedby={errors.email ? 'email-error' : undefined}
         />
@@ -136,7 +205,8 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
           id="message"
           rows={5}
           {...register('message')}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+          disabled={status === 'loading'}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed"
           aria-invalid={errors.message ? 'true' : 'false'}
           aria-describedby={errors.message ? 'message-error' : undefined}
         />
@@ -150,9 +220,38 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+        disabled={status === 'loading'}
+        className="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        aria-busy={status === 'loading'}
       >
-        Envoyer
+        {status === 'loading' ? (
+          <>
+            <svg
+              className="animate-spin h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+            <span>Envoi en cours...</span>
+          </>
+        ) : (
+          'Envoyer'
+        )}
       </button>
     </form>
   );
