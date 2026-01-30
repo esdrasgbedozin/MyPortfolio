@@ -1,5 +1,5 @@
 /**
- * Epic 6.2 - FE-078/081: Tests de validation ContactForm + API integration
+ * Epic 6.2 - FE-078/081/083: Tests de validation ContactForm + API + Turnstile
  * TDD RED Phase - Tests écrits AVANT implémentation
  */
 
@@ -7,6 +7,15 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { ContactForm } from './ContactForm';
+
+// Mock Turnstile widget to simulate token generation
+vi.mock('@marsidev/react-turnstile', () => ({
+  Turnstile: ({ onSuccess }: { onSuccess: (token: string) => void }) => {
+    // Auto-simulate successful token generation
+    setTimeout(() => onSuccess('test-turnstile-token'), 0);
+    return <div data-testid="turnstile-widget">Turnstile Mock</div>;
+  },
+}));
 
 describe('ContactForm - Epic 6.2 FE-078', () => {
   it('should render form with name, email and message fields', () => {

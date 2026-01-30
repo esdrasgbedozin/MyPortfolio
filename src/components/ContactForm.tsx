@@ -1,12 +1,13 @@
 /**
- * Epic 6.2 - FE-079/081/082: Composant ContactForm
- * React Hook Form + Zod validation + API integration + UI states
+ * Epic 6.2 - FE-079/081/082/083: Composant ContactForm
+ * React Hook Form + Zod validation + API integration + UI states + Turnstile
  */
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { Turnstile } from '@marsidev/react-turnstile';
 import { api, ApiError } from '../services/api';
 
 // Zod schema validation (conformément RFC 7807 + SOLID)
@@ -23,6 +24,12 @@ const contactFormSchema = z.object({
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
+
+/**
+ * Cloudflare Turnstile test sitekey (always passes)
+ * Prod: use PUBLIC_TURNSTILE_SITE_KEY from env
+ */
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
 
 /**
  * Type de réponse API selon OpenAPI spec
@@ -54,6 +61,7 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
   const [status, setStatus] = useState<SubmissionStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
 
   const { register, handleSubmit, formState, reset } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
@@ -92,11 +100,15 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
 
     // Sinon, appeler l'API
     try {
-      const response = await api.post<ContactFormResponse>('/contact', data);
+      const response = await api.post<ContactFormResponse>('/contact', {
+        ...data,
+        turnstileToken, // Include Turnstile token in API request
+      });
 
       setStatus('success');
       setSuccessMessage(response.message || 'Votre message a été envoyé avec succès !');
       reset(); // Clear form après succès
+      setTurnstileToken(''); // Reset Turnstile token
 
       if (onSuccess) {
         onSuccess(response);
@@ -217,10 +229,37 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
         )}
       </div>
 
+      {/* Cloudflare Turnstile */}
+      <div className="flex justify-center">
+        <Turnstile
+          siteKey={TURNSTILE_SITE_KEY}
+          onSuccess={(token) => setTurnstileToken(token)}
+          onError={() => setTurnstileToken('')}
+          onExpire={() => setTurnstileToken('')}
+          options={{
+            theme: 'light',
+            size: 'normal',
+          }}
+        />
+      </div>
+
+      {/* Cloudflare Turnstile */}
+      <div>
+        <Turnstile
+          siteKey={TURNSTILE_SITE_KEY}
+          onSuccess={(token: string) => setTurnstileToken(token)}
+          onError={() => setTurnstileToken('')}
+          options={{
+            theme: 'light',
+            size: 'normal',
+          }}
+        />
+      </div>
+
       {/* Submit Button */}
       <button
         type="submit"
-        disabled={status === 'loading'}
+        disabled={status === 'loading' || !turnstileToken}
         className="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         aria-busy={status === 'loading'}
       >
