@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:4173',
+    baseURL: 'http://localhost:4321',
     trace: 'on-first-retry',
   },
   timeout: 10000, // 10s par test (au lieu de 30s)
@@ -22,8 +22,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npx serve dist/client -l 4173',
-    url: 'http://localhost:4173',
+    command: 'pnpm run dev',
+    url: 'http://localhost:4321',
     reuseExistingServer: true,
     timeout: 120 * 1000,
   },
