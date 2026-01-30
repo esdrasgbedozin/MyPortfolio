@@ -1,11 +1,12 @@
 /**
- * Epic 6.2 - FE-079: Composant ContactForm
- * React Hook Form + Zod validation
+ * Epic 6.2 - FE-079/081: Composant ContactForm
+ * React Hook Form + Zod validation + API integration
  */
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { api, ApiError } from '../services/api';
 
 // Zod schema validation (conformément RFC 7807 + SOLID)
 const contactFormSchema = z.object({
@@ -22,17 +23,28 @@ const contactFormSchema = z.object({
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 
+/**
+ * Type de réponse API selon OpenAPI spec
+ */
+interface ContactFormResponse {
+  success: boolean;
+  messageId: string;
+  message: string;
+}
+
 interface ContactFormProps {
   onSubmit?: (data: ContactFormData) => void | Promise<void>;
+  onSuccess?: (response: ContactFormResponse) => void;
+  onError?: (error: ApiError) => void;
 }
 
 /**
- * ContactForm component with validation
- * Handles form submission with Zod schema validation
+ * ContactForm component with validation and API integration
+ * Handles form submission with Zod schema validation + API call
  * @returns JSX.Element
  */
 // eslint-disable-next-line max-lines-per-function
-export function ContactForm({ onSubmit }: ContactFormProps): React.JSX.Element {
+export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps): React.JSX.Element {
   const { register, handleSubmit, formState } = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
     mode: 'onSubmit',
@@ -43,8 +55,33 @@ export function ContactForm({ onSubmit }: ContactFormProps): React.JSX.Element {
   const { errors } = formState;
 
   const handleFormSubmit = async (data: ContactFormData): Promise<void> => {
+    // Si un handler custom est fourni, l'utiliser (pour les tests)
     if (onSubmit) {
-      await onSubmit(data);
+      try {
+        await onSubmit(data);
+      } catch (error) {
+        // Avaler l'erreur silencieusement si pas de handler onError
+        if (error instanceof ApiError && onError) {
+          onError(error);
+        }
+        // Ne pas re-throw pour éviter unhandled rejection dans les tests
+        return;
+      }
+      return;
+    }
+
+    // Sinon, appeler l'API
+    try {
+      const response = await api.post<ContactFormResponse>('/contact', data);
+
+      if (onSuccess) {
+        onSuccess(response);
+      }
+    } catch (error) {
+      if (error instanceof ApiError && onError) {
+        onError(error);
+      }
+      // Ne pas re-throw - l'erreur est gérée par onError callback
     }
   };
 

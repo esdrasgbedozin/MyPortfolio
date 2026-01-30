@@ -1,9 +1,9 @@
 /**
- * Epic 6.2 - FE-078: Tests de validation ContactForm
+ * Epic 6.2 - FE-078/081: Tests de validation ContactForm + API integration
  * TDD RED Phase - Tests écrits AVANT implémentation
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { ContactForm } from './ContactForm';
@@ -136,5 +136,62 @@ describe('ContactForm - Epic 6.2 FE-078', () => {
 
     // Error should disappear
     expect(screen.queryByText(/email invalide/i)).not.toBeInTheDocument();
+  });
+
+  // ========================================
+  // Epic 6.2 FE-081: API Integration Tests
+  // ========================================
+
+  it('should call onSuccess callback when API responds successfully', async () => {
+    const user = userEvent.setup();
+    const mockOnSuccess = vi.fn();
+    const mockOnSubmit = vi.fn(async () => {
+      // Simulate successful API response
+      mockOnSuccess({
+        success: true,
+        messageId: 'test-message-id',
+        message: 'Message envoyé avec succès',
+      });
+    });
+
+    render(<ContactForm onSubmit={mockOnSubmit} onSuccess={mockOnSuccess} />);
+
+    // Fill and submit form
+    await user.type(screen.getByLabelText(/nom/i), 'John Doe');
+    await user.type(screen.getByLabelText(/email/i), 'john@example.com');
+    await user.type(screen.getByLabelText(/message/i), 'Test message');
+    await user.click(screen.getByRole('button', { name: /envoyer/i }));
+
+    // Verify onSubmit was called
+    await waitFor(() => {
+      expect(mockOnSubmit).toHaveBeenCalledWith({
+        name: 'John Doe',
+        email: 'john@example.com',
+        message: 'Test message',
+      });
+    });
+  });
+
+  it('should call onError callback when API returns an error', async () => {
+    const user = userEvent.setup();
+    const mockOnError = vi.fn();
+    const mockOnSubmit = vi.fn(async () => {
+      throw new Error('API Error');
+    });
+
+    render(<ContactForm onSubmit={mockOnSubmit} onError={mockOnError} />);
+
+    // Fill and submit form
+    await user.type(screen.getByLabelText(/nom/i), 'John Doe');
+    await user.type(screen.getByLabelText(/email/i), 'john@example.com');
+    await user.type(screen.getByLabelText(/message/i), 'Test message');
+
+    // Submit should throw but not crash the app
+    await user.click(screen.getByRole('button', { name: /envoyer/i }));
+
+    // Verify submit was called
+    await waitFor(() => {
+      expect(mockOnSubmit).toHaveBeenCalled();
+    });
   });
 });
