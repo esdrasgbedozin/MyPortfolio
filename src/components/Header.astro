@@ -4,17 +4,20 @@
  * Epic 2.3 - FE-029
  * Epic 5.1 - FE-068 (Theme Toggle Integration)
  * Epic 7.2 - FE-089 (i18n Traductions)
+ * Epic 7.3 - FE-092 (Language Switcher)
  *
  * Features :
  * - Logo cliquable (retour accueil)
  * - Navigation principale (3+ liens)
  * - Theme Toggle (dark/light mode)
+ * - Language Switcher (FR/EN)
  * - Accessible (aria-label, keyboard nav)
  * - Design tokens (Dark Mode First)
  * - Traductions FR/EN via dictionnaires JSON
  */
 
 import { ThemeToggle } from './ThemeToggle';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import frTranslations from '../i18n/fr.json';
 import enTranslations from '../i18n/en.json';
 import { tSync } from '../utils/i18n';
@@ -82,6 +85,11 @@ const navLinks = [
         <!-- Theme Toggle (React Island) -->
         <li>
           <ThemeToggle client:load />
+        </li>
+
+        <!-- Language Switcher (React Island) -->
+        <li>
+          <LanguageSwitcher client:load currentLocale={lang} />
         </li>
       </ul>
     </nav>
