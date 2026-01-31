@@ -1,15 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Hero from '../../components/Hero';
+import enTranslations from '../../i18n/en.json';
+import { tSync } from '../../utils/i18n';
+
+const translations = enTranslations;
+const lang = 'en' as const;
 ---
 
-<Layout title="Professional Portfolio - Home" lang="en">
+<Layout title="Professional Portfolio - Home" lang={lang}>
   <Hero
     client:load
-    title="Esdras GBEDOZIN"
-    tagline="Software Engineer"
-    description="Passionate about software architecture, cloud solutions, and scalable systems. I design and build high-performance web applications with Jamstack, TypeScript, and Azure."
-    primaryCta={{ label: 'View my projects', href: '/en/projects' }}
-    secondaryCta={{ label: 'Contact me', href: '/en/contact' }}
+    title={tSync('hero.name', lang, translations)}
+    tagline={tSync('hero.tagline', lang, translations)}
+    description={tSync('hero.description', lang, translations)}
+    primaryCta={{ label: tSync('hero.cta.projects', lang, translations), href: '/en/projects' }}
+    secondaryCta={{ label: tSync('hero.cta.contact', lang, translations), href: '/en/contact' }}
   />
 </Layout>

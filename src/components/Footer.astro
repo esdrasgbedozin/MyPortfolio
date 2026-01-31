@@ -2,41 +2,48 @@
 /**
  * Footer Component : Footer avec liens sociaux et copyright
  * Epic 2.3 - FE-031
+ * Epic 7.2 - FE-090 (i18n Traductions)
  *
  * Features :
  * - Copyright avec année dynamique
  * - Liens sociaux (GitHub, LinkedIn, Email)
  * - Accessible (aria-label, target="_blank" securisé)
  * - Design tokens (Dark Mode First)
+ * - Traductions FR/EN via dictionnaires JSON
  */
+
+import frTranslations from '../i18n/fr.json';
+import enTranslations from '../i18n/en.json';
+import { tSync } from '../utils/i18n';
 
 interface Props {
   lang?: 'fr' | 'en';
 }
 
 const { lang = 'fr' } = Astro.props;
+const translations = lang === 'fr' ? frTranslations : enTranslations;
 
 // Liens sociaux (à configurer avec vraies URLs plus tard)
 const socialLinks = [
   {
     name: 'GitHub',
     url: 'https://github.com/username',
-    ariaLabel: lang === 'fr' ? 'Voir mon profil GitHub' : 'View my GitHub profile',
+    ariaLabel: tSync('footer.social.github', lang, translations),
   },
   {
     name: 'LinkedIn',
     url: 'https://linkedin.com/in/username',
-    ariaLabel: lang === 'fr' ? 'Voir mon profil LinkedIn' : 'View my LinkedIn profile',
+    ariaLabel: tSync('footer.social.linkedin', lang, translations),
   },
   {
     name: 'Email',
     url: 'mailto:contact@example.com',
-    ariaLabel: lang === 'fr' ? 'Me contacter par email' : 'Contact me by email',
+    ariaLabel: tSync('footer.social.email', lang, translations),
   },
 ];
 
 const currentYear = new Date().getFullYear();
-const rightsText = lang === 'fr' ? 'Tous droits réservés' : 'All rights reserved';
+const rightsText = tSync('footer.copyright', lang, translations);
 ---
 
 <footer class="border-t border-[var(--color-neutral-800)] mt-16">

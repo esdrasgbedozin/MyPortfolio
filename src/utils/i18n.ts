@@ -41,3 +41,78 @@ export function getLocalizedPath(path: string, locale: Locale): string {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `/${locale}${cleanPath}`;
 }
+
+/**
+ * Translation dictionaries
+ */
+type TranslationDict = Record<string, unknown>;
+
+let frDict: TranslationDict | null = null;
+let enDict: TranslationDict | null = null;
+
+/**
+ * Load translation dictionary for a locale
+ */
+async function loadTranslations(locale: Locale): Promise<TranslationDict> {
+  if (locale === 'fr') {
+    if (!frDict) {
+      frDict = (await import('../i18n/fr.json')).default;
+    }
+    return frDict;
+  } else {
+    if (!enDict) {
+      enDict = (await import('../i18n/en.json')).default;
+    }
+    return enDict;
+  }
+}
+
+/**
+ * Get nested value from object using dot notation
+ * @param obj - Object to search in
+ * @param path - Dot-separated path (e.g., 'nav.home')
+ * @returns Value or undefined
+ */
+function getNestedValue(obj: unknown, path: string): string | undefined {
+  const keys = path.split('.');
+  let current: unknown = obj;
+
+  for (const key of keys) {
+    if (typeof current !== 'object' || current === null) {
+      return undefined;
+    }
+    current = (current as Record<string, unknown>)[key];
+  }
+
+  return typeof current === 'string' ? current : undefined;
+}
+
+/**
+ * Translate a key to the target locale
+ * @param key - Translation key (dot notation: 'nav.home')
+ * @param locale - Target locale
+ * @returns Translated string or key if not found
+ */
+export async function t(key: string, locale: Locale = DEFAULT_LOCALE): Promise<string> {
+  try {
+    const dict = await loadTranslations(locale);
+    const value = getNestedValue(dict, key);
+    return value ?? key;
+  } catch (error) {
+    console.error(`Translation error for key "${key}":`, error);
+    return key;
+  }
+}
+
+/**
+ * Synchronous translation (requires pre-loaded dictionaries)
+ * Use only in contexts where async is not possible
+ * @param key - Translation key
+ * @param locale - Target locale
+ * @param dict - Pre-loaded dictionary
+ * @returns Translated string or key
+ */
+export function tSync(key: string, locale: Locale, dict: TranslationDict): string {
+  const value = getNestedValue(dict, key);
+  return value ?? key;
+}
