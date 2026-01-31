@@ -3,6 +3,7 @@
  * Footer Component : Footer avec liens sociaux et copyright
  * Epic 2.3 - FE-031
  * Epic 7.2 - FE-090 (i18n Traductions)
+ * Epic 7.2 - FE-091c (Intl API formatDate)
  *
  * Features :
  * - Copyright avec année dynamique
@@ -10,11 +11,13 @@
  * - Accessible (aria-label, target="_blank" securisé)
  * - Design tokens (Dark Mode First)
  * - Traductions FR/EN via dictionnaires JSON
+ * - Date dernière maj formatée selon locale
  */
 
 import frTranslations from '../i18n/fr.json';
 import enTranslations from '../i18n/en.json';
 import { tSync } from '../utils/i18n';
+import { formatDate } from '../utils/intl';
 
 interface Props {
   lang?: 'fr' | 'en';
@@ -44,6 +47,8 @@ const socialLinks = [
 
 const currentYear = new Date().getFullYear();
 const rightsText = tSync('footer.copyright', lang, translations);
+const lastUpdated = formatDate(new Date(), lang);
+const lastUpdatedLabel = tSync('footer.lastUpdated', lang, translations);
 ---
 
 <footer class="border-t border-[var(--color-neutral-800)] mt-16">
@@ -68,6 +73,11 @@ const rightsText = tSync('footer.copyright', lang, translations);
     <!-- Copyright -->
     <p class="text-[var(--color-neutral-500)] text-sm">
       &copy; {currentYear} Portfolio. {rightsText}.
+    </p>
+
+    <!-- Last Updated (Intl API Demo) -->
+    <p class="text-[var(--color-neutral-600)] text-xs mt-2">
+      {lastUpdatedLabel} : {lastUpdated}
     </p>
   </div>
 </footer>
