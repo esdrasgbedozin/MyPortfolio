@@ -22,6 +22,8 @@
     "openapi:lint": "spectral lint openapi.yaml",
     "openapi:lint:api": "spectral lint api/openapi.yaml",
     "test:contract": "node tests/contract/run-tests.mjs",
+    "lhci": "lhci autorun",
+    "lhci:ci": "lhci autorun --collect.settings.chromeFlags='--no-sandbox'",
     "prepare": "husky"
   },
   "lint-staged": {

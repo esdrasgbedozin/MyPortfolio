@@ -555,7 +555,7 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains
 
 ---
 
-**Auteur** : GitHub Copilot  
+**Auteur** : Esdras GBEDOZIN - Ingénieur Informatique
 **Date** : 1 février 2026  
 **Epic** : 5.3 - Documentation (EF-061)  
 **Statut** : ✅ Production-Ready

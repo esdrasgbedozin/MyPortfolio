@@ -1,15 +1,9 @@
 ---
 // Epic 5.3 - EF-059: Swagger UI Page - English Version
-import Layout from '@/layouts/Layout.astro';
-import SwaggerUI from '@/components/SwaggerUI';
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import '@/styles/swagger-ui-custom.css';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const openApiPath = path.join(__dirname, '../../../..', 'openapi.yaml');
-const openApiSpec = fs.readFileSync(openApiPath, 'utf-8');
+import Layout from '../../layouts/Layout.astro';
+import SwaggerUI from '../../components/SwaggerUI';
+import '../../styles/swagger-ui-custom.css';
+import openApiSpec from '../../../public/openapi.yaml?raw';
 
 const title = 'API Documentation - Portfolio Pro';
 const description = 'Interactive API documentation for the portfolio (OpenAPI 3.1)';
