@@ -1,0 +1,155 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Terminal from '../../components/Terminal';
+import AnimatedCounter from '../../components/AnimatedCounter';
+import Timeline from '../../components/Timeline';
+import ScrollReveal from '../../components/ScrollReveal';
+import ParallaxBackground from '../../components/ParallaxBackground';
+import frTranslations from '../../i18n/fr.json';
+
+const lang = 'fr' as const;
+
+const terminalLines = [
+  { type: 'command' as const, content: 'whoami', delay: 500 },
+  {
+    type: 'output' as const,
+    content: 'Esdras GBEDOZIN\nIngénieur Full-Stack & Architecte Cloud',
+    delay: 100,
+  },
+  { type: 'command' as const, content: 'cat skills.txt', delay: 800 },
+  {
+    type: 'output' as const,
+    content: `✨ Frontend: React, TypeScript, Astro\n☁️  Cloud: Azure, Vercel, Edge Functions\n🔧 Backend: Node.js, .NET, API REST\n📊 DevOps: CI/CD, Docker, Kubernetes\n🎨 UI/UX: Tailwind, Animations, Accessibilité`,
+    delay: 100,
+  },
+  { type: 'command' as const, content: 'echo $PASSION', delay: 1000 },
+  { type: 'output' as const, content: '🚀 Créer des expériences web exceptionnelles', delay: 100 },
+];
+
+const timelineItems = [
+  {
+    title: 'Architecte Cloud Azure',
+    date: '2024 - Présent',
+    description:
+      "Conception et déploiement d'architectures cloud scalables. Migration vers Azure, optimisation des coûts, mise en place de pipelines CI/CD.",
+    type: 'work' as const,
+  },
+  {
+    title: 'Certification Azure Solutions Architect',
+    date: '2023',
+    description: "Certification Microsoft AZ-305: Conception de solutions d'infrastructure Azure.",
+    type: 'certification' as const,
+  },
+  {
+    title: 'Lead Developer Full-Stack',
+    date: '2022 - 2024',
+    description:
+      "Développement d'applications web complexes avec React, TypeScript et .NET. Gestion d'équipe et architecture logicielle.",
+    type: 'work' as const,
+  },
+  {
+    title: 'Master Ingénierie Logicielle',
+    date: '2020 - 2022',
+    description: 'Spécialisation en architectures distribuées, cloud computing et DevOps.',
+    type: 'education' as const,
+  },
+];
+---
+
+<Layout title="À Propos - Portfolio" lang={lang}>
+  {/* Hero Section */}
+  <ParallaxBackground speed={0.3} variant="gradient" className="py-24" client:idle>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ScrollReveal delay={0} client:idle>
+        <h1
+          class="text-5xl md:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient-text"
+        >
+          À Propos de Moi
+        </h1>
+        <p class="text-xl text-center text-neutral-400 max-w-3xl mx-auto leading-relaxed">
+          Passionné par la création d'expériences web exceptionnelles, je combine expertise
+          technique et vision créative pour transformer des idées en solutions concrètes.
+        </p>
+      </ScrollReveal>
+    </div>
+  </ParallaxBackground>
+
+  {/* Stats Section */}
+  <section class="py-16 bg-neutral-950/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <AnimatedCounter end={42} suffix="+" label="Projets réalisés" duration={2.5} client:idle />
+        <AnimatedCounter end={15} suffix="+" label="Certifications" duration={2} client:idle />
+        <AnimatedCounter
+          end={99}
+          suffix="%"
+          label="Satisfaction client"
+          duration={2.5}
+          client:idle
+        />
+        <AnimatedCounter end={5} suffix="+" label="Ans d'expérience" duration={2} client:idle />
+      </div>
+    </div>
+  </section>
+
+  {/* Terminal Section */}
+  <ParallaxBackground speed={0.2} variant="dots" className="py-24" client:idle>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ScrollReveal delay={0} client:idle>
+        <h2
+          class="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+        >
+          ~/mon-profil
+        </h2>
+      </ScrollReveal>
+
+      <ScrollReveal delay={200} client:idle>
+        <Terminal lines={terminalLines} prompt="❯" client:idle />
+      </ScrollReveal>
+    </div>
+  </ParallaxBackground>
+
+  {/* Timeline Section */}
+  <section class="py-24 bg-neutral-950/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ScrollReveal delay={0} client:idle>
+        <h2
+          class="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+        >
+          Mon Parcours
+        </h2>
+        <p class="text-center text-neutral-400 mb-16 max-w-2xl mx-auto">
+          Une progression continue vers l'excellence technique
+        </p>
+      </ScrollReveal>
+
+      <Timeline items={timelineItems} linePosition="left" client:idle />
+    </div>
+  </section>
+
+  {/* CTA Section */}
+  <ParallaxBackground speed={0.3} variant="gradient" className="py-24" client:idle>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <ScrollReveal delay={0} client:idle>
+        <h2 class="text-4xl font-bold mb-6 text-neutral-100">Travaillons Ensemble</h2>
+        <p class="text-xl text-neutral-400 mb-8 max-w-2xl mx-auto">
+          Vous avez un projet ambitieux ? Discutons de la façon dont je peux vous aider à le
+          réaliser.
+        </p>
+        <a
+          href="/fr/contact"
+          class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-lg font-medium hover:from-primary-500 hover:to-primary-400 transition-all hover:scale-105 shadow-lg hover:shadow-primary-500/50 text-lg"
+        >
+          Me Contacter
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </ScrollReveal>
+    </div>
+  </ParallaxBackground>
+</Layout>
