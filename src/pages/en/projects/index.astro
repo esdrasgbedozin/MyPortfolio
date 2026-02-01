@@ -3,10 +3,13 @@
  * Projects Page EN
  * Epic 4.3 - FE-062: Integrate getCollection in projects page
  * Epic 5.2 - FE-073: Integrate ProjectList with filters
+ * Phase 1-4: Visual enhancements (parallax, scroll reveal)
  */
 import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import { ProjectList } from '../../../components/ProjectList';
+import ScrollReveal from '../../../components/ScrollReveal';
+import ParallaxBackground from '../../../components/ParallaxBackground';
 import type { Project } from '../../../components/ProjectList';
 
 export const prerender = true;
@@ -47,16 +50,24 @@ const projects: Project[] = sortedProjects.map((project) => {
 ---
 
 <Layout title="My Projects - Portfolio" lang="en">
-  <div class="container mx-auto px-4 py-16">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">My Projects</h1>
-      <p class="text-lg text-[var(--color-neutral-400)] max-w-2xl mx-auto">
-        Discover my technical achievements: web applications, cloud architectures, and innovative
-        solutions built with passion.
-      </p>
-    </div>
+  <ParallaxBackground speed={0.3} variant="gradient" className="py-20" client:idle>
+    <div class="container mx-auto px-4">
+      <ScrollReveal delay={0} client:idle>
+        <div class="text-center mb-16">
+          <h1
+            class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient-text"
+          >
+            My Projects
+          </h1>
+          <p class="text-xl text-neutral-400 max-w-3xl mx-auto leading-relaxed">
+            Discover my technical achievements: web applications, cloud architectures, and
+            innovative solutions built with passion.
+          </p>
+        </div>
+      </ScrollReveal>
 
-    {/* ProjectList React Island with filters - FE-073 */}
-    <ProjectList client:idle projects={projects} />
-  </div>
+      {/* ProjectList React Island with filters - FE-073 */}
+      <ProjectList client:idle projects={projects} />
+    </div>
+  </ParallaxBackground>
 </Layout>
