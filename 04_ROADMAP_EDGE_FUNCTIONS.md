@@ -313,7 +313,7 @@
 
 ---
 
-**Document rédigé par** : GitHub Copilot (Technical PM & Scrum Master Mode)  
+**Document rédigé par** : Esdras GBEDOZIN - Ingénieur Informatique  
 **Pour** : Esdras GBEDOZIN - Ingénieur Informatique  
 **Date** : 17 janvier 2026  
 **Statut** : ✅ **VALIDÉ - Roadmap Exécutable**

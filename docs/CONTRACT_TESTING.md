@@ -391,7 +391,7 @@ The script automatically starts/stops Prism server.
 
 ---
 
-**Document authored by:** GitHub Copilot  
+**Document authored by:** Esdras GBEDOZIN  
 **Date:** February 1, 2026  
 **Epic:** 5.1 - Contract Testing (EF-055d)  
 **Status:** ✅ Complete

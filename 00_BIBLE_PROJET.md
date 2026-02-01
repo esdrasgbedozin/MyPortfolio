@@ -985,7 +985,7 @@ Tout le frontmatter est dans chaque fichier (duplication acceptable pour la simp
 
 ---
 
-**Document rédigé par** : GitHub Copilot (Lead PM & DDD Expert Mode)
+**Document rédigé par** : Esdras GBEDOZIN - Ingénieur Informatique
 **Pour** : Esdras GBEDOZIN - Ingénieur Informatique
 **Date de création** : 17 janvier 2026
 **Dernière mise à jour** : 17 janvier 2026 (v1.1)

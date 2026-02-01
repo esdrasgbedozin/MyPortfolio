@@ -219,7 +219,7 @@ src/i18n/
 
 ---
 
-**Document rédigé par** : GitHub Copilot (Lead PM & DDD Expert Mode)  
+**Document rédigé par** : Esdras GBEDOZIN - Ingénieur Informatique  
 **Pour** : Esdras GBEDOZIN - Ingénieur Informatique  
 **Date** : 17 janvier 2026 (v1.2)  
 **Statut** : ✅ **VALIDÉ - Document de Référence**
