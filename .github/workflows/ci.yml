@@ -81,10 +81,36 @@ jobs:
         env:
           CI: true
 
+  contract-tests:
+    name: OpenAPI Contract Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate OpenAPI schema
+        run: pnpm run openapi:lint
+
+      - name: Run contract tests
+        run: pnpm run test:contract
+
   build:
     name: Build Check
     runs-on: ubuntu-latest
-    needs: [lint, typecheck]
+    needs: [lint, typecheck, contract-tests]
     steps:
       - uses: actions/checkout@v4
 
