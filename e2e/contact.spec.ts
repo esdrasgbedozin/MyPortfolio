@@ -11,39 +11,42 @@ test.describe('Contact Page (FR)', () => {
     await expect(description).toBeVisible();
   });
 
-  test('should display disabled form fields', async ({ page }) => {
+  test('should display enabled form fields', async ({ page }) => {
     await page.goto('/fr/contact');
 
     const nameInput = page.locator('#name');
     await expect(nameInput).toBeVisible();
-    await expect(nameInput).toBeDisabled();
+    await expect(nameInput).toBeEnabled(); // Epic 6.2: Formulaire interactif
 
     const emailInput = page.locator('#email');
     await expect(emailInput).toBeVisible();
-    await expect(emailInput).toBeDisabled();
+    await expect(emailInput).toBeEnabled();
 
     const messageTextarea = page.locator('#message');
     await expect(messageTextarea).toBeVisible();
-    await expect(messageTextarea).toBeDisabled();
+    await expect(messageTextarea).toBeEnabled();
   });
 
-  test('should display disabled submit button', async ({ page }) => {
+  test('should display enabled submit button', async ({ page }) => {
     await page.goto('/fr/contact');
 
-    const submitButton = page.getByRole('button', {
-      name: 'Envoyer (Prochainement)',
-    });
+    const submitButton = page.locator('button[type="submit"]');
     await expect(submitButton).toBeVisible();
-    await expect(submitButton).toBeDisabled();
+    await expect(submitButton).toBeEnabled(); // Epic 6.2: Bouton actif
   });
 
-  test('should display note about future implementation', async ({ page }) => {
+  test('should have working form validation', async ({ page }) => {
     await page.goto('/fr/contact');
 
-    const note = page.getByText(
-      'Le formulaire interactif avec validation et anti-spam sera disponible dans la Phase 6'
-    );
-    await expect(note).toBeVisible();
+    // Epic 6.2 FE-083: Validation côté client
+    const submitButton = page.locator('button[type="submit"]');
+
+    // Soumettre formulaire vide devrait montrer erreurs
+    await submitButton.click();
+
+    // Vérifier présence de messages d'erreur (role="alert")
+    const errors = page.locator('[role="alert"]');
+    await expect(errors.first()).toBeVisible();
   });
 });
 
@@ -58,36 +61,41 @@ test.describe('Contact Page (EN)', () => {
     await expect(description).toBeVisible();
   });
 
-  test('should display disabled form fields', async ({ page }) => {
+  test('should display enabled form fields', async ({ page }) => {
     await page.goto('/en/contact');
 
     const nameInput = page.locator('#name');
     await expect(nameInput).toBeVisible();
-    await expect(nameInput).toBeDisabled();
+    await expect(nameInput).toBeEnabled(); // Epic 6.2: Formulaire interactif
 
     const emailInput = page.locator('#email');
     await expect(emailInput).toBeVisible();
-    await expect(emailInput).toBeDisabled();
+    await expect(emailInput).toBeEnabled();
 
     const messageTextarea = page.locator('#message');
     await expect(messageTextarea).toBeVisible();
-    await expect(messageTextarea).toBeDisabled();
+    await expect(messageTextarea).toBeEnabled();
   });
 
-  test('should display disabled submit button', async ({ page }) => {
+  test('should display enabled submit button', async ({ page }) => {
     await page.goto('/en/contact');
 
-    const submitButton = page.getByRole('button', { name: 'Send (Coming Soon)' });
+    const submitButton = page.locator('button[type="submit"]');
     await expect(submitButton).toBeVisible();
-    await expect(submitButton).toBeDisabled();
+    await expect(submitButton).toBeEnabled(); // Epic 6.2: Bouton actif
   });
 
-  test('should display note about future implementation', async ({ page }) => {
+  test('should have working form validation', async ({ page }) => {
     await page.goto('/en/contact');
 
-    const note = page.getByText(
-      'Interactive form with validation and anti-spam will be available in Phase 6'
-    );
-    await expect(note).toBeVisible();
+    // Epic 6.2 FE-083: Validation côté client
+    const submitButton = page.locator('button[type="submit"]');
+
+    // Soumettre formulaire vide devrait montrer erreurs
+    await submitButton.click();
+
+    // Vérifier présence de messages d'erreur (role="alert")
+    const errors = page.locator('[role="alert"]');
+    await expect(errors.first()).toBeVisible();
   });
 });
