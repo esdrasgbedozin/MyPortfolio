@@ -6,6 +6,7 @@
  * - Filtrage dynamique des projets
  * - Persistence des filtres dans URL query params (SEO-friendly)
  * - Rendu de ProjectFilter + ProjectCards
+ * - Phase 3: Stagger animations au scroll
  *
  * @module components/ProjectList
  */
@@ -13,6 +14,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { ProjectFilter, type FilterValue } from './ProjectFilter';
 import ProjectCard from './ProjectCard';
+import ScrollReveal from './ScrollReveal';
 
 export interface Project {
   title: string;
@@ -140,20 +142,27 @@ export function ProjectList({ projects }: ProjectListProps) {
         )}
       </div>
 
-      {/* Project Grid */}
+      {/* Project Grid with Stagger Animation */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredProjects.length > 0 ? (
           filteredProjects.map((project, index) => (
-            <ProjectCard
+            <ScrollReveal
               key={`${project.title}-${index}`}
-              title={project.title}
-              description={project.description}
-              technologies={project.technologies}
-              period={project.period}
-              status={project.status}
-              demoUrl={project.demoUrl}
-              repositoryUrl={project.repositoryUrl}
-            />
+              delay={index * 100}
+              duration={600}
+              distance={40}
+              threshold={0.1}
+            >
+              <ProjectCard
+                title={project.title}
+                description={project.description}
+                technologies={project.technologies}
+                period={project.period}
+                status={project.status}
+                demoUrl={project.demoUrl}
+                repositoryUrl={project.repositoryUrl}
+              />
+            </ScrollReveal>
           ))
         ) : (
           <div className="col-span-full text-center py-12 text-[var(--color-neutral-400)]">
