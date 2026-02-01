@@ -623,7 +623,7 @@ import CountUp from 'react-countup';
 
 ---
 
-**Auteur** : GitHub Copilot  
+**Auteur** : Esdras GBEDOZIN
 **Pour** : Esdras GBEDOZIN  
 **Date** : 1 février 2026  
 **Philosophie** : "Less is bore. More is... MAGIC ✨"

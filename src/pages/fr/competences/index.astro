@@ -1,8 +1,9 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import Badge from '../../../components/Badge';
+import SkillBadge from '../../../components/SkillBadge';
 import ScrollReveal from '../../../components/ScrollReveal';
 import ParallaxBackground from '../../../components/ParallaxBackground';
+import { Code2, Server, Cloud, Database, BookOpen } from 'lucide-react';
 ---
 
 <Layout title="Mes Compétences - Portfolio" lang="fr">
@@ -28,17 +29,18 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
         <ScrollReveal delay={100} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
+              <Code2 className="text-primary-400" size={28} />
               Langages de programmation
             </h2>
             <div class="flex flex-wrap gap-3">
-              <Badge variant="info" client:load>TypeScript</Badge>
-              <Badge variant="info" client:load>JavaScript</Badge>
-              <Badge variant="info" client:load>Python</Badge>
-              <Badge variant="info" client:load>Java</Badge>
-              <Badge variant="default" client:load>C#</Badge>
-              <Badge variant="default" client:load>SQL</Badge>
+              <SkillBadge variant="primary" icon={Code2} client:load>TypeScript</SkillBadge>
+              <SkillBadge variant="primary" icon={Code2} client:load>JavaScript</SkillBadge>
+              <SkillBadge variant="primary" icon={Code2} client:load>Python</SkillBadge>
+              <SkillBadge variant="primary" icon={Code2} client:load>Java</SkillBadge>
+              <SkillBadge variant="secondary" icon={Code2} client:load>C#</SkillBadge>
+              <SkillBadge variant="secondary" icon={Database} client:load>SQL</SkillBadge>
             </div>
           </div>
         </ScrollReveal>
@@ -47,17 +49,18 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
         <ScrollReveal delay={200} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
+              <Server className="text-primary-400" size={28} />
               Frameworks & Bibliothèques
             </h2>
             <div class="flex flex-wrap gap-3">
-              <Badge variant="info" client:load>React</Badge>
-              <Badge variant="info" client:load>Astro</Badge>
-              <Badge variant="info" client:load>Next.js</Badge>
-              <Badge variant="info" client:load>Node.js</Badge>
-              <Badge variant="default" client:load>Express</Badge>
-              <Badge variant="default" client:load>Spring Boot</Badge>
+              <SkillBadge variant="primary" icon={Server} client:load>React</SkillBadge>
+              <SkillBadge variant="primary" icon={Server} client:load>Astro</SkillBadge>
+              <SkillBadge variant="primary" icon={Server} client:load>Next.js</SkillBadge>
+              <SkillBadge variant="primary" icon={Server} client:load>Node.js</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>Express</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>Spring Boot</SkillBadge>
             </div>
           </div>
         </ScrollReveal>
@@ -66,17 +69,18 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
         <ScrollReveal delay={300} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
+              <Cloud className="text-primary-400" size={28} />
               Cloud & DevOps
             </h2>
             <div class="flex flex-wrap gap-3">
-              <Badge variant="info" client:load>Azure</Badge>
-              <Badge variant="info" client:load>AWS</Badge>
-              <Badge variant="info" client:load>Vercel</Badge>
-              <Badge variant="default" client:load>Docker</Badge>
-              <Badge variant="default" client:load>Kubernetes</Badge>
-              <Badge variant="default" client:load>GitHub Actions</Badge>
+              <SkillBadge variant="primary" icon={Cloud} client:load>Azure</SkillBadge>
+              <SkillBadge variant="primary" icon={Cloud} client:load>AWS</SkillBadge>
+              <SkillBadge variant="primary" icon={Cloud} client:load>Vercel</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>Docker</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>Kubernetes</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>GitHub Actions</SkillBadge>
             </div>
           </div>
         </ScrollReveal>
@@ -85,15 +89,16 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
         <ScrollReveal delay={400} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
+              <Database className="text-primary-400" size={28} />
               Bases de données
             </h2>
             <div class="flex flex-wrap gap-3">
-              <Badge variant="info" client:load>PostgreSQL</Badge>
-              <Badge variant="info" client:load>MongoDB</Badge>
-              <Badge variant="default" client:load>Redis</Badge>
-              <Badge variant="default" client:load>SQL Server</Badge>
+              <SkillBadge variant="primary" icon={Database} client:load>PostgreSQL</SkillBadge>
+              <SkillBadge variant="primary" icon={Database} client:load>MongoDB</SkillBadge>
+              <SkillBadge variant="secondary" icon={Database} client:load>Redis</SkillBadge>
+              <SkillBadge variant="secondary" icon={Database} client:load>SQL Server</SkillBadge>
             </div>
           </div>
         </ScrollReveal>
@@ -102,17 +107,23 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
         <ScrollReveal delay={500} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
+              <BookOpen className="text-primary-400" size={28} />
               Méthodologies & Pratiques
             </h2>
             <div class="flex flex-wrap gap-3">
-              <Badge variant="success" client:load>TDD</Badge>
-              <Badge variant="success" client:load>Agile / Scrum</Badge>
-              <Badge variant="success" client:load>CI/CD</Badge>
-              <Badge variant="success" client:load>SOLID Principles</Badge>
-              <Badge variant="default" client:load>Design Patterns</Badge>
-              <Badge variant="default" client:load>Clean Architecture</Badge>
+              <SkillBadge variant="success" icon={BookOpen} client:load>TDD</SkillBadge>
+              <SkillBadge variant="success" icon={BookOpen} client:load>Agile / Scrum</SkillBadge>
+              <SkillBadge variant="success" icon={BookOpen} client:load>CI/CD</SkillBadge>
+              <SkillBadge variant="success" icon={BookOpen} client:load>SOLID Principles</SkillBadge
+              >
+              <SkillBadge variant="secondary" icon={BookOpen} client:load
+                >Design Patterns</SkillBadge
+              >
+              <SkillBadge variant="secondary" icon={BookOpen} client:load
+                >Clean Architecture</SkillBadge
+              >
             </div>
           </div>
         </ScrollReveal>

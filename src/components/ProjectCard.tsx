@@ -56,7 +56,7 @@ export default function ProjectCard({
         <div className="relative z-10">
           {/* Header */}
           <div className="flex justify-between items-start mb-4">
-            <h3 className="text-xl font-bold text-[var(--color-neutral-100)] group-hover:text-primary-300 transition-colors">
+            <h3 className="text-xl font-bold text-white group-hover:text-primary-300 transition-colors">
               {title}
             </h3>
             <span
@@ -67,7 +67,9 @@ export default function ProjectCard({
           </div>
 
           {/* Description */}
-          <p className="text-[var(--color-neutral-400)] mb-4 leading-relaxed">{description}</p>
+          <p className="text-neutral-200 group-hover:text-white mb-4 leading-relaxed">
+            {description}
+          </p>
 
           {/* Technologies */}
           {technologies.length > 0 && (
@@ -76,7 +78,7 @@ export default function ProjectCard({
                 <span
                   key={tech}
                   data-testid="tech-badge"
-                  className="px-3 py-1 bg-neutral-800/50 backdrop-blur-sm text-[var(--color-neutral-300)] rounded-md text-sm border border-neutral-700/50 hover:border-primary-400/50 transition-colors"
+                  className="px-3 py-1 bg-neutral-800/50 backdrop-blur-sm text-neutral-200 group-hover:text-white rounded-md text-sm border border-neutral-700/50 hover:border-primary-400/50 transition-colors"
                 >
                   {tech}
                 </span>
@@ -86,7 +88,7 @@ export default function ProjectCard({
 
           {/* Footer */}
           <div className="flex justify-between items-center mt-4 pt-4 border-t border-white/10">
-            <span className="text-sm text-[var(--color-neutral-500)]">{period}</span>
+            <span className="text-sm text-neutral-400 group-hover:text-neutral-200">{period}</span>
 
             {/* Links */}
             {(demoUrl || repositoryUrl) && (
@@ -96,7 +98,7 @@ export default function ProjectCard({
                     href={demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-[var(--color-primary-500)] hover:text-[var(--color-primary-400)] transition-all hover:translate-x-1"
+                    className="text-sm text-primary-400 hover:text-primary-300 transition-all hover:translate-x-1 font-medium"
                   >
                     Demo →
                   </a>
@@ -106,7 +108,7 @@ export default function ProjectCard({
                     href={repositoryUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-[var(--color-primary-500)] hover:text-[var(--color-primary-400)] transition-all hover:translate-x-1"
+                    className="text-sm text-primary-400 hover:text-primary-300 transition-all hover:translate-x-1 font-medium"
                   >
                     Code →
                   </a>

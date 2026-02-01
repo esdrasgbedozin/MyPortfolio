@@ -1,93 +1,139 @@
 ---
+// Phase 1-4: Visual enhancements (parallax, scroll reveal, glassmorphism)
 import Layout from '../../../layouts/Layout.astro';
-import Badge from '../../../components/Badge';
+import SkillBadge from '../../../components/SkillBadge';
+import ScrollReveal from '../../../components/ScrollReveal';
+import ParallaxBackground from '../../../components/ParallaxBackground';
+import { Code2, Server, Cloud, Database, BookOpen } from 'lucide-react';
 ---
 
 <Layout title="My Skills - Portfolio" lang="en">
-  <div class="container mx-auto px-4 py-16">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">Skills</h1>
-      <p class="text-lg text-[var(--color-neutral-400)] max-w-2xl mx-auto">
-        Technologies, frameworks and methodologies I master to design and build innovative technical
-        solutions.
-      </p>
+  <ParallaxBackground variant="grid" speed={0.3} className="min-h-screen">
+    <div class="container mx-auto px-4 py-16">
+      <ScrollReveal delay={0}>
+        <div class="text-center mb-12">
+          <h1
+            class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
+          >
+            Skills
+          </h1>
+          <p class="text-lg text-neutral-300 max-w-2xl mx-auto">
+            Technologies, frameworks and methodologies I master to design and build innovative
+            technical solutions.
+          </p>
+        </div>
+      </ScrollReveal>
+
+      {/* Skills categories */}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Languages */}
+        <ScrollReveal delay={100}>
+          <div class="glass-effect rounded-xl p-8">
+            <h2
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent"
+            >
+              <Code2 className="text-primary-400" size={28} />
+              Programming Languages
+            </h2>
+            <div class="flex flex-wrap gap-3">
+              <SkillBadge variant="primary" icon={Code2} client:load>TypeScript</SkillBadge>
+              <SkillBadge variant="primary" icon={Code2} client:load>JavaScript</SkillBadge>
+              <SkillBadge variant="primary" icon={Code2} client:load>Python</SkillBadge>
+              <SkillBadge variant="primary" icon={Code2} client:load>Java</SkillBadge>
+              <SkillBadge variant="secondary" icon={Code2} client:load>C#</SkillBadge>
+              <SkillBadge variant="secondary" icon={Database} client:load>SQL</SkillBadge>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Frameworks */}
+        <ScrollReveal delay={200}>
+          <div class="glass-effect rounded-xl p-8">
+            <h2
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent"
+            >
+              <Server className="text-primary-400" size={28} />
+              Frameworks & Libraries
+            </h2>
+            <div class="flex flex-wrap gap-3">
+              <SkillBadge variant="primary" icon={Server} client:load>React</SkillBadge>
+              <SkillBadge variant="primary" icon={Server} client:load>Astro</SkillBadge>
+              <SkillBadge variant="primary" icon={Server} client:load>Next.js</SkillBadge>
+              <SkillBadge variant="primary" icon={Server} client:load>Node.js</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>Express</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>Spring Boot</SkillBadge>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Cloud & DevOps */}
+        <ScrollReveal delay={300}>
+          <div class="glass-effect rounded-xl p-8">
+            <h2
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent"
+            >
+              <Cloud className="text-primary-400" size={28} />
+              Cloud & DevOps
+            </h2>
+            <div class="flex flex-wrap gap-3">
+              <SkillBadge variant="primary" icon={Cloud} client:load>Azure</SkillBadge>
+              <SkillBadge variant="primary" icon={Cloud} client:load>AWS</SkillBadge>
+              <SkillBadge variant="primary" icon={Cloud} client:load>Vercel</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>Docker</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>Kubernetes</SkillBadge>
+              <SkillBadge variant="secondary" icon={Server} client:load>GitHub Actions</SkillBadge>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Databases */}
+        <ScrollReveal delay={400}>
+          <div class="glass-effect rounded-xl p-8">
+            <h2
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent"
+            >
+              <Database className="text-primary-400" size={28} />
+              Databases
+            </h2>
+            <div class="flex flex-wrap gap-3">
+              <SkillBadge variant="primary" icon={Database} client:load>PostgreSQL</SkillBadge>
+              <SkillBadge variant="primary" icon={Database} client:load>MongoDB</SkillBadge>
+              <SkillBadge variant="secondary" icon={Database} client:load>Redis</SkillBadge>
+              <SkillBadge variant="secondary" icon={Database} client:load>SQL Server</SkillBadge>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Methodologies - Full width */}
+        <ScrollReveal delay={500}>
+          <div class="glass-effect rounded-xl p-8 md:col-span-2">
+            <h2
+              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-400 bg-clip-text text-transparent"
+            >
+              <BookOpen className="text-primary-400" size={28} />
+              Methodologies & Practices
+            </h2>
+            <div class="flex flex-wrap gap-3">
+              <SkillBadge variant="success" icon={BookOpen} client:load>TDD</SkillBadge>
+              <SkillBadge variant="success" icon={BookOpen} client:load>Agile / Scrum</SkillBadge>
+              <SkillBadge variant="success" icon={BookOpen} client:load>CI/CD</SkillBadge>
+              <SkillBadge variant="success" icon={BookOpen} client:load>SOLID Principles</SkillBadge
+              >
+              <SkillBadge variant="secondary" icon={BookOpen} client:load
+                >Design Patterns</SkillBadge
+              >
+              <SkillBadge variant="secondary" icon={BookOpen} client:load
+                >Clean Architecture</SkillBadge
+              >
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+
+      {/* Content Collections note */}
+      <div class="mt-12 text-center text-sm text-neutral-500">
+        <p>Note: Real skills will be loaded via Content Collections (Phase 4)</p>
+      </div>
     </div>
-
-    {/* Skills categories */}
-    <div class="space-y-12">
-      {/* Languages */}
-      <div>
-        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">
-          Programming Languages
-        </h2>
-        <div class="flex flex-wrap gap-3">
-          <Badge variant="primary" client:load>TypeScript</Badge>
-          <Badge variant="primary" client:load>JavaScript</Badge>
-          <Badge variant="primary" client:load>Python</Badge>
-          <Badge variant="primary" client:load>Java</Badge>
-          <Badge variant="secondary" client:load>C#</Badge>
-          <Badge variant="secondary" client:load>SQL</Badge>
-        </div>
-      </div>
-
-      {/* Frameworks */}
-      <div>
-        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">
-          Frameworks & Libraries
-        </h2>
-        <div class="flex flex-wrap gap-3">
-          <Badge variant="primary" client:load>React</Badge>
-          <Badge variant="primary" client:load>Astro</Badge>
-          <Badge variant="primary" client:load>Next.js</Badge>
-          <Badge variant="primary" client:load>Node.js</Badge>
-          <Badge variant="secondary" client:load>Express</Badge>
-          <Badge variant="secondary" client:load>Spring Boot</Badge>
-        </div>
-      </div>
-
-      {/* Cloud & DevOps */}
-      <div>
-        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">Cloud & DevOps</h2>
-        <div class="flex flex-wrap gap-3">
-          <Badge variant="primary" client:load>Azure</Badge>
-          <Badge variant="primary" client:load>AWS</Badge>
-          <Badge variant="primary" client:load>Vercel</Badge>
-          <Badge variant="secondary" client:load>Docker</Badge>
-          <Badge variant="secondary" client:load>Kubernetes</Badge>
-          <Badge variant="secondary" client:load>GitHub Actions</Badge>
-        </div>
-      </div>
-
-      {/* Databases */}
-      <div>
-        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">Databases</h2>
-        <div class="flex flex-wrap gap-3">
-          <Badge variant="primary" client:load>PostgreSQL</Badge>
-          <Badge variant="primary" client:load>MongoDB</Badge>
-          <Badge variant="secondary" client:load>Redis</Badge>
-          <Badge variant="secondary" client:load>SQL Server</Badge>
-        </div>
-      </div>
-
-      {/* Methodologies */}
-      <div>
-        <h2 class="text-2xl font-bold mb-6 text-[var(--color-primary-400)]">
-          Methodologies & Practices
-        </h2>
-        <div class="flex flex-wrap gap-3">
-          <Badge variant="success" client:load>TDD</Badge>
-          <Badge variant="success" client:load>Agile / Scrum</Badge>
-          <Badge variant="success" client:load>CI/CD</Badge>
-          <Badge variant="success" client:load>SOLID Principles</Badge>
-          <Badge variant="secondary" client:load>Design Patterns</Badge>
-          <Badge variant="secondary" client:load>Clean Architecture</Badge>
-        </div>
-      </div>
-    </div>
-
-    {/* Content Collections note */}
-    <div class="mt-12 text-center text-sm text-[var(--color-neutral-500)]">
-      <p>Note: Real skills will be loaded via Content Collections (Phase 4)</p>
-    </div>
-  </div>
+  </ParallaxBackground>
 </Layout>

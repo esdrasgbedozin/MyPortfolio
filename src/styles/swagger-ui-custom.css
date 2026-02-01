@@ -68,7 +68,7 @@
   border-color: var(--swagger-ui-border);
 }
 
-.swagger-dark-theme .swagger-ui input[type="text"],
+.swagger-dark-theme .swagger-ui input[type='text'],
 .swagger-dark-theme .swagger-ui textarea,
 .swagger-dark-theme .swagger-ui select {
   background: var(--swagger-ui-bg);

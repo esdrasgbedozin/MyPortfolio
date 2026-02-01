@@ -1,23 +1,34 @@
 ---
+// Phase 1-4: Visual enhancements (parallax, scroll reveal, glassmorphism)
 import Layout from '../../../layouts/Layout.astro';
 import { ContactForm } from '../../../components/ContactForm';
+import ScrollReveal from '../../../components/ScrollReveal';
+import ParallaxBackground from '../../../components/ParallaxBackground';
 ---
 
 <Layout title="Contact Me - Portfolio" lang="en">
-  <div class="container mx-auto px-4 py-16 max-w-2xl">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">Contact Me</h1>
-      <p class="text-lg text-[var(--color-neutral-400)]">
-        Have a project, an opportunity, or a question? Feel free to reach out, I'll get back to you
-        as soon as possible.
-      </p>
-    </div>
+  <ParallaxBackground variant="gradient" speed={0.3} className="min-h-screen">
+    <div class="container mx-auto px-4 py-16 max-w-2xl">
+      <ScrollReveal delay={0}>
+        <div class="text-center mb-12">
+          <h1
+            class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
+          >
+            Contact Me
+          </h1>
+          <p class="text-lg text-neutral-300">
+            Have a project, an opportunity, or a question? Feel free to reach out, I'll get back to
+            you as soon as possible.
+          </p>
+        </div>
+      </ScrollReveal>
 
-    {/* React form with validation - Epic 6.2 FE-080 */}
-    <div
-      class="bg-[var(--color-neutral-900)] border border-[var(--color-neutral-800)] rounded-lg p-8"
-    >
-      <ContactForm client:load />
+      {/* React form with validation - Epic 6.2 FE-080 */}
+      <ScrollReveal delay={200}>
+        <div class="glass-effect card-elevated rounded-xl p-8">
+          <ContactForm client:load />
+        </div>
+      </ScrollReveal>
     </div>
-  </div>
+  </ParallaxBackground>
 </Layout>

@@ -72,14 +72,14 @@ module.exports = {
         'html-has-lang': 'error',
         'html-lang-valid': 'error',
         'image-alt': 'error',
-        'label': 'error',
+        label: 'error',
         'link-name': 'error',
 
         // SEO
         'meta-description': 'error',
         'document-title': 'error',
         'html-has-lang': 'error',
-        'canonical': 'error',
+        canonical: 'error',
 
         // Best Practices
         'errors-in-console': 'off', // Désactivé car warnings normaux
