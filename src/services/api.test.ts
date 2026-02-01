@@ -208,10 +208,7 @@ describe('API Client - Epic 6.1 FE-077', () => {
     await api.get('/health');
 
     // ASSERT
-    expect(fetchMock).toHaveBeenCalledWith(
-      'http://test-api.local/api/health',
-      expect.any(Object)
-    );
+    expect(fetchMock).toHaveBeenCalledWith('http://test-api.local/api/health', expect.any(Object));
 
     // Cleanup
     import.meta.env.PUBLIC_API_URL = originalEnv;

@@ -58,10 +58,7 @@ class ApiClient {
   /**
    * Requête HTTP générique avec gestion d'erreurs
    */
-  private async request<T>(
-    endpoint: string,
-    options: RequestOptions = {}
-  ): Promise<T> {
+  private async request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
     const { timeout = 10000, headers, ...fetchOptions } = options;
 
     const url = `${this.baseUrl}${endpoint}`;
@@ -126,11 +123,7 @@ class ApiClient {
   /**
    * POST request
    */
-  async post<T>(
-    endpoint: string,
-    data?: unknown,
-    options?: RequestOptions
-  ): Promise<T> {
+  async post<T>(endpoint: string, data?: unknown, options?: RequestOptions): Promise<T> {
     return this.request<T>(endpoint, {
       ...options,
       method: 'POST',
@@ -141,11 +134,7 @@ class ApiClient {
   /**
    * PUT request
    */
-  async put<T>(
-    endpoint: string,
-    data?: unknown,
-    options?: RequestOptions
-  ): Promise<T> {
+  async put<T>(endpoint: string, data?: unknown, options?: RequestOptions): Promise<T> {
     return this.request<T>(endpoint, {
       ...options,
       method: 'PUT',
@@ -169,10 +158,7 @@ class ApiClient {
  * Utilise la variable d'environnement PUBLIC_API_URL
  */
 export function createApiClient(baseUrl?: string): ApiClient {
-  const apiBaseUrl =
-    baseUrl ||
-    import.meta.env.PUBLIC_API_URL ||
-    'http://localhost:4010/api';
+  const apiBaseUrl = baseUrl || import.meta.env.PUBLIC_API_URL || 'http://localhost:4010/api';
 
   return new ApiClient({ baseUrl: apiBaseUrl });
 }
