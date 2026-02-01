@@ -13,6 +13,8 @@ export default defineConfig({
     edgeMiddleware: true,
   }),
 
+  site: 'https://portfolio.example.com', // FE-094/095: Base URL for canonical/sitemap
+
   // i18n Configuration (FE-032)
   i18n: {
     defaultLocale: 'fr',

@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "projects": "Projets",
+    "certifications": "Certifications",
+    "skills": "Compétences",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Esdras GBEDOZIN",
+    "tagline": "Ingénieur Informatique",
+    "description": "Passionné par l'architecture logicielle, le cloud et les solutions évolutives. Je conçois et développe des applications web performantes avec Jamstack, TypeScript et Azure.",
+    "cta": {
+      "projects": "Voir mes projets",
+      "contact": "Me contacter"
+    }
+  },
+  "footer": {
+    "social": {
+      "github": "Voir mon profil GitHub",
+      "linkedin": "Voir mon profil LinkedIn",
+      "email": "Me contacter par email"
+    },
+    "copyright": "Tous droits réservés",
+    "lastUpdated": "Dernière mise à jour"
+  },
+  "common": {
+    "skipToContent": "Aller au contenu principal",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue"
+  }
+}

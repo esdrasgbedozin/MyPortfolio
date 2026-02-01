@@ -43,6 +43,8 @@
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
     "astro": "^5.16.11",
+    "astro-i18next": "1.0.0-beta.21",
+    "i18next": "^25.8.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-hook-form": "^7.71.1",

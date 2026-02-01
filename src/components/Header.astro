@@ -3,44 +3,53 @@
  * Header Component : Navigation principale responsive
  * Epic 2.3 - FE-029
  * Epic 5.1 - FE-068 (Theme Toggle Integration)
+ * Epic 7.2 - FE-089 (i18n Traductions)
+ * Epic 7.3 - FE-092 (Language Switcher)
  *
  * Features :
  * - Logo cliquable (retour accueil)
  * - Navigation principale (3+ liens)
  * - Theme Toggle (dark/light mode)
+ * - Language Switcher (FR/EN)
  * - Accessible (aria-label, keyboard nav)
  * - Design tokens (Dark Mode First)
+ * - Traductions FR/EN via dictionnaires JSON
  */
 
 import { ThemeToggle } from './ThemeToggle';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import frTranslations from '../i18n/fr.json';
+import enTranslations from '../i18n/en.json';
+import { tSync } from '../utils/i18n';
 
 interface Props {
   lang?: 'fr' | 'en';
 }
 
 const { lang = 'fr' } = Astro.props;
+const translations = lang === 'fr' ? frTranslations : enTranslations;
 
 // Navigation links avec i18n routing
 const navLinks = [
   {
     href: `/${lang}`,
-    label: lang === 'fr' ? 'Accueil' : 'Home',
+    label: tSync('nav.home', lang, translations),
   },
   {
     href: `/${lang}/${lang === 'fr' ? 'projets' : 'projects'}`,
-    label: lang === 'fr' ? 'Projets' : 'Projects',
+    label: tSync('nav.projects', lang, translations),
   },
   {
     href: `/${lang}/certifications`,
-    label: lang === 'fr' ? 'Certifications' : 'Certifications',
+    label: tSync('nav.certifications', lang, translations),
   },
   {
     href: `/${lang}/${lang === 'fr' ? 'competences' : 'skills'}`,
-    label: lang === 'fr' ? 'Compétences' : 'Skills',
+    label: tSync('nav.skills', lang, translations),
   },
   {
     href: `/${lang}/contact`,
-    label: 'Contact',
+    label: tSync('nav.contact', lang, translations),
   },
 ];
 ---
@@ -76,6 +85,11 @@ const navLinks = [
         <!-- Theme Toggle (React Island) -->
         <li>
           <ThemeToggle client:load />
+        </li>
+
+        <!-- Language Switcher (React Island) -->
+        <li>
+          <LanguageSwitcher client:load currentLocale={lang} />
         </li>
       </ul>
     </nav>

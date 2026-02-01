@@ -5,6 +5,7 @@ import {
   isValidLocale,
   getLocaleFromPath,
   getLocalizedPath,
+  tSync,
 } from './i18n';
 
 describe('i18n Utils', () => {
@@ -65,6 +66,26 @@ describe('i18n Utils', () => {
     it('should handle nested paths', () => {
       expect(getLocalizedPath('/projets/detail', 'fr')).toBe('/fr/projets/detail');
       expect(getLocalizedPath('/projects/detail', 'en')).toBe('/en/projects/detail');
+    });
+  });
+
+  describe('tSync', () => {
+    it('should translate simple keys', () => {
+      const frDict = { nav: { home: 'Accueil' } };
+      const enDict = { nav: { home: 'Home' } };
+
+      expect(tSync('nav.home', 'fr', frDict)).toBe('Accueil');
+      expect(tSync('nav.home', 'en', enDict)).toBe('Home');
+    });
+
+    it('should return key if translation not found', () => {
+      const dict = {};
+      expect(tSync('unknown.key', 'fr', dict)).toBe('unknown.key');
+    });
+
+    it('should handle nested keys', () => {
+      const dict = { footer: { social: { github: 'Voir mon profil GitHub' } } };
+      expect(tSync('footer.social.github', 'fr', dict)).toBe('Voir mon profil GitHub');
     });
   });
 });

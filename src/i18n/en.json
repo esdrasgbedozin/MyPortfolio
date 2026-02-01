@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "certifications": "Certifications",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "hero": {
+    "name": "Esdras GBEDOZIN",
+    "tagline": "Software Engineer",
+    "description": "Passionate about software architecture, cloud solutions, and scalable systems. I design and build high-performance web applications with Jamstack, TypeScript, and Azure.",
+    "cta": {
+      "projects": "View my projects",
+      "contact": "Contact me"
+    }
+  },
+  "footer": {
+    "social": {
+      "github": "View my GitHub profile",
+      "linkedin": "View my LinkedIn profile",
+      "email": "Contact me by email"
+    },
+    "copyright": "All rights reserved",
+    "lastUpdated": "Last updated"
+  },
+  "common": {
+    "skipToContent": "Skip to main content",
+    "loading": "Loading...",
+    "error": "An error occurred"
+  }
+}
