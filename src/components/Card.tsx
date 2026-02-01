@@ -1,4 +1,5 @@
 import type { ReactNode, HTMLAttributes, JSX } from 'react';
+import Tilt from 'react-parallax-tilt';
 
 export interface CardProps extends HTMLAttributes<HTMLElement> {
   /**
@@ -33,11 +34,18 @@ export interface CardProps extends HTMLAttributes<HTMLElement> {
    * @default false
    */
   hoverable?: boolean;
+
+  /**
+   * Active l'effet Tilt 3D
+   * @default false
+   */
+  tilt?: boolean;
 }
 
 /**
  * Composant Card : Carte atomique avec header/body/footer
  * Respect SOLID & Design Tokens (Dark Mode First)
+ * Phase 2: Enhanced with glassmorphism + Tilt 3D option
  */
 export const Card = ({
   children,
@@ -46,17 +54,18 @@ export const Card = ({
   variant = 'default',
   padding = 'default',
   hoverable = false,
+  tilt = false,
   className = '',
   ...props
 }: CardProps): JSX.Element => {
-  // Classes de base (semantic HTML + design tokens)
-  const baseClasses = 'rounded-lg border';
+  // Classes de base (semantic HTML + design tokens + glassmorphism)
+  const baseClasses = 'rounded-xl border transition-all duration-300';
 
-  // Variants : respectent les design tokens Dark Mode First
+  // Variants : respectent les design tokens Dark Mode First + glassmorphism
   const variantClasses = {
-    default: 'bg-[var(--color-neutral-900)] border-[var(--color-neutral-800)]',
-    elevated: 'bg-[var(--color-neutral-800)] border-[var(--color-neutral-700)] shadow-lg',
-    outlined: 'bg-transparent border-2 border-[var(--color-neutral-700)]',
+    default: 'glass-effect border-white/10',
+    elevated: 'card-elevated glass-effect border-white/10',
+    outlined: 'bg-transparent border-2 border-neutral-700 hover:border-primary-500',
   };
 
   // Padding : respecte spacing scale (4-64px)
@@ -67,9 +76,9 @@ export const Card = ({
     comfortable: 'p-8', // 32px
   };
 
-  // Hover effect (optionnel)
+  // Hover effect (optionnel) avec glow
   const hoverClasses = hoverable
-    ? 'hover:border-[var(--color-primary-600)] transition-colors cursor-pointer'
+    ? 'hover:border-primary-400/50 cursor-pointer hover:shadow-lg hover:shadow-primary-500/20'
     : '';
 
   const allClasses = [
@@ -82,19 +91,37 @@ export const Card = ({
     .filter(Boolean)
     .join(' ');
 
-  return (
+  const cardContent = (
     <article className={allClasses} {...props}>
-      {header && (
-        <div className="border-b border-[var(--color-neutral-800)] pb-4 mb-4">{header}</div>
-      )}
+      {header && <div className="border-b border-white/10 pb-4 mb-4">{header}</div>}
 
       <div>{children}</div>
 
-      {footer && (
-        <div className="border-t border-[var(--color-neutral-800)] pt-4 mt-4">{footer}</div>
-      )}
+      {footer && <div className="border-t border-white/10 pt-4 mt-4">{footer}</div>}
     </article>
   );
+
+  // Wrap with Tilt if enabled
+  if (tilt) {
+    return (
+      <Tilt
+        tiltMaxAngleX={5}
+        tiltMaxAngleY={5}
+        perspective={1000}
+        scale={1.01}
+        transitionSpeed={450}
+        glareEnable={true}
+        glareMaxOpacity={0.1}
+        glareColor="#38bdf8"
+        glarePosition="all"
+        className="w-full"
+      >
+        {cardContent}
+      </Tilt>
+    );
+  }
+
+  return cardContent;
 };
 
 export default Card;

@@ -17,6 +17,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 /**
  * Composant Button : Bouton atomique avec variants et sizes
  * Respect SOLID & Design Tokens (Dark Mode First)
+ * Phase 2: Enhanced with glassmorphism + gradient hover + scale
  */
 export const Button = ({
   variant = 'primary',
@@ -27,20 +28,20 @@ export const Button = ({
   children,
   ...props
 }: ButtonProps): JSX.Element => {
-  // Calcul des classes Tailwind basées sur les design tokens
+  // Calcul des classes Tailwind basées sur les design tokens + glassmorphism
   const baseClasses =
-    'rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
+    'rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 hover:scale-105 active:scale-95';
 
-  // Variants : respectent les design tokens définis dans global.css
+  // Variants : respectent les design tokens + glassmorphism + glow
   const variantClasses = {
     primary:
-      'bg-[var(--color-primary-600)] text-white hover:bg-[var(--color-primary-700)] focus:ring-[var(--color-primary-500)]',
+      'bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-500 hover:to-primary-400 focus:ring-primary-500 shadow-lg hover:shadow-primary-500/50',
     secondary:
-      'bg-[var(--color-secondary-600)] text-white hover:bg-[var(--color-secondary-700)] focus:ring-[var(--color-secondary-500)]',
+      'bg-gradient-to-r from-secondary-600 to-secondary-500 text-white hover:from-secondary-500 hover:to-secondary-400 focus:ring-secondary-500 shadow-lg hover:shadow-secondary-500/50',
     ghost:
-      'bg-transparent text-[var(--color-neutral-200)] hover:bg-[var(--color-neutral-800)] focus:ring-[var(--color-neutral-700)]',
+      'bg-transparent text-neutral-200 hover:bg-neutral-800/50 backdrop-blur-sm focus:ring-neutral-700 border border-transparent hover:border-neutral-700',
     outline:
-      'border-2 border-[var(--color-neutral-700)] text-[var(--color-neutral-200)] bg-transparent hover:bg-[var(--color-neutral-800)] focus:ring-[var(--color-neutral-700)]',
+      'border-2 border-neutral-700 text-neutral-200 bg-transparent hover:bg-neutral-800/50 hover:border-primary-500 focus:ring-neutral-700 backdrop-blur-sm',
   };
 
   // Sizes : respectent l'échelle de spacing (4-64px)

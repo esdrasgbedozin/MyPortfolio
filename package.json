@@ -58,6 +58,7 @@
     "react-countup": "^6.5.3",
     "react-dom": "^19.2.3",
     "react-hook-form": "^7.71.1",
+    "react-parallax-tilt": "^1.7.319",
     "resend": "^6.8.0",
     "tailwindcss": "^4.1.18",
     "zod": "^4.3.5"

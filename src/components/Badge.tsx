@@ -17,6 +17,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 /**
  * Composant Badge : Badge atomique avec semantic colors
  * Respect SOLID & Design Tokens (Dark Mode First)
+ * Phase 2: Enhanced with glassmorphism + shimmer
  */
 export const Badge = ({
   variant = 'default',
@@ -25,16 +26,18 @@ export const Badge = ({
   children,
   ...props
 }: BadgeProps): JSX.Element => {
-  // Classes de base : inline-flex pour alignement contenu
-  const baseClasses = 'inline-flex items-center justify-center rounded-full font-medium';
+  // Classes de base : inline-flex pour alignement contenu + glassmorphism
+  const baseClasses =
+    'inline-flex items-center justify-center rounded-full font-medium backdrop-blur-sm border transition-all duration-200 hover:scale-105';
 
-  // Variants : respectent semantic colors des design tokens
+  // Variants : respectent semantic colors des design tokens + glassmorphism
   const variantClasses = {
-    default: 'bg-[var(--color-neutral-800)] text-[var(--color-neutral-200)]',
-    success: 'bg-[var(--color-success)] text-white',
-    warning: 'bg-[var(--color-warning)] text-[var(--color-neutral-900)]',
-    error: 'bg-[var(--color-error)] text-white',
-    info: 'bg-[var(--color-primary-600)] text-white',
+    default:
+      'bg-neutral-800/50 text-[var(--color-neutral-200)] border-neutral-700/50 hover:border-neutral-600',
+    success: 'bg-green-500/20 text-green-400 border-green-500/30 hover:border-green-400',
+    warning: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30 hover:border-yellow-400',
+    error: 'bg-red-500/20 text-red-400 border-red-500/30 hover:border-red-400',
+    info: 'bg-primary-500/20 text-primary-400 border-primary-500/30 hover:border-primary-400',
   };
 
   // Sizes : respectent spacing scale (4-64px)
