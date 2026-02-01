@@ -21,6 +21,7 @@
     "test:e2e:ui": "playwright test --ui",
     "openapi:lint": "spectral lint openapi.yaml",
     "openapi:lint:api": "spectral lint api/openapi.yaml",
+    "test:contract": "node tests/contract/run-tests.mjs",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -72,6 +73,8 @@
     "husky": "^9.1.7",
     "jsdom": "^27.4.0",
     "lint-staged": "^16.2.7",
+    "newman": "^6.2.2",
+    "portman": "^0.0.3",
     "prettier": "^3.8.0",
     "prettier-plugin-astro": "^0.14.1",
     "vitest": "^4.0.17"
