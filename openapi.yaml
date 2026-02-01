@@ -545,7 +545,11 @@ paths:
         Envoie un message de contact depuis le portfolio.
 
         **Protections** :
-        - Rate limiting : Max 5 requêtes/heure par IP
+        - Rate limiting : Système progressif à 3 tiers
+          - Tier 1: 10 req/heure (IP standard)
+          - Tier 2: 3 req/heure après 1er blocage (24h)
+          - Tier 3: Blocage permanent après 3 violations
+          - Whitelist: Score Turnstile >0.7 bypass
         - Anti-spam : Cloudflare Turnstile obligatoire
         - Validation : Zod schema côté serveur
 

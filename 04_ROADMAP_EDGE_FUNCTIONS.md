@@ -106,13 +106,18 @@
 | **EF-026b** | ✅ CODE : Implémenter retry policy             | EF-026a        | 50min | Fonction `retry()` avec exponential backoff, max 3 tentatives (GREEN) |
 | **EF-026c** | 🔵 REFACTOR : Intégrer retry dans EmailService | EF-026b        | 30min | EmailService utilise retry automatiquement, tests passent             |
 
-### Epic 2.4 : Service Rate Limiting
+### Epic 2.4 : Service Rate Limiting (Progressive 3-Tier)
 
-| ID         | Titre                                  | Dépendance | Durée | Critère de Fin                                                    |
-| ---------- | -------------------------------------- | ---------- | ----- | ----------------------------------------------------------------- |
-| **EF-027** | ✅ TEST : Créer test rate limiting IP  | -          | 40min | Test max 5 req/heure par IP (RED)                                 |
-| **EF-028** | ✅ CODE : Implémenter rate limiter     | EF-027     | 60min | Vercel Edge Config KV store, fonction `isRateLimited(ip)` (GREEN) |
-| **EF-029** | 🔵 REFACTOR : Cleanup rate limit store | EF-028     | 30min | Auto-cleanup après 1h, tests passent                              |
+| ID          | Titre                                     | Dépendance | Durée | Critère de Fin                                                    |
+| ----------- | ----------------------------------------- | ---------- | ----- | ----------------------------------------------------------------- |
+| **EF-027**  | ✅ TEST : Créer test rate limiting IP     | -          | 40min | Test Tier 1: 10 req/heure par IP (RED)                            |
+| **EF-028**  | ✅ CODE : Implémenter rate limiter        | EF-027     | 60min | Vercel Edge Config KV store, fonction `isRateLimited(ip)` (GREEN) |
+| **EF-029**  | 🔵 REFACTOR : Cleanup rate limit store    | EF-028     | 30min | Auto-cleanup après 1h, tests passent                              |
+| **EF-029a** | ✅ TEST : Test Tier 2 (pénalité 24h)      | EF-029     | 40min | Après 1er blocage → 3 req/heure pendant 24h (RED)                 |
+| **EF-029b** | ✅ CODE : Implémenter Tier 2              | EF-029a    | 50min | Système de pénalité progressif (GREEN)                            |
+| **EF-029c** | ✅ TEST : Test Tier 3 (blocage permanent) | EF-029b    | 40min | Après 3 violations → blocage permanent (RED)                      |
+| **EF-029d** | ✅ CODE : Implémenter Tier 3              | EF-029c    | 50min | Whitelist + déblocage manuel requis (GREEN)                       |
+| **EF-029e** | 🔵 REFACTOR : Intégration Turnstile score | EF-029d    | 40min | Whitelist automatique si score >0.7, tests passent                |
 
 ---
 
