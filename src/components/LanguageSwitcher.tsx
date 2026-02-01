@@ -7,6 +7,7 @@
 
 import { useState } from 'react';
 import type { Locale } from '../utils/i18n';
+import { getLocalizedPath } from '../utils/i18n';
 
 interface LanguageSwitcherProps {
   currentLocale: Locale;
@@ -26,11 +27,15 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps): Reac
     // Determine target locale
     const targetLocale: Locale = currentLocale === 'fr' ? 'en' : 'fr';
 
-    // Get current pathname
+    // Get current pathname without locale prefix
     const currentPath = window.location.pathname;
 
-    // Replace locale in path
-    const newPath = currentPath.replace(`/${currentLocale}/`, `/${targetLocale}/`);
+    // Extract path segment after locale (e.g., "/fr/projets" → "/projets", "/fr" → "")
+    const pathWithoutLocale = currentPath.replace(new RegExp(`^/${currentLocale}/?`), '/');
+
+    // Use getLocalizedPath to build correct target path
+    const targetPath = pathWithoutLocale === '/' ? '' : pathWithoutLocale.replace(/^\//, '');
+    const newPath = getLocalizedPath(targetPath, targetLocale);
 
     // Navigate to new locale path
     window.location.href = newPath;

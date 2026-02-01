@@ -69,4 +69,23 @@ describe('LanguageSwitcher', () => {
     render(<LanguageSwitcher currentLocale="fr" />);
     expect(screen.getByRole('button')).toHaveAttribute('aria-label');
   });
+
+  it('should navigate from /fr homepage to /en homepage', async () => {
+    // Set FR homepage path (no trailing segment)
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: {
+        href: 'http://localhost:4321/fr',
+        pathname: '/fr',
+      },
+    });
+
+    render(<LanguageSwitcher currentLocale="fr" />);
+
+    const button = screen.getByRole('button');
+    await userEvent.click(button);
+
+    // Should navigate to /en (not /fr with broken path)
+    expect(window.location.href).toBe('/en/');
+  });
 });
