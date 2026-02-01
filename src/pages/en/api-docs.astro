@@ -1,0 +1,153 @@
+---
+// Epic 5.3 - EF-059: Swagger UI Page - English Version
+import Layout from '@/layouts/Layout.astro';
+import SwaggerUI from '@/components/SwaggerUI';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import '@/styles/swagger-ui-custom.css';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const openApiPath = path.join(__dirname, '../../../..', 'openapi.yaml');
+const openApiSpec = fs.readFileSync(openApiPath, 'utf-8');
+
+const title = 'API Documentation - Portfolio Pro';
+const description = 'Interactive API documentation for the portfolio (OpenAPI 3.1)';
+---
+
+<Layout title={title} description={description}>
+  <div class="api-docs-container">
+    <header class="api-docs-header">
+      <h1>📚 API Documentation</h1>
+      <p class="subtitle">OpenAPI 3.1 Specification - Professional Portfolio</p>
+      <div class="info-banner">
+        <p>
+          <strong>Architecture:</strong> Jamstack (Astro SSG) + Edge Functions (Vercel Serverless)
+        </p>
+        <p>
+          <strong>Base URL:</strong>
+          <code>https://portfolio.dev/api</code>
+        </p>
+        <p>
+          <strong>Version:</strong> 1.0.0
+        </p>
+      </div>
+    </header>
+
+    <main class="api-docs-main">
+      <SwaggerUI spec={openApiSpec} client:only="react" />
+    </main>
+
+    <footer class="api-docs-footer">
+      <p>
+        🔗 <a href="/openapi.yaml" download>Download OpenAPI YAML file</a>
+      </p>
+      <p>
+        💡 This documentation is automatically generated from <code>openapi.yaml</code>
+      </p>
+      <p>
+        🌍 <a href="/fr/api-docs">Version française</a>
+      </p>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  .api-docs-container {
+    min-height: 100vh;
+    background: var(--color-background);
+    color: var(--color-text);
+  }
+
+  .api-docs-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-8) var(--spacing-4);
+    text-align: center;
+  }
+
+  .api-docs-header h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
+    color: var(--color-primary);
+  }
+
+  .subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-6);
+  }
+
+  .info-banner {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-4);
+    max-width: 800px;
+    margin: 0 auto var(--spacing-8);
+    text-align: left;
+  }
+
+  .info-banner p {
+    margin: var(--spacing-2) 0;
+    font-size: var(--font-size-base);
+  }
+
+  .info-banner code {
+    background: var(--color-background);
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--border-radius-sm);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-accent);
+  }
+
+  .api-docs-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-4) var(--spacing-8);
+  }
+
+  .api-docs-footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-8) var(--spacing-4);
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .api-docs-footer p {
+    margin: var(--spacing-2) 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  .api-docs-footer a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+
+  .api-docs-footer a:hover {
+    color: var(--color-accent);
+  }
+
+  .api-docs-footer code {
+    background: var(--color-surface);
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--border-radius-sm);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-xs);
+  }
+
+  /* Dark mode optimizations */
+  :global(.dark) .info-banner {
+    background: var(--color-surface-dark);
+    border-color: var(--color-border-dark);
+  }
+
+  :global(.dark) .info-banner code {
+    background: var(--color-background-dark);
+  }
+</style>
