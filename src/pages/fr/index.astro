@@ -10,7 +10,7 @@ const lang = 'fr' as const;
 
 <Layout title="Portfolio Professionnel - Accueil" lang={lang}>
   <Hero
-    client:load
+    client:idle
     title={tSync('hero.name', lang, translations)}
     tagline={tSync('hero.tagline', lang, translations)}
     description={tSync('hero.description', lang, translations)}
