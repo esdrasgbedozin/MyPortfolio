@@ -35,6 +35,10 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm dev`             | Starts local dev server at `localhost:4321`      |
 | `pnpm build`           | Build your production site to `./dist/`          |
 | `pnpm preview`         | Preview your build locally, before deploying     |
+| `pnpm test`            | Run unit tests with Vitest                       |
+| `pnpm test:e2e`        | Run E2E tests with Playwright                    |
+| `pnpm test:contract`   | Run OpenAPI contract tests                       |
+| `pnpm openapi:lint`    | Validate OpenAPI schema with Spectral            |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
@@ -98,3 +102,19 @@ For production monitoring setup, see **[MONITORING.md](./MONITORING.md)**:
 
 - [Vercel Log Drains Setup](./MONITORING.md#epic-43-log-aggregation-ef-049g)
 - [Monitoring Dashboard Config](./MONITORING.md#epic-43-monitoring-dashboard-ef-049h)
+
+### Contract Testing (Epic 5.1)
+
+For OpenAPI contract testing setup, see **[CONTRACT_TESTING.md](./docs/CONTRACT_TESTING.md)**:
+
+- Spectral linter for OpenAPI validation
+- Prism mock server for development
+- Automated contract test suite
+- CI/CD integration
+
+**Quick Commands:**
+
+```bash
+pnpm run openapi:lint      # Validate OpenAPI schema
+pnpm run test:contract     # Run contract tests
+```

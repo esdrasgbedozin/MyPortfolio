@@ -138,7 +138,11 @@ Règles subject:
 ## Sécurité
 
 - Headers: X-Content-Type-Options, X-Frame-Options, CSP
-- Rate Limiting: Max 5 req/heure/IP sur formulaire contact
+- Rate Limiting: Système progressif à 3 tiers
+  - Tier 1: 10 req/heure (IP standard)
+  - Tier 2: 3 req/heure après 1er blocage (pénalité 24h)
+  - Tier 3: Blocage permanent après 3 violations (déblocage manuel)
+  - Whitelist: Basée sur score Turnstile (>0.7 bypass rate limit)
 - Anti-Spam: Cloudflare Turnstile obligatoire
 - Secrets: Variables d'env (jamais hardcodé)
 - Validation: Zod côté client ET serveur

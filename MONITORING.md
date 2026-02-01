@@ -144,6 +144,9 @@ Logs are currently available in:
 
 ## 📈 Epic 4.3: Monitoring Dashboard (EF-049h)
 
+> **⚠️ NOTE** : Configuration détaillée disponible dans [docs/MONITORING_ALERTES.md](../docs/MONITORING_ALERTES.md)  
+> **Epic 6.2** : Alertes Sentry + Vercel + GitHub Actions Health Checks
+
 ### Vercel Analytics (Built-in, Free)
 
 **Metrics Available**:

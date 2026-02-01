@@ -1,0 +1,82 @@
+/* Swagger UI Custom Styles - Epic 5.3 EF-059 */
+
+/* Wrapper dark theme */
+.swagger-ui-wrapper.swagger-dark-theme {
+  --swagger-ui-bg: #1a1a1a;
+  --swagger-ui-text: #e5e5e5;
+  --swagger-ui-border: #333;
+  --swagger-ui-surface: #252525;
+}
+
+/* Override Swagger UI defaults for dark mode */
+.swagger-dark-theme .swagger-ui {
+  color: var(--swagger-ui-text);
+}
+
+.swagger-dark-theme .swagger-ui .opblock-tag {
+  background: var(--swagger-ui-surface);
+  border-color: var(--swagger-ui-border);
+}
+
+.swagger-dark-theme .swagger-ui .opblock {
+  background: var(--swagger-ui-surface);
+  border-color: var(--swagger-ui-border);
+}
+
+.swagger-dark-theme .swagger-ui .opblock .opblock-summary {
+  background: var(--swagger-ui-bg);
+  border-color: var(--swagger-ui-border);
+}
+
+.swagger-dark-theme .swagger-ui .response-col_status {
+  color: var(--swagger-ui-text);
+}
+
+.swagger-dark-theme .swagger-ui .model-box,
+.swagger-dark-theme .swagger-ui .model {
+  background: var(--swagger-ui-surface);
+  border-color: var(--swagger-ui-border);
+}
+
+.swagger-dark-theme .swagger-ui .parameter__name,
+.swagger-dark-theme .swagger-ui .parameter__type {
+  color: var(--swagger-ui-text);
+}
+
+.swagger-dark-theme .swagger-ui table thead tr th {
+  background: var(--swagger-ui-surface);
+  color: var(--swagger-ui-text);
+  border-color: var(--swagger-ui-border);
+}
+
+.swagger-dark-theme .swagger-ui table tbody tr td {
+  background: var(--swagger-ui-bg);
+  border-color: var(--swagger-ui-border);
+}
+
+.swagger-dark-theme .swagger-ui .info .title {
+  color: var(--swagger-ui-text);
+}
+
+.swagger-dark-theme .swagger-ui .info .description,
+.swagger-dark-theme .swagger-ui .info .base-url {
+  color: var(--swagger-ui-text);
+}
+
+.swagger-dark-theme .swagger-ui .scheme-container {
+  background: var(--swagger-ui-surface);
+  border-color: var(--swagger-ui-border);
+}
+
+.swagger-dark-theme .swagger-ui input[type="text"],
+.swagger-dark-theme .swagger-ui textarea,
+.swagger-dark-theme .swagger-ui select {
+  background: var(--swagger-ui-bg);
+  color: var(--swagger-ui-text);
+  border-color: var(--swagger-ui-border);
+}
+
+/* Light mode fallback */
+.swagger-ui-wrapper:not(.swagger-dark-theme) .swagger-ui {
+  /* Use Swagger UI default light theme */
+}

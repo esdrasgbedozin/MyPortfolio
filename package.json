@@ -19,6 +19,11 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "openapi:lint": "spectral lint openapi.yaml",
+    "openapi:lint:api": "spectral lint api/openapi.yaml",
+    "test:contract": "node tests/contract/run-tests.mjs",
+    "lhci": "lhci autorun",
+    "lhci:ci": "lhci autorun --collect.settings.chromeFlags='--no-sandbox'",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -53,11 +58,15 @@
     "zod": "^4.3.5"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.57.0",
     "@stoplight/prism-cli": "^5.14.2",
+    "@stoplight/spectral-cli": "^6.15.0",
+    "@stoplight/spectral-rulesets": "^1.22.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "@types/swagger-ui-react": "^5.18.0",
     "@typescript-eslint/eslint-plugin": "^8.53.1",
     "@typescript-eslint/parser": "^8.53.1",
     "@vitejs/plugin-react": "^5.1.2",
@@ -68,8 +77,11 @@
     "husky": "^9.1.7",
     "jsdom": "^27.4.0",
     "lint-staged": "^16.2.7",
+    "newman": "^6.2.2",
+    "portman": "^0.0.3",
     "prettier": "^3.8.0",
     "prettier-plugin-astro": "^0.14.1",
+    "swagger-ui-react": "^5.31.0",
     "vitest": "^4.0.17"
   }
 }
