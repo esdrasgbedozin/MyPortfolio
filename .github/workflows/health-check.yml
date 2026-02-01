@@ -1,0 +1,97 @@
+name: Production Health Check
+
+on:
+  # Exécuter toutes les 15 minutes
+  schedule:
+    - cron: '*/15 * * * *'
+
+  # Permettre exécution manuelle
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    name: Check /api/health Endpoint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check API Health
+        id: health
+        run: |
+          echo "🔍 Checking https://portfolio.com/api/health..."
+
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://portfolio.com/api/health)
+
+          if [ "$response" -ne 200 ]; then
+            echo "❌ Health check FAILED: HTTP $response"
+            echo "status=failed" >> $GITHUB_OUTPUT
+            exit 1
+          else
+            echo "✅ Health check PASSED: HTTP $response"
+            echo "status=success" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Issue on Failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Production Health Check Failed',
+              body: `## Health Check Failure
+              
+              **Time**: ${new Date().toISOString()}
+              **Endpoint**: https://portfolio.com/api/health
+              **Status**: Failed to return HTTP 200
+              
+              ### Possible Causes
+              - Edge Function crash
+              - Vercel deployment issue
+              - Network connectivity problem
+              - Rate limiting (DDoS)
+              
+              ### Action Required
+              1. Check Vercel deployment logs: https://vercel.com/portfolio/deployments
+              2. Check Sentry errors: https://sentry.io/organizations/portfolio/issues/
+              3. Verify API dependencies (Brevo/SendGrid status)
+              
+              ### Immediate Steps
+              \`\`\`bash
+              # Check deployment status
+              vercel ls --prod
+              
+              # View real-time logs
+              vercel logs --prod --follow
+              
+              # Rollback if necessary
+              vercel rollback <deployment-id>
+              \`\`\`
+              
+              cc @team`,
+              labels: ['bug', 'production', 'p0-critical', 'health-check']
+            });
+
+            console.log(`✅ Created issue: ${issue.data.html_url}`);
+
+      - name: Send Slack Notification on Failure
+        if: failure() && vars.SLACK_WEBHOOK_URL != ''
+        uses: slackapi/slack-github-action@v1
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          payload: |
+            {
+              "text": "🚨 Production Health Check Failed",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*🚨 Production Health Check Failed*\n\n*Endpoint*: https://portfolio.com/api/health\n*Time*: ${{ github.event.repository.updated_at }}\n\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow Run>"
+                  }
+                }
+              ]
+            }
