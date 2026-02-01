@@ -1,0 +1,16 @@
+# Spectral Configuration for OpenAPI Validation
+# Epic 5.1 - EF-055a: Contract Testing Setup
+
+extends:
+  - 'spectral:oas'
+
+rules:
+  # Enforce stricter rules for production quality
+  operation-operationId: error
+  operation-description: warn
+  info-description: error
+  info-contact: warn
+  info-license: warn
+  operation-tag-defined: warn
+  path-params: error
+  typed-enum: error

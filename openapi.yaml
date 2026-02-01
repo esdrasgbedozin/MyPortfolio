@@ -154,7 +154,7 @@ components:
           items:
             type: string
             format: uri
-          example: ['/images/projects/portfolio-1.jpg']
+          example: ['https://portfolio.dev/images/projects/portfolio-1.jpg']
         metrics:
           type: object
           description: Métriques techniques (optionnel)
@@ -226,7 +226,7 @@ components:
           type: string
           format: uri
           description: URL du badge numérique (optionnel)
-          example: '/badges/aws-saa.png'
+          example: 'https://portfolio.dev/badges/aws-saa.png'
         score:
           type: integer
           description: Score obtenu (optionnel)

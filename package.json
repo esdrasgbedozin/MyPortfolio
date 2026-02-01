@@ -19,6 +19,8 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "openapi:lint": "spectral lint openapi.yaml",
+    "openapi:lint:api": "spectral lint api/openapi.yaml",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -55,6 +57,8 @@
   "devDependencies": {
     "@playwright/test": "^1.57.0",
     "@stoplight/prism-cli": "^5.14.2",
+    "@stoplight/spectral-cli": "^6.15.0",
+    "@stoplight/spectral-rulesets": "^1.22.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
