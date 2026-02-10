@@ -100,7 +100,7 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
 
     // Sinon, appeler l'API
     try {
-      const response = await api.post<ContactFormResponse>('/contact', {
+      const response = await api.post<ContactFormResponse>('/contact.json', {
         ...data,
         turnstileToken, // Include Turnstile token in API request
       });
@@ -236,19 +236,6 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
           onSuccess={(token) => setTurnstileToken(token)}
           onError={() => setTurnstileToken('')}
           onExpire={() => setTurnstileToken('')}
-          options={{
-            theme: 'light',
-            size: 'normal',
-          }}
-        />
-      </div>
-
-      {/* Cloudflare Turnstile */}
-      <div>
-        <Turnstile
-          siteKey={TURNSTILE_SITE_KEY}
-          onSuccess={(token: string) => setTurnstileToken(token)}
-          onError={() => setTurnstileToken('')}
           options={{
             theme: 'light',
             size: 'normal',

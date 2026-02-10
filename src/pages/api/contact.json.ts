@@ -17,6 +17,7 @@ import { ContactService } from '../../services/ContactService';
 import { ApiError, InternalServerError } from '../../errors/ApiError';
 import { logger } from '../../utils/logger';
 import { Sentry } from '../../utils/sentry';
+import { validateEnv } from '../../utils/validateEnv';
 
 /**
  * POST /api/contact.json
@@ -26,6 +27,24 @@ export async function POST(context: APIContext): Promise<Response> {
   // Generate unique requestId for tracing (EF-045)
   const requestId = crypto.randomUUID();
   const clientIp = context.clientAddress || '0.0.0.0';
+
+  // EF-053: Validate required env vars in production (fail fast with clear error)
+  if (import.meta.env.PROD) {
+    try {
+      validateEnv();
+    } catch (envError) {
+      logger.error('Environment validation failed', envError as Error, {
+        context: 'api/contact',
+        requestId,
+      });
+      Sentry.captureException(envError);
+      const configError = new InternalServerError(
+        'Server configuration error',
+        '/api/contact.json'
+      );
+      return configError.toResponse();
+    }
+  }
 
   // EF-049e: Add Sentry breadcrumb for request start
   Sentry.addBreadcrumb({

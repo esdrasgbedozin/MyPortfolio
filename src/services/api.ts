@@ -155,10 +155,12 @@ class ApiClient {
 
 /**
  * Factory pour créer une instance du client API
- * Utilise la variable d'environnement PUBLIC_API_URL
+ * Uses the app's own API routes by default (Astro SSR).
+ * In production, PUBLIC_API_URL can be set to the deployment URL.
+ * Falls back to '/api' for same-origin requests.
  */
 export function createApiClient(baseUrl?: string): ApiClient {
-  const apiBaseUrl = baseUrl || import.meta.env.PUBLIC_API_URL || 'http://localhost:4010/api';
+  const apiBaseUrl = baseUrl || import.meta.env.PUBLIC_API_URL || '/api';
 
   return new ApiClient({ baseUrl: apiBaseUrl });
 }
