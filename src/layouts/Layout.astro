@@ -8,14 +8,52 @@ interface Props {
   title?: string;
   description?: string;
   lang?: 'fr' | 'en';
+  ogImage?: string;
+  ogType?: string;
 }
 
-const { title = 'Portfolio', description = 'Portfolio Professionnel', lang = 'fr' } = Astro.props;
+const {
+  title = 'Portfolio - Esdras G. Bedozin',
+  description = 'Portfolio Professionnel - Ingénieur Full-Stack & Architecte Cloud',
+  lang = 'fr',
+  ogImage,
+  ogType = 'website',
+} = Astro.props;
 
 // SEO: hreflang alternate URLs (FE-094)
 const currentPath = Astro.url.pathname.replace(`/${lang}`, ''); // Remove locale from path
 const frUrl = new URL(getLocalizedPath(currentPath, 'fr'), Astro.site);
 const enUrl = new URL(getLocalizedPath(currentPath, 'en'), Astro.site);
+
+// SEO: Open Graph (FE-105)
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://portfolio.example.com';
+const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageUrl = ogImage
+  ? new URL(ogImage, siteUrl).toString()
+  : new URL('/og-default.png', siteUrl).toString();
+
+// SEO: JSON-LD Structured Data (FE-107)
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Esdras G. Bedozin',
+  jobTitle:
+    lang === 'fr'
+      ? 'Ingénieur Full-Stack & Architecte Cloud'
+      : 'Full-Stack Engineer & Cloud Architect',
+  url: siteUrl,
+  sameAs: ['https://github.com/esdrasgbedozin', 'https://linkedin.com/in/esdrasgbedozin'],
+  knowsAbout: ['TypeScript', 'React', 'Astro', 'Azure', 'Node.js', 'Python'],
+};
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Portfolio - Esdras G. Bedozin',
+  url: siteUrl,
+  inLanguage: [lang],
+  author: { '@type': 'Person', name: 'Esdras G. Bedozin' },
+};
 ---
 
 <!doctype html>
@@ -25,6 +63,21 @@ const enUrl = new URL(getLocalizedPath(currentPath, 'en'), Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph Meta Tags (FE-105) -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_US'} />
+    <meta property="og:site_name" content="Portfolio - Esdras G. Bedozin" />
+
+    <!-- Twitter Card Meta Tags (FE-105) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- Preload critical fonts (FE-102/103) -->
     <link
@@ -49,6 +102,13 @@ const enUrl = new URL(getLocalizedPath(currentPath, 'en'), Astro.site);
 
     <!-- Canonical URL -->
     <link rel="canonical" href={Astro.url.toString()} />
+
+    <!-- JSON-LD Structured Data (FE-107) -->
+    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+
+    <!-- Named slot for page-specific head elements -->
+    <slot name="head" />
 
     <title>{title}</title>
   </head>

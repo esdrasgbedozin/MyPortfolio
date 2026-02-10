@@ -2,7 +2,7 @@
 
 > **Dernière mise à jour** : 10 février 2026  
 > **Branche active** : `feature/milestone-7-frontend-optimizations`  
-> **Commits** : 8 commits (Phases 1-4 + Navigation + Tests + react-icons + Perf)
+> **Commits** : 9 commits (Phases 1-4 + Navigation + Tests + react-icons + Perf + SEO/A11y)
 
 ---
 
@@ -18,7 +18,7 @@
 | **M6** : i18n Complete                | ✅ **100%**  | FE-084→FE-093                 | ~1 jour      | Traductions FR/EN + dates/nombres Intl              |
 | **M7** : BACKEND Observability        | ✅ **100%**  | EF-049a→EF-062                | ~2 jours     | Sentry + Security Headers + Contract Tests          |
 | **M7** : FRONTEND Visual Enhancements | ✅ **100%**  | Phases 1-4 + tests + icons    | ~3 jours     | Hero, Glassmorphism, Scroll, Signature, react-icons |
-| **M7** : FRONTEND Performance         | ✅ **90%**   | FE-102→FE-114 complétés       | ~0.5 jour    | Fonts, CSS, Bundle, Lighthouse CI (Images N/A)      |
+| **M7** : FRONTEND Performance         | ✅ **98%**   | FE-100→FE-114 complétés       | ~1 jour      | Fonts, CSS, Bundle, SEO, A11y, Lighthouse CI        |
 | **M8** : Switch API Réelle            | 🔜 **Prévu** | -                             | -            | Après intégration contenu réel                      |
 | **M9** : Optimisations Finales        | 🔜 **Prévu** | -                             | -            | SEO + A11y avancée                                  |
 
@@ -133,6 +133,16 @@ Ces tâches étaient prévues AVANT les améliorations visuelles, mais tu as dem
 - ⏭️ **FE-099** : Placeholder blur (LQIP)
 - ⏭️ **FE-100** : CDN optimization (Vercel Image)
 - ⏭️ **FE-101** : Tests Lighthouse images LCP <2s
+
+##### **Epic 8.2a : SEO Avancé** (FE-105→FE-107) — ✅ COMPLÉTÉ
+
+- ✅ **FE-105** : Open Graph meta tags (og:title/description/image/url sur TOUTES pages)
+- ✅ **FE-106** : robots.txt (public/robots.txt avec sitemap URL + disallow API)
+- ✅ **FE-107** : JSON-LD structured data (Person + WebSite schema.org)
+
+##### **Epic 8.2b : Accessibilité Automatisée** (FE-100) — ✅ COMPLÉTÉ
+
+- ✅ **FE-100** : @axe-core/playwright installé + e2e/accessibility.spec.ts (18 tests, toutes pages)
 
 ##### **Epic 8.2 : Optimisation Fonts** (FE-102→FE-105) — ✅ COMPLÉTÉ
 
@@ -394,17 +404,17 @@ TURNSTILE_SECRET_KEY=0x4XXXXXXXXXXXX  # Ton compte Cloudflare
 
 ## 📊 MÉTRIQUES ACTUELLES
 
-| Indicateur                   | Valeur  | Objectif | Statut                                          |
-| ---------------------------- | ------- | -------- | ----------------------------------------------- |
-| **TypeScript Errors**        | 0       | 0        | ✅                                              |
-| **Tests Vitest**             | 350/351 | >80%     | ✅ 99.7% (1 skipped)                            |
-| **Tests Playwright**         | 120/128 | 100%     | ✅ 100% (8 skipped intentionally)               |
-| **Lighthouse Performance**   | -       | ≥90      | 🔜 Config prête, à valider après déploiement    |
-| **Lighthouse Accessibility** | -       | ≥90      | 🔜 Config prête, à valider après déploiement    |
-| **Bundle JS**                | ~150KB  | <150KB   | ✅ Code splitting configuré (manualChunks)      |
-| **Fonts**                    | 82KB    | <100KB   | ✅ Inter 26KB + JetBrains Mono 56KB (woff2 var) |
-| **Commits M7 Frontend**      | 8       | -        | ✅ (Phases 1-4 + Nav + Tests + Icons + Perf)    |
-| **Pages Enrichies**          | 8/8     | 8/8      | ✅ 100% (toutes pages glassmorphism + parallax) |
+| Indicateur                   | Valeur  | Objectif | Statut                                             |
+| ---------------------------- | ------- | -------- | -------------------------------------------------- |
+| **TypeScript Errors**        | 0       | 0        | ✅                                                 |
+| **Tests Vitest**             | 350/351 | >80%     | ✅ 99.7% (1 skipped)                               |
+| **Tests Playwright**         | 120/128 | 100%     | ✅ 100% (8 skipped intentionally)                  |
+| **Lighthouse Performance**   | -       | ≥90      | 🔜 Config prête, à valider après déploiement       |
+| **Lighthouse Accessibility** | -       | ≥90      | 🔜 Config prête, à valider après déploiement       |
+| **Bundle JS**                | ~150KB  | <150KB   | ✅ Code splitting configuré (manualChunks)         |
+| **Fonts**                    | 82KB    | <100KB   | ✅ Inter 26KB + JetBrains Mono 56KB (woff2 var)    |
+| **Commits M7 Frontend**      | 9       | -        | ✅ (Phases 1-4 + Nav + Tests + Icons + Perf + SEO) |
+| **Pages Enrichies**          | 8/8     | 8/8      | ✅ 100% (toutes pages glassmorphism + parallax)    |
 
 ---
 
@@ -415,7 +425,7 @@ TURNSTILE_SECRET_KEY=0x4XXXXXXXXXXXX  # Ton compte Cloudflare
 - ✅ M1 à M6 : 100% (Setup → i18n)
 - ✅ M7 Backend : 100% (Sentry, Retry, Rate Limit, Security, Contract Tests)
 - ✅ M7 Frontend Visuels : 100% (Phases 1-4 + toutes pages enrichies + react-icons)
-- ✅ M7 Frontend Performance : 90% (Fonts, CSS, Bundle, Lighthouse CI)
+- ✅ M7 Frontend Performance : 98% (Fonts, CSS, Bundle, Lighthouse CI, SEO, A11y)
 - ✅ Tests : 350/351 unit + 120/128 E2E (tous passent, skips intentionnels)
 - ✅ Navigation : 6 liens FR/EN avec About accessible
 - ✅ Pages enrichies : 8/8 (Home, About, Projects, Skills, Certifications, Contact FR/EN)
@@ -427,9 +437,9 @@ TURNSTILE_SECRET_KEY=0x4XXXXXXXXXXXX  # Ton compte Cloudflare
 - ❌ Switch API réelle (Resend + Turnstile)
 - ❌ Merge `develop` → `main` + déploiement production
 
-### **Tu es à** : **~95% de M7 Frontend complet** 🎯
+### **Tu es à** : **~98% de M7 Frontend complet** 🎯
 
-### **Temps restant estimé** : **3-4h** (contenu réel + switch API)
+### **Temps restant estimé** : **3h** (contenu réel + switch API)
 
 ### **Recommandation** :
 

@@ -7,7 +7,11 @@
 
 import type { APIRoute } from 'astro';
 
-const SITE_URL = 'https://portfolio.example.com'; // TODO: Replace with real domain
+/**
+ * Site URL sourced from astro.config.mjs `site` property.
+ * Update astro.config.mjs when deploying to production domain.
+ */
+const SITE_URL = import.meta.env.SITE || 'https://portfolio.example.com';
 
 // Map FR paths to EN paths
 const PATH_MAP: Record<string, string> = {
