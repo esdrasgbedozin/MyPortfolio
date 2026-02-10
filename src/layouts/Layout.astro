@@ -26,6 +26,22 @@ const enUrl = new URL(getLocalizedPath(currentPath, 'en'), Astro.site);
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Preload critical fonts (FE-102/103) -->
+    <link
+      rel="preload"
+      href="/fonts/inter-latin-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/jetbrains-mono-latin-var.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
     <!-- SEO: hreflang alternate links (FE-094) -->
     <link rel="alternate" hreflang="fr" href={frUrl.toString()} />
     <link rel="alternate" hreflang="en" href={enUrl.toString()} />

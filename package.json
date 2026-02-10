@@ -24,6 +24,7 @@
     "test:contract": "node tests/contract/run-tests.mjs",
     "lhci": "lhci autorun",
     "lhci:ci": "lhci autorun --collect.settings.chromeFlags='--no-sandbox'",
+    "build:analyze": "ANALYZE=true astro build",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -89,6 +90,7 @@
     "portman": "^0.0.3",
     "prettier": "^3.8.0",
     "prettier-plugin-astro": "^0.14.1",
+    "rollup-plugin-visualizer": "^6.0.5",
     "swagger-ui-react": "^5.31.0",
     "vitest": "^4.0.17"
   }
