@@ -1,14 +1,15 @@
 /**
  * SkillBadge Component
- * Enhanced Badge with technology logos/icons
+ * Enhanced Badge with technology logos/icons from react-icons
  */
 
-import type { LucideIcon } from 'lucide-react';
+import type { IconType } from 'react-icons';
 import type { ReactElement } from 'react';
+import { getTechIcon } from '../data/techIcons';
 
 interface SkillBadgeProps {
   children: string;
-  icon?: LucideIcon;
+  icon?: IconType;
   variant?: 'primary' | 'secondary' | 'success';
 }
 
@@ -20,14 +21,17 @@ const variantStyles = {
 
 export default function SkillBadge({
   children,
-  icon: Icon,
+  icon,
   variant = 'primary',
 }: SkillBadgeProps): ReactElement {
+  // Auto-detect icon from technology name if not provided
+  const Icon = icon || getTechIcon(children);
+
   return (
     <span
-      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium border backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-primary-400/70 ${variantStyles[variant]}`}
+      className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-primary-400/70 ${variantStyles[variant]}`}
     >
-      {Icon && <Icon size={16} aria-hidden="true" />}
+      {Icon && <Icon size={20} aria-hidden="true" />}
       <span>{children}</span>
     </span>
   );

@@ -3,7 +3,6 @@ import Layout from '../../../layouts/Layout.astro';
 import SkillBadge from '../../../components/SkillBadge';
 import ScrollReveal from '../../../components/ScrollReveal';
 import ParallaxBackground from '../../../components/ParallaxBackground';
-import { Code2, Server, Cloud, Database, BookOpen } from 'lucide-react';
 ---
 
 <Layout title="Mes Compétences - Portfolio" lang="fr">
@@ -29,18 +28,17 @@ import { Code2, Server, Cloud, Database, BookOpen } from 'lucide-react';
         <ScrollReveal delay={100} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
-              <Code2 className="text-primary-400" size={28} />
               Langages de programmation
             </h2>
             <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="primary" icon={Code2} client:load>TypeScript</SkillBadge>
-              <SkillBadge variant="primary" icon={Code2} client:load>JavaScript</SkillBadge>
-              <SkillBadge variant="primary" icon={Code2} client:load>Python</SkillBadge>
-              <SkillBadge variant="primary" icon={Code2} client:load>Java</SkillBadge>
-              <SkillBadge variant="secondary" icon={Code2} client:load>C#</SkillBadge>
-              <SkillBadge variant="secondary" icon={Database} client:load>SQL</SkillBadge>
+              <SkillBadge variant="primary">TypeScript</SkillBadge>
+              <SkillBadge variant="primary">JavaScript</SkillBadge>
+              <SkillBadge variant="primary">Python</SkillBadge>
+              <SkillBadge variant="primary">Java</SkillBadge>
+              <SkillBadge variant="secondary">C#</SkillBadge>
+              <SkillBadge variant="secondary">SQL</SkillBadge>
             </div>
           </div>
         </ScrollReveal>
@@ -49,18 +47,17 @@ import { Code2, Server, Cloud, Database, BookOpen } from 'lucide-react';
         <ScrollReveal delay={200} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
-              <Server className="text-primary-400" size={28} />
               Frameworks & Bibliothèques
             </h2>
             <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="primary" icon={Server} client:load>React</SkillBadge>
-              <SkillBadge variant="primary" icon={Server} client:load>Astro</SkillBadge>
-              <SkillBadge variant="primary" icon={Server} client:load>Next.js</SkillBadge>
-              <SkillBadge variant="primary" icon={Server} client:load>Node.js</SkillBadge>
-              <SkillBadge variant="secondary" icon={Server} client:load>Express</SkillBadge>
-              <SkillBadge variant="secondary" icon={Server} client:load>Spring Boot</SkillBadge>
+              <SkillBadge variant="primary">React</SkillBadge>
+              <SkillBadge variant="primary">Astro</SkillBadge>
+              <SkillBadge variant="primary">Next.js</SkillBadge>
+              <SkillBadge variant="primary">Node.js</SkillBadge>
+              <SkillBadge variant="secondary">Express</SkillBadge>
+              <SkillBadge variant="secondary">Spring Boot</SkillBadge>
             </div>
           </div>
         </ScrollReveal>
@@ -69,18 +66,17 @@ import { Code2, Server, Cloud, Database, BookOpen } from 'lucide-react';
         <ScrollReveal delay={300} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
-              <Cloud className="text-primary-400" size={28} />
               Cloud & DevOps
             </h2>
             <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="primary" icon={Cloud} client:load>Azure</SkillBadge>
-              <SkillBadge variant="primary" icon={Cloud} client:load>AWS</SkillBadge>
-              <SkillBadge variant="primary" icon={Cloud} client:load>Vercel</SkillBadge>
-              <SkillBadge variant="secondary" icon={Server} client:load>Docker</SkillBadge>
-              <SkillBadge variant="secondary" icon={Server} client:load>Kubernetes</SkillBadge>
-              <SkillBadge variant="secondary" icon={Server} client:load>GitHub Actions</SkillBadge>
+              <SkillBadge variant="primary">Azure</SkillBadge>
+              <SkillBadge variant="primary">AWS</SkillBadge>
+              <SkillBadge variant="primary">Vercel</SkillBadge>
+              <SkillBadge variant="secondary">Docker</SkillBadge>
+              <SkillBadge variant="secondary">Kubernetes</SkillBadge>
+              <SkillBadge variant="secondary">GitHub Actions</SkillBadge>
             </div>
           </div>
         </ScrollReveal>
@@ -89,16 +85,15 @@ import { Code2, Server, Cloud, Database, BookOpen } from 'lucide-react';
         <ScrollReveal delay={400} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
-              <Database className="text-primary-400" size={28} />
               Bases de données
             </h2>
             <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="primary" icon={Database} client:load>PostgreSQL</SkillBadge>
-              <SkillBadge variant="primary" icon={Database} client:load>MongoDB</SkillBadge>
-              <SkillBadge variant="secondary" icon={Database} client:load>Redis</SkillBadge>
-              <SkillBadge variant="secondary" icon={Database} client:load>SQL Server</SkillBadge>
+              <SkillBadge variant="primary">PostgreSQL</SkillBadge>
+              <SkillBadge variant="primary">MongoDB</SkillBadge>
+              <SkillBadge variant="secondary">Redis</SkillBadge>
+              <SkillBadge variant="secondary">SQL Server</SkillBadge>
             </div>
           </div>
         </ScrollReveal>
@@ -107,23 +102,17 @@ import { Code2, Server, Cloud, Database, BookOpen } from 'lucide-react';
         <ScrollReveal delay={500} client:idle>
           <div class="glass-effect rounded-xl p-8">
             <h2
-              class="text-2xl font-bold mb-6 flex items-center gap-2 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
             >
-              <BookOpen className="text-primary-400" size={28} />
               Méthodologies & Pratiques
             </h2>
             <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="success" icon={BookOpen} client:load>TDD</SkillBadge>
-              <SkillBadge variant="success" icon={BookOpen} client:load>Agile / Scrum</SkillBadge>
-              <SkillBadge variant="success" icon={BookOpen} client:load>CI/CD</SkillBadge>
-              <SkillBadge variant="success" icon={BookOpen} client:load>SOLID Principles</SkillBadge
-              >
-              <SkillBadge variant="secondary" icon={BookOpen} client:load
-                >Design Patterns</SkillBadge
-              >
-              <SkillBadge variant="secondary" icon={BookOpen} client:load
-                >Clean Architecture</SkillBadge
-              >
+              <SkillBadge variant="success">TDD</SkillBadge>
+              <SkillBadge variant="success">Agile / Scrum</SkillBadge>
+              <SkillBadge variant="success">CI/CD</SkillBadge>
+              <SkillBadge variant="success">SOLID Principles</SkillBadge>
+              <SkillBadge variant="secondary">Design Patterns</SkillBadge>
+              <SkillBadge variant="secondary">Clean Architecture</SkillBadge>
             </div>
           </div>
         </ScrollReveal>

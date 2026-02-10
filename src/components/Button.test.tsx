@@ -24,14 +24,16 @@ describe('Button Component', () => {
       render(<Button>Primary</Button>);
 
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-[var(--color-primary-600)]');
+      expect(button).toHaveClass('bg-gradient-to-r');
+      expect(button).toHaveClass('from-primary-600');
     });
 
     it('should render secondary variant', () => {
       render(<Button variant="secondary">Secondary</Button>);
 
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-[var(--color-secondary-600)]');
+      expect(button).toHaveClass('bg-gradient-to-r');
+      expect(button).toHaveClass('from-secondary-600');
     });
 
     it('should render ghost variant', () => {

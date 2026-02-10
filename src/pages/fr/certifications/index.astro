@@ -7,9 +7,9 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
 ---
 
 <Layout title="Mes Certifications - Portfolio" lang="fr">
-  <ParallaxBackground variant="dots" speed={0.3} className="min-h-screen">
+  <ParallaxBackground variant="dots" speed={0.3} className="min-h-screen" client:load>
     <div class="container mx-auto px-4 py-16">
-      <ScrollReveal delay={0}>
+      <ScrollReveal delay={0} client:load>
         <div class="text-center mb-12">
           <h1
             class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
@@ -26,13 +26,13 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
       {/* Grid responsive 1/2/3 colonnes */}
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Certification 1 - Exemple */}
-        <ScrollReveal delay={100}>
+        <ScrollReveal delay={100} client:load>
           <article
             class="glass-effect card-elevated rounded-xl p-6 h-full hover:border-primary-400/50 transition-all duration-300"
           >
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-xl font-bold text-white">Azure Solutions Architect Expert</h3>
-              <Badge variant="success" client:load>Actif</Badge>
+              <Badge variant="success">Actif</Badge>
             </div>
             <p class="text-sm text-neutral-400 mb-2 font-semibold">Microsoft</p>
             <p class="text-sm text-neutral-300 mb-4">Obtenue : Janvier 2024</p>
@@ -41,13 +41,13 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
         </ScrollReveal>
 
         {/* Certification 2 - Exemple */}
-        <ScrollReveal delay={200}>
+        <ScrollReveal delay={200} client:load>
           <article
             class="glass-effect card-elevated rounded-xl p-6 h-full hover:border-primary-400/50 transition-all duration-300"
           >
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-xl font-bold text-white">AWS Certified Developer</h3>
-              <Badge variant="success" client:load>Actif</Badge>
+              <Badge variant="success">Actif</Badge>
             </div>
             <p class="text-sm text-neutral-400 mb-2 font-semibold">Amazon Web Services</p>
             <p class="text-sm text-neutral-300 mb-4">Obtenue : Mars 2023</p>
@@ -56,13 +56,13 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
         </ScrollReveal>
 
         {/* Certification 3 - Exemple */}
-        <ScrollReveal delay={300}>
+        <ScrollReveal delay={300} client:load>
           <article
             class="glass-effect card-elevated rounded-xl p-6 h-full hover:border-primary-400/50 transition-all duration-300"
           >
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-xl font-bold text-white">Professional Scrum Master I</h3>
-              <Badge variant="success" client:load>Actif</Badge>
+              <Badge variant="success">Actif</Badge>
             </div>
             <p class="text-sm text-neutral-400 mb-2 font-semibold">Scrum.org</p>
             <p class="text-sm text-neutral-300 mb-4">Obtenue : Juin 2023</p>

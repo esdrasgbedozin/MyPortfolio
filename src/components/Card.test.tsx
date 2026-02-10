@@ -40,16 +40,16 @@ describe('Card Component', () => {
       render(<Card>Content</Card>);
 
       const card = screen.getByRole('article');
-      expect(card).toHaveClass('bg-[var(--color-neutral-900)]');
-      expect(card).toHaveClass('border-[var(--color-neutral-800)]');
+      expect(card).toHaveClass('glass-effect');
+      expect(card).toHaveClass('border-white/10');
     });
 
     it('should render elevated variant', () => {
       render(<Card variant="elevated">Content</Card>);
 
       const card = screen.getByRole('article');
-      expect(card).toHaveClass('bg-[var(--color-neutral-800)]');
-      expect(card).toHaveClass('shadow-lg');
+      expect(card).toHaveClass('card-elevated');
+      expect(card).toHaveClass('glass-effect');
     });
 
     it('should render outlined variant', () => {
@@ -104,7 +104,7 @@ describe('Card Component', () => {
 
       const header = screen.getByText('Title').parentElement;
       expect(header).toHaveClass('border-b');
-      expect(header).toHaveClass('border-[var(--color-neutral-800)]');
+      expect(header).toHaveClass('border-white/10');
       expect(header).toHaveClass('pb-4');
     });
   });
@@ -122,7 +122,7 @@ describe('Card Component', () => {
 
       const footer = screen.getByText('Actions').parentElement;
       expect(footer).toHaveClass('border-t');
-      expect(footer).toHaveClass('border-[var(--color-neutral-800)]');
+      expect(footer).toHaveClass('border-white/10');
       expect(footer).toHaveClass('pt-4');
     });
   });
@@ -162,8 +162,8 @@ describe('Card Component', () => {
       render(<Card hoverable>Content</Card>);
 
       const card = screen.getByRole('article');
-      expect(card).toHaveClass('hover:border-[var(--color-primary-600)]');
-      expect(card).toHaveClass('transition-colors');
+      expect(card).toHaveClass('hover:border-primary-400/50');
+      expect(card).toHaveClass('transition-all');
     });
 
     it('should not apply hover styles by default', () => {

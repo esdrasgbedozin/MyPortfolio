@@ -40,7 +40,7 @@ describe('Badge Component', () => {
       render(<Badge>Default</Badge>);
 
       const badge = screen.getByText('Default');
-      expect(badge).toHaveClass('bg-[var(--color-neutral-800)]');
+      expect(badge).toHaveClass('bg-neutral-800/50');
       expect(badge).toHaveClass('text-[var(--color-neutral-200)]');
     });
 
@@ -48,32 +48,32 @@ describe('Badge Component', () => {
       render(<Badge variant="success">Success</Badge>);
 
       const badge = screen.getByText('Success');
-      expect(badge).toHaveClass('bg-[var(--color-success)]');
-      expect(badge).toHaveClass('text-white');
+      expect(badge).toHaveClass('bg-green-500/20');
+      expect(badge).toHaveClass('text-green-400');
     });
 
     it('should render warning variant', () => {
       render(<Badge variant="warning">Warning</Badge>);
 
       const badge = screen.getByText('Warning');
-      expect(badge).toHaveClass('bg-[var(--color-warning)]');
-      expect(badge).toHaveClass('text-[var(--color-neutral-900)]');
+      expect(badge).toHaveClass('bg-yellow-500/20');
+      expect(badge).toHaveClass('text-yellow-400');
     });
 
     it('should render error variant', () => {
       render(<Badge variant="error">Error</Badge>);
 
       const badge = screen.getByText('Error');
-      expect(badge).toHaveClass('bg-[var(--color-error)]');
-      expect(badge).toHaveClass('text-white');
+      expect(badge).toHaveClass('bg-red-500/20');
+      expect(badge).toHaveClass('text-red-400');
     });
 
     it('should render info variant', () => {
       render(<Badge variant="info">Info</Badge>);
 
       const badge = screen.getByText('Info');
-      expect(badge).toHaveClass('bg-[var(--color-primary-600)]');
-      expect(badge).toHaveClass('text-white');
+      expect(badge).toHaveClass('bg-primary-500/20');
+      expect(badge).toHaveClass('text-primary-400');
     });
   });
 
@@ -158,7 +158,7 @@ describe('Badge Component', () => {
       );
 
       const badge = screen.getByText('OK');
-      expect(badge).toHaveClass('bg-[var(--color-success)]');
+      expect(badge).toHaveClass('bg-green-500/20');
       expect(badge).toHaveClass('px-2');
       expect(badge).toHaveClass('text-xs');
     });
@@ -171,7 +171,7 @@ describe('Badge Component', () => {
       );
 
       const badge = screen.getByText('Failed');
-      expect(badge).toHaveClass('bg-[var(--color-error)]');
+      expect(badge).toHaveClass('bg-red-500/20');
       expect(badge).toHaveClass('ml-2');
     });
   });

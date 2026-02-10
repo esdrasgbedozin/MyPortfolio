@@ -132,6 +132,13 @@ export class RateLimitService {
   }
 
   /**
+   * Reset complet du store (utile pour les tests E2E)
+   */
+  reset(): void {
+    this.store.clear();
+  }
+
+  /**
    * Arrête le timer de cleanup (utile pour les tests)
    */
   destroy(): void {
