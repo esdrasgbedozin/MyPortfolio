@@ -209,18 +209,22 @@ async function main() {
     console.log(`${colors.green}Passed: ${results.passed}${colors.reset}`);
     console.log(`${colors.red}Failed: ${results.failed}${colors.reset}`);
 
-    // Exit with appropriate code
-    if (results.failed > 0) {
-      process.exit(1);
+    // Stop Prism server before exiting
+    if (prismProcess) {
+      log.info('Stopping Prism mock server...');
+      prismProcess.kill('SIGTERM');
+      prismProcess = null;
     }
+
+    // Explicit exit to avoid hanging on child process cleanup
+    process.exit(results.failed > 0 ? 1 : 0);
   } catch (error) {
     log.error(`Contract testing failed: ${error.message}`);
     process.exit(1);
   } finally {
-    // Stop Prism server
+    // Ensure Prism server is stopped even on unexpected errors
     if (prismProcess) {
-      log.info('Stopping Prism mock server...');
-      prismProcess.kill();
+      prismProcess.kill('SIGKILL');
     }
   }
 }
