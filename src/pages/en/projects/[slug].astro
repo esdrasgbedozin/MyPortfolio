@@ -63,7 +63,7 @@ const siteUrl = Astro.site?.toString() || 'http://localhost:4321';
 const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImage = project.image
   ? new URL(project.image, siteUrl).toString()
-  : new URL('/og-default.png', siteUrl).toString();
+  : new URL('/og-default.svg', siteUrl).toString();
 ---
 
 <Layout title={`${project.title} - Portfolio`} lang="en">

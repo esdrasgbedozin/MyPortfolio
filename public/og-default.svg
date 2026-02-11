@@ -1,0 +1,42 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Accent line -->
+  <rect x="100" y="200" width="120" height="4" rx="2" fill="url(#accent)"/>
+  
+  <!-- Name -->
+  <text x="100" y="270" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="700" fill="#f5f5f5">
+    Esdras GBEDOZIN
+  </text>
+  
+  <!-- Title -->
+  <text x="100" y="330" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="400" fill="#a1a1aa">
+    Full-Stack Engineer &amp; Cloud Architect
+  </text>
+  
+  <!-- Tech tags -->
+  <text x="100" y="400" font-family="monospace" font-size="20" fill="#3b82f6">
+    TypeScript · React · Astro · Azure · Node.js
+  </text>
+  
+  <!-- Bottom accent line -->
+  <rect x="100" y="500" width="1000" height="2" rx="1" fill="#27272a"/>
+  
+  <!-- URL -->
+  <text x="100" y="540" font-family="monospace" font-size="18" fill="#71717a">
+    portfolio.esdrasgbedozin.dev
+  </text>
+</svg>

@@ -1,4 +1,48 @@
 ---
-// Redirect root to default locale (FR)
-return Astro.redirect('/fr');
+/**
+ * Root redirect with Accept-Language detection (FE-093)
+ *
+ * Detects browser language preference from Accept-Language header.
+ * Redirects to /en if English is preferred, /fr otherwise (default).
+ */
+
+const acceptLanguage = Astro.request.headers.get('accept-language') || '';
+
+// Parse Accept-Language: check if English is preferred over French
+const preferredLocale = parsePreferredLocale(acceptLanguage);
+
+return Astro.redirect(`/${preferredLocale}`);
+
+/**
+ * Parse Accept-Language header to determine preferred locale.
+ * Only supports 'fr' and 'en'. Defaults to 'fr'.
+ *
+ * @example
+ * parsePreferredLocale('en-US,en;q=0.9,fr;q=0.8') // 'en'
+ * parsePreferredLocale('fr-FR,fr;q=0.9,en;q=0.8') // 'fr'
+ * parsePreferredLocale('de-DE,de;q=0.9') // 'fr' (default)
+ */
+function parsePreferredLocale(header: string): 'fr' | 'en' {
+  if (!header) return 'fr';
+
+  // Split by comma, parse quality values
+  const languages = header.split(',').map((part) => {
+    const [lang, quality] = part.trim().split(';q=');
+    return {
+      lang: lang.trim().toLowerCase().split('-')[0], // 'en-US' -> 'en'
+      q: quality ? parseFloat(quality) : 1.0,
+    };
+  });
+
+  // Sort by quality (highest first)
+  languages.sort((a, b) => b.q - a.q);
+
+  // Find first supported locale
+  for (const { lang } of languages) {
+    if (lang === 'en') return 'en';
+    if (lang === 'fr') return 'fr';
+  }
+
+  return 'fr'; // Default
+}
 ---

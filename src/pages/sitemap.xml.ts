@@ -3,9 +3,11 @@
  *
  * Génère sitemap.xml multilingue pour FR/EN
  * Respecte le format XML standard avec hreflang
+ * Inclut les pages statiques ET les pages de détail des projets
  */
 
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 
 /**
  * Site URL sourced from astro.config.mjs `site` property.
@@ -22,37 +24,55 @@ const PATH_MAP: Record<string, string> = {
   '': '',
 };
 
-export const GET: APIRoute = async () => {
-  // Build sitemap entries
-  const entries: string[] = [];
-
-  // For each FR route, create entry with hreflang alternates
-  Object.entries(PATH_MAP).forEach(([frPath, enPath]) => {
-    const frUrl = `${SITE_URL}/fr${frPath}`;
-    const enUrl = `${SITE_URL}/en${enPath}`;
-
-    // Add entry for FR page
-    entries.push(`
+function buildEntry(frUrl: string, enUrl: string, priority: string = '0.8'): string {
+  return `
   <url>
     <loc>${frUrl}</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="${frUrl}" />
     <xhtml:link rel="alternate" hreflang="en" href="${enUrl}" />
     <xhtml:link rel="alternate" hreflang="x-default" href="${frUrl}" />
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>`);
-
-    // Add entry for EN page
-    entries.push(`
+    <priority>${priority}</priority>
+  </url>
   <url>
     <loc>${enUrl}</loc>
     <xhtml:link rel="alternate" hreflang="fr" href="${frUrl}" />
     <xhtml:link rel="alternate" hreflang="en" href="${enUrl}" />
     <xhtml:link rel="alternate" hreflang="x-default" href="${frUrl}" />
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>`);
+    <priority>${priority}</priority>
+  </url>`;
+}
+
+export const GET: APIRoute = async () => {
+  const entries: string[] = [];
+
+  // Static pages (FR/EN pairs)
+  Object.entries(PATH_MAP).forEach(([frPath, enPath]) => {
+    const frUrl = `${SITE_URL}/fr${frPath}`;
+    const enUrl = `${SITE_URL}/en${enPath}`;
+    entries.push(buildEntry(frUrl, enUrl));
   });
+
+  // Project detail pages (dynamic slugs from content collection)
+  try {
+    const allProjects = await getCollection('projects');
+    // Group by slug (strip locale suffix): "api-ecommerce.fr" → "api-ecommerce"
+    const slugs = new Set<string>();
+    for (const project of allProjects) {
+      // Content file IDs are like "api-ecommerce.fr" or "api-ecommerce.en"
+      const slug = project.id.replace(/\.(fr|en)$/, '');
+      slugs.add(slug);
+    }
+
+    for (const slug of slugs) {
+      const frUrl = `${SITE_URL}/fr/projets/${slug}`;
+      const enUrl = `${SITE_URL}/en/projects/${slug}`;
+      entries.push(buildEntry(frUrl, enUrl, '0.6'));
+    }
+  } catch {
+    // Content collection may not be available during build - skip dynamic entries
+  }
 
   // Build XML
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
