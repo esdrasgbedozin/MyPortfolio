@@ -1,62 +1,76 @@
 ---
+/**
+ * About Page EN
+ * Dynamic data from Content Collections
+ */
+import { getEntry, getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Terminal from '../../components/Terminal';
 import AnimatedCounter from '../../components/AnimatedCounter';
 import Timeline from '../../components/Timeline';
 import ScrollReveal from '../../components/ScrollReveal';
 import ParallaxBackground from '../../components/ParallaxBackground';
-import enTranslations from '../../i18n/en.json';
+
+export const prerender = true;
 
 const lang = 'en' as const;
 
+// Load real data from Content Collections
+const certsEntry = await getEntry('certifications', 'certifications.en');
+const skillsEntry = await getEntry('skills', 'skills.en');
+const allProjects = await getCollection('projects');
+
+const certs = certsEntry?.data ?? [];
+const skills = skillsEntry?.data ?? [];
+const enProjects = allProjects.filter((p) => p.id.endsWith('.en'));
+
+// Dynamically computed stats
+const totalSkills = skills.reduce((acc, cat) => acc + cat.skills.length, 0);
+const totalCerts = certs.length;
+const totalProjects = enProjects.length;
+const totalCategories = skills.length;
+
+// Terminal with real skills
 const terminalLines = [
   { type: 'command' as const, content: 'whoami', delay: 500 },
   {
     type: 'output' as const,
-    content: 'Esdras GBEDOZIN\nFull-Stack Engineer & Cloud Architect',
+    content: 'Esdras GBEDOZIN\nSoftware Engineer — Full-Stack & Cloud',
     delay: 100,
   },
   { type: 'command' as const, content: 'cat skills.txt', delay: 800 },
   {
     type: 'output' as const,
-    content: `✨ Frontend: React, TypeScript, Astro\n☁️  Cloud: Azure, Vercel, Edge Functions\n🔧 Backend: Node.js, .NET, REST APIs\n📊 DevOps: CI/CD, Docker, Kubernetes\n🎨 UI/UX: Tailwind, Animations, Accessibility`,
+    content: `☁️  Cloud: GCP, Cloud Run, Firestore, Terraform\n🔧 Backend: Python, FastAPI, Flask, Java, Node.js\n✨ Frontend: React, TypeScript, Astro, Tailwind CSS\n📊 DevOps: Docker, Jenkins, GitHub Actions, CI/CD\n🧪 Testing: Playwright, Selenium, Cypress, PyTest, TDD\n🤖 AI: Vertex AI, Gemini API, Document AI`,
     delay: 100,
   },
   { type: 'command' as const, content: 'echo $PASSION', delay: 1000 },
-  { type: 'output' as const, content: '🚀 Creating exceptional web experiences', delay: 100 },
+  {
+    type: 'output' as const,
+    content: '🚀 Architecting robust and scalable cloud-native solutions',
+    delay: 100,
+  },
 ];
 
-const timelineItems = [
-  {
-    title: 'Azure Cloud Architect',
-    date: '2024 - Present',
-    description:
-      'Design and deployment of scalable cloud architectures. Azure migration, cost optimization, CI/CD pipeline implementation.',
-    type: 'work' as const,
-  },
-  {
-    title: 'Azure Solutions Architect Certification',
-    date: '2023',
-    description: 'Microsoft AZ-305 certification: Azure infrastructure solutions design.',
+// Timeline built from real certifications
+const timelineItems = certs
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+  .map((cert) => ({
+    title: cert.title,
+    date: new Date(cert.date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+    }),
+    description: cert.description ?? `Certification issued by ${cert.organization}`,
     type: 'certification' as const,
-  },
-  {
-    title: 'Lead Full-Stack Developer',
-    date: '2022 - 2024',
-    description:
-      'Development of complex web applications with React, TypeScript and .NET. Team management and software architecture.',
-    type: 'work' as const,
-  },
-  {
-    title: 'Master in Software Engineering',
-    date: '2020 - 2022',
-    description: 'Specialization in distributed architectures, cloud computing and DevOps.',
-    type: 'education' as const,
-  },
-];
+  }));
 ---
 
-<Layout title="About - Portfolio" lang={lang}>
+<Layout
+  title="About - Portfolio"
+  description="About Esdras GBEDOZIN — Software Engineer specializing in Cloud, DevOps and Full-Stack development. Journey, certifications and technical expertise."
+  lang={lang}
+>
   {/* Hero Section */}
   <ParallaxBackground speed={0.3} variant="gradient" className="py-24" client:idle>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,33 +81,38 @@ const timelineItems = [
           About Me
         </h1>
         <p class="text-xl text-center text-neutral-400 max-w-3xl mx-auto leading-relaxed">
-          Passionate about creating exceptional web experiences, I combine technical expertise and
-          creative vision to transform ideas into concrete solutions.
+          Software engineer passionate about cloud architecture, DevOps and Full-Stack development.
+          I design robust cloud-native solutions with Python, React and Google Cloud Platform.
         </p>
       </ScrollReveal>
     </div>
   </ParallaxBackground>
 
-  {/* Stats Section */}
+  {/* Stats Section — dynamic data */}
   <section class="py-16 bg-neutral-950/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
         <AnimatedCounter
-          end={42}
+          end={totalProjects}
           suffix="+"
           label="Projects delivered"
-          duration={2.5}
+          duration={2}
           client:idle
         />
-        <AnimatedCounter end={15} suffix="+" label="Certifications" duration={2} client:idle />
+        <AnimatedCounter end={totalCerts} label="Certifications" duration={2} client:idle />
         <AnimatedCounter
-          end={99}
-          suffix="%"
-          label="Client satisfaction"
+          end={totalSkills}
+          suffix="+"
+          label="Technologies mastered"
           duration={2.5}
           client:idle
         />
-        <AnimatedCounter end={5} suffix="+" label="Years of experience" duration={2} client:idle />
+        <AnimatedCounter
+          end={totalCategories}
+          label="Areas of expertise"
+          duration={2}
+          client:idle
+        />
       </div>
     </div>
   </section>
@@ -115,7 +134,7 @@ const timelineItems = [
     </div>
   </ParallaxBackground>
 
-  {/* Timeline Section */}
+  {/* Timeline Section — real certifications */}
   <section class="py-24 bg-neutral-950/50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <ScrollReveal delay={0} client:idle>
@@ -125,7 +144,7 @@ const timelineItems = [
           My Journey
         </h2>
         <p class="text-center text-neutral-400 mb-16 max-w-2xl mx-auto">
-          A continuous progression towards technical excellence
+          Certifications and professional achievements
         </p>
       </ScrollReveal>
 
