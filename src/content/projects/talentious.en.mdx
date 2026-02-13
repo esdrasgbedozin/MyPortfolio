@@ -1,0 +1,103 @@
+---
+title: Talentious — AI-Powered Resume Generator
+description: B2C SaaS platform enabling professionals to create AI-optimized resumes in seconds. Cloud-native architecture on GCP with 3 AI agents, FastAPI backend, Next.js frontend and Terraform infrastructure.
+image: /images/projects/talentious.jpg
+tags: [web, backend, devops, data]
+technologies:
+  [
+    Next.js,
+    React,
+    TypeScript,
+    Tailwind CSS,
+    Python,
+    FastAPI,
+    SQLAlchemy,
+    PostgreSQL,
+    Google Cloud Platform,
+    Cloud Run,
+    Cloud SQL,
+    Vertex AI,
+    Gemini,
+    Terraform,
+    Docker,
+    GitHub Actions,
+    Stripe,
+    JWT,
+  ]
+category: web
+startDate: 2025-06-01
+status: in-progress
+githubUrl: https://github.com/esdrasgbedozin/Talentious
+featured: true
+---
+
+# Talentious — AI-Powered Resume Generation SaaS Platform
+
+B2C SaaS platform enabling professionals to create AI-optimized resumes in seconds. The application semantically analyzes job postings, enriches user profiles, and automatically generates tailored CVs.
+
+## 🎯 Goals
+
+- Automatically generate optimized resumes from job postings
+- Cloud-native microservices architecture deployed on GCP
+- 3 specialized AI agents orchestrated by a FastAPI backend
+- GDPR-compliant with data hosting in Paris region
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **Framework**: Next.js 16 (App Router)
+- **UI**: React 19, TypeScript, Tailwind CSS 4
+- **State**: React Query (TanStack Query)
+- **Drag & Drop**: DND Kit
+- **Icons**: Lucide React
+- **Testing**: Jest, React Testing Library
+
+### Backend
+
+- **Framework**: FastAPI (Python 3.11)
+- **ORM**: SQLAlchemy 2.0 (async)
+- **Migrations**: Alembic
+- **Auth**: JWT (python-jose), Bcrypt
+- **Validation**: Pydantic 2.10
+- **Testing**: Pytest, httpx
+
+### AI Agents
+
+- **PDF Parser**: PyMuPDF (fitz)
+- **Analyzer & Writer**: Vertex AI SDK
+- **Model**: Gemini 2.5 Flash (1M token context)
+- **Prompts**: GCP Secret Manager
+
+### Infrastructure
+
+- **Cloud**: Google Cloud Platform (europe-west9)
+- **Compute**: Cloud Run (serverless)
+- **Database**: Cloud SQL (PostgreSQL 15)
+- **Storage**: Cloud Storage
+- **IaC**: Terraform
+- **Containers**: Docker, Docker Compose
+- **Registry**: Artifact Registry
+- **CI/CD**: GitHub Actions
+- **Secrets**: GCP Secret Manager
+
+## 📦 Features
+
+- ✅ Complete microservices architecture (6 Docker services)
+- ✅ FastAPI backend with secure JWT authentication
+- ✅ Next.js frontend with WYSIWYG editor and design system
+- ✅ 3 operational AI agents (PDF Parser, Job Analyzer, CV Writer)
+- ✅ Vertex AI integration (Gemini 2.5 Flash) fully functional
+- ✅ PostgreSQL database with Alembic migrations
+- ✅ Complete Infrastructure as Code (Terraform)
+- 🔄 CI/CD pipeline with GitHub Actions (in progress)
+- 🔄 Stripe payment system (in progress)
+- 🔄 PDF export (in progress)
+
+## 🚀 Performance
+
+- Resume generation time: < 10s
+- API Response Time: < 200ms (average)
+- Vertex AI Context: 1M tokens (~750K chars)
+- Backend test coverage: ~80% (Pytest)
+- Frontend test coverage: ~75% (Jest)

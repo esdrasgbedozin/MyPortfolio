@@ -1,0 +1,103 @@
+---
+title: Talentious — Génération de CV par IA
+description: Plateforme SaaS B2C permettant de créer des CV optimisés par intelligence artificielle générative. Architecture cloud-native sur GCP avec 3 agents IA, backend FastAPI, frontend Next.js et infrastructure Terraform.
+image: /images/projects/talentious.jpg
+tags: [web, backend, devops, data]
+technologies:
+  [
+    Next.js,
+    React,
+    TypeScript,
+    Tailwind CSS,
+    Python,
+    FastAPI,
+    SQLAlchemy,
+    PostgreSQL,
+    Google Cloud Platform,
+    Cloud Run,
+    Cloud SQL,
+    Vertex AI,
+    Gemini,
+    Terraform,
+    Docker,
+    GitHub Actions,
+    Stripe,
+    JWT,
+  ]
+category: web
+startDate: 2025-06-01
+status: in-progress
+githubUrl: https://github.com/esdrasgbedozin/Talentious
+featured: true
+---
+
+# Talentious — Plateforme SaaS de Génération de CV par IA
+
+Plateforme SaaS B2C permettant aux professionnels de créer des CV ultra-optimisés grâce à l'intelligence artificielle générative. L'application analyse sémantiquement les offres d'emploi, enrichit le profil utilisateur et génère automatiquement des CV sur mesure en quelques secondes.
+
+## 🎯 Objectifs
+
+- Générer des CV optimisés automatiquement à partir d'une offre d'emploi
+- Architecture cloud-native microservices déployée sur GCP
+- 3 agents IA spécialisés orchestrés par un backend FastAPI
+- Respect des normes RGPD avec hébergement en région parisienne
+
+## 🛠️ Stack Technique
+
+### Frontend
+
+- **Framework** : Next.js 16 (App Router)
+- **UI** : React 19, TypeScript, Tailwind CSS 4
+- **State** : React Query (TanStack Query)
+- **Drag & Drop** : DND Kit
+- **Icons** : Lucide React
+- **Tests** : Jest, React Testing Library
+
+### Backend
+
+- **Framework** : FastAPI (Python 3.11)
+- **ORM** : SQLAlchemy 2.0 (async)
+- **Migrations** : Alembic
+- **Auth** : JWT (python-jose), Bcrypt
+- **Validation** : Pydantic 2.10
+- **Tests** : Pytest, httpx
+
+### Agents IA
+
+- **Parser PDF** : PyMuPDF (fitz)
+- **Analyseur & Rédacteur** : Vertex AI SDK
+- **Modèle** : Gemini 2.5 Flash (1M tokens context)
+- **Prompts** : GCP Secret Manager
+
+### Infrastructure
+
+- **Cloud** : Google Cloud Platform (europe-west9)
+- **Compute** : Cloud Run (serverless)
+- **Database** : Cloud SQL (PostgreSQL 15)
+- **Storage** : Cloud Storage
+- **IaC** : Terraform
+- **Containers** : Docker, Docker Compose
+- **Registry** : Artifact Registry
+- **CI/CD** : GitHub Actions
+- **Secrets** : GCP Secret Manager
+
+## 📦 Fonctionnalités
+
+- ✅ Architecture microservices complète (6 services Docker)
+- ✅ Backend FastAPI avec authentification JWT sécurisée
+- ✅ Frontend Next.js avec éditeur WYSIWYG et système de design
+- ✅ 3 agents IA opérationnels (Parser PDF, Analyseur d'Offres, Rédacteur CV)
+- ✅ Intégration Vertex AI (Gemini 2.5 Flash) fonctionnelle
+- ✅ Base de données PostgreSQL avec migrations Alembic
+- ✅ Infrastructure as Code complète (Terraform)
+- 🔄 Pipeline CI/CD GitHub Actions (en cours)
+- 🔄 Système de paiement Stripe (en cours)
+- 🔄 Export PDF (en cours)
+
+## 🚀 Performance
+
+- Temps de génération CV : < 10s
+- API Response Time : < 200ms (moyenne)
+- Vertex AI Context : 1M tokens (~750K caractères)
+- Couverture tests Backend : ~80% (Pytest)
+- Couverture tests Frontend : ~75% (Jest)
