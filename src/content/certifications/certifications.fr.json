@@ -1,52 +1,78 @@
 [
   {
-    "title": "AWS Certified Solutions Architect – Professional",
-    "organization": "Amazon Web Services",
-    "date": "2025-06-15",
-    "expiryDate": "2028-06-15",
-    "credentialId": "AWS-PSA-123456",
-    "credentialUrl": "https://www.credly.com/badges/example-aws-pro",
-    "logo": "/images/certifications/aws-saa-pro.png",
-    "description": "Conception et déploiement d'architectures cloud scalables, sécurisées et résilientes sur AWS. Maîtrise des services EC2, S3, RDS, Lambda, VPC, IAM et CloudFormation."
-  },
-  {
-    "title": "Google Professional Cloud Architect",
+    "title": "Google Associate Cloud Engineer",
     "organization": "Google Cloud",
-    "date": "2025-03-20",
-    "expiryDate": "2027-03-20",
-    "credentialId": "GCP-PCA-789012",
-    "credentialUrl": "https://www.credential.net/example-gcp",
-    "logo": "/images/certifications/gcp-architect.png",
-    "description": "Conception d'infrastructures cloud natives sur Google Cloud Platform. Expertise en Compute Engine, Cloud Storage, BigQuery, Kubernetes Engine et Cloud Functions."
+    "date": "2026-01-01",
+    "credentialId": "1e59f0fe4fbf4345a34cc7d86ad92d9f",
+    "credentialUrl": "https://www.credly.com/badges/fddb75b9-5c18-4b5a-aac2-45ef147b9600/linked_in_profile",
+    "description": "Déploiement et gestion d'applications et d'infrastructures sur Google Cloud Platform. Compétences en Compute Engine, Cloud Storage, IAM, networking et monitoring avec les outils GCP."
   },
   {
-    "title": "Microsoft Certified: Azure Solutions Architect Expert",
-    "organization": "Microsoft",
-    "date": "2024-11-10",
-    "expiryDate": "2026-11-10",
-    "credentialId": "MSFT-AZ305-345678",
-    "credentialUrl": "https://learn.microsoft.com/credentials/example-azure",
-    "logo": "/images/certifications/azure-architect.png",
-    "description": "Architecture de solutions cloud sur Azure. Compétences en Azure App Services, Azure Functions, Cosmos DB, Azure DevOps et Azure Active Directory."
+    "title": "ISTQB Certified Tester Advanced Level – Test Automation Engineering (CTAL-TAE) v2.0",
+    "organization": "GASQ",
+    "date": "2025-11-01",
+    "credentialId": "25-126413",
+    "credentialUrl": "https://app.skillsclub.com/credential/273028-895b1419d3d56becefa6bf5f395e7050a0e041625fbebf6bbce0c55406e25b21?locale=en",
+    "description": "Conception et implémentation de stratégies d'automatisation des tests logiciels. Maîtrise des architectures de frameworks de test, sélection d'outils, scripting et intégration dans les pipelines CI/CD."
   },
   {
-    "title": "Certified Kubernetes Administrator (CKA)",
-    "organization": "Cloud Native Computing Foundation",
-    "date": "2025-01-05",
-    "expiryDate": "2028-01-05",
-    "credentialId": "CNCF-CKA-901234",
-    "credentialUrl": "https://www.credly.com/badges/example-cka",
-    "logo": "/images/certifications/cka.png",
-    "description": "Administration de clusters Kubernetes en production. Gestion des deployments, networking, storage, security et troubleshooting."
+    "title": "Google Cloud Digital Leader",
+    "organization": "Google Cloud",
+    "date": "2025-07-01",
+    "credentialId": "a053c1a1aeda4ef094cf2f0de14cc03a",
+    "credentialUrl": "https://www.credly.com/badges/198f7e5d-4887-490a-a8fb-72a32ce4d83b/linked_in_profile",
+    "description": "Compréhension des concepts fondamentaux du cloud et des produits Google Cloud. Capacité à articuler comment les technologies cloud peuvent soutenir la transformation numérique d'une organisation."
   },
   {
-    "title": "HashiCorp Certified: Terraform Associate",
-    "organization": "HashiCorp",
-    "date": "2024-09-18",
-    "expiryDate": "2026-09-18",
-    "credentialId": "HASHI-TF-567890",
-    "credentialUrl": "https://www.credly.com/badges/example-terraform",
-    "logo": "/images/certifications/terraform.png",
-    "description": "Infrastructure as Code avec Terraform. Maîtrise des providers, modules, state management et best practices pour provisionner des infrastructures cloud."
+    "title": "ISTQB® Foundation Level (CTFL)",
+    "organization": "GASQ",
+    "date": "2025-07-01",
+    "credentialId": "CFTL-CTFL-FR-25-122432",
+    "credentialUrl": "https://app.skillsclub.com/credential/219004-73a01dd20513226b138808166270f418b5a37edfa6bb9e4c83f9cb4e6b3606eb?locale=en",
+    "description": "Fondamentaux du test logiciel : techniques de conception de tests, gestion des tests, tests statiques et dynamiques, niveaux et types de tests. Certification internationalement reconnue par l'ISTQB."
+  },
+  {
+    "title": "Certificat Voltaire",
+    "organization": "Projet Voltaire",
+    "date": "2025-02-01",
+    "credentialId": "XNK6WMU",
+    "credentialUrl": "https://mon.certificat-voltaire.fr/verification-certificat?code=XNK6WMU",
+    "description": "Certification attestant du niveau de maîtrise de l'orthographe et de la grammaire française. Référence en milieu professionnel pour garantir la qualité rédactionnelle."
+  },
+  {
+    "title": "Conception Responsable des Services Numériques",
+    "organization": "Institut du Numérique Responsable",
+    "date": "2024-11-01",
+    "credentialId": "tv7Yr9K3",
+    "credentialUrl": "http://ecocertification.univ-lr.fr/",
+    "description": "Éco-conception de services numériques : réduction de l'empreinte environnementale, accessibilité, sobriété numérique et bonnes pratiques pour un développement web responsable et durable."
+  },
+  {
+    "title": "L'essentiel de n8n",
+    "organization": "LinkedIn",
+    "date": "2025-12-01",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/62a7598f726284083d78f5a8b7f5b56c320ba9058336e368c7cf5b9156d9c599",
+    "description": "Automatisation de workflows avec n8n : création de scénarios d'intégration, connexion d'APIs, orchestration de tâches et mise en place de processus automatisés no-code/low-code."
+  },
+  {
+    "title": "Learning Docker",
+    "organization": "LinkedIn",
+    "date": "2024-10-01",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/bc2b2babf1890d839634199c47810219b5a0ee2a1054bed2537b36d908d94725",
+    "description": "Conteneurisation d'applications avec Docker : création d'images, gestion de conteneurs, Docker Compose, volumes et bonnes pratiques pour des environnements de développement et de production."
+  },
+  {
+    "title": "Learning Jenkins",
+    "organization": "LinkedIn",
+    "date": "2024-08-01",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/a1fe9b4381f4501245958bc6832ddad1008c94749570a66770db6de984caaf13",
+    "description": "Intégration et déploiement continus avec Jenkins : configuration de pipelines CI/CD, automatisation de builds, gestion de plugins et orchestration de workflows de livraison logicielle."
+  },
+  {
+    "title": "JavaScript Essential Training",
+    "organization": "LinkedIn",
+    "date": "2024-08-01",
+    "credentialUrl": "https://www.linkedin.com/learning/certificates/987a76bdea00f01884fbd6ac1369b8d5f4a3b9df1bb65f7bc03d951567f5ffc5",
+    "description": "Fondamentaux de JavaScript : manipulation du DOM, programmation événementielle, fonctions, closures, promesses et bonnes pratiques de développement front-end moderne."
   }
 ]
