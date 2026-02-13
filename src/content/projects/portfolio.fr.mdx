@@ -1,0 +1,93 @@
+---
+title: Portfolio Professionnel
+description: Portfolio moderne avec Astro 5, React 19 et Vercel Edge Functions. Architecture Jamstack avec Islands, formulaire de contact sécurisé, i18n FR/EN, 350+ tests unitaires et accessibilité WCAG 2.1 AA.
+image: /images/projects/portfolio.jpg
+tags: [web, frontend, fullstack]
+technologies:
+  [
+    Astro,
+    React,
+    TypeScript,
+    Tailwind CSS,
+    Vercel,
+    Edge Functions,
+    Resend,
+    Cloudflare Turnstile,
+    Sentry,
+    Vitest,
+    Playwright,
+    Framer Motion,
+    Zod,
+  ]
+category: web
+startDate: 2025-10-01
+status: in-progress
+githubUrl: https://github.com/esdrasgbedozin/MyPortfolio
+featured: true
+---
+
+# Portfolio Professionnel — Esdras GBEDOZIN
+
+Portfolio d'ingénieur Full-Stack & Architecte Cloud construit avec une architecture Jamstack moderne. Site performant, accessible et entièrement bilingue (FR/EN).
+
+## 🎯 Objectifs
+
+- Vitrine professionnelle performante (Lighthouse >90)
+- Architecture Jamstack SSR + Islands Architecture
+- Formulaire de contact sécurisé avec anti-spam
+- Accessibilité WCAG 2.1 niveau AA
+- Tests automatisés exhaustifs (350+ tests)
+
+## 🛠️ Stack Technique
+
+### Frontend
+
+- **Framework** : Astro 5 (SSR + Islands Architecture)
+- **UI** : React 19, TypeScript strict, Tailwind CSS 4
+- **Animations** : Framer Motion, tsParticles, react-parallax-tilt
+- **Composants** : Glassmorphism, ScrollReveal, AnimatedCounter, Terminal effect
+- **Fonts** : Inter + JetBrains Mono (variable, self-hosted, 82KB)
+
+### Backend (Edge Functions)
+
+- **API** : Astro SSR sur Vercel Edge Functions
+- **Email** : Resend (primary) + SendGrid (fallback) avec retry exponential backoff
+- **Anti-spam** : Cloudflare Turnstile + Rate Limiting 3-Tier progressif
+- **Validation** : Zod côté client ET serveur
+- **Monitoring** : Sentry (error tracking) + JSON structured logging
+
+### Infrastructure
+
+- **Hosting** : Vercel (Edge Network)
+- **i18n** : FR/EN avec détection Accept-Language
+- **SEO** : Open Graph, JSON-LD (schema.org), sitemap XML dynamique, robots.txt
+- **Sécurité** : CSP, HSTS, X-Frame-Options, X-Content-Type-Options
+- **CI/CD** : GitHub Actions + Lighthouse CI
+
+## 📦 Fonctionnalités
+
+- ✅ 8 pages bilingues (FR/EN) avec hreflang
+- ✅ Hero interactif avec particules et gradient animé
+- ✅ Formulaire de contact sécurisé (Turnstile + Rate Limiting)
+- ✅ Cartes projet avec tilt 3D et glassmorphism
+- ✅ Animations scroll reveal et parallax
+- ✅ Terminal typing effect et timeline interactive
+- ✅ Theme toggle (dark/light) avec persistance
+- ✅ Design system complet (Badge, Button, Card, Input)
+- ✅ Content Collections Astro (MDX projets, JSON certifs/skills)
+- ✅ Contrat API OpenAPI 3.0 avec tests
+
+## 🧪 Tests
+
+- **Vitest** : 350+ tests unitaires (32 fichiers)
+- **Playwright** : 120+ tests E2E + 18 tests accessibilité axe-core
+- **Contract** : Validation automatique du contrat OpenAPI
+- **Pattern** : TDD strict (Red → Green → Refactor)
+
+## 🚀 Performance
+
+- Lighthouse : >90 toutes catégories
+- FCP : < 2s
+- CSS inline critique < 14KB
+- Bundle splitting (React, Framer Motion, tsParticles)
+- CSS minification LightningCSS

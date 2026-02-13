@@ -1,0 +1,93 @@
+---
+title: Professional Portfolio
+description: Modern portfolio built with Astro 5, React 19 and Vercel Edge Functions. Jamstack architecture with Islands, secure contact form, FR/EN i18n, 350+ unit tests and WCAG 2.1 AA accessibility.
+image: /images/projects/portfolio.jpg
+tags: [web, frontend, fullstack]
+technologies:
+  [
+    Astro,
+    React,
+    TypeScript,
+    Tailwind CSS,
+    Vercel,
+    Edge Functions,
+    Resend,
+    Cloudflare Turnstile,
+    Sentry,
+    Vitest,
+    Playwright,
+    Framer Motion,
+    Zod,
+  ]
+category: web
+startDate: 2025-10-01
+status: in-progress
+githubUrl: https://github.com/esdrasgbedozin/MyPortfolio
+featured: true
+---
+
+# Professional Portfolio — Esdras GBEDOZIN
+
+Full-Stack Engineer & Cloud Architect portfolio built with a modern Jamstack architecture. Performant, accessible and fully bilingual (FR/EN) website.
+
+## 🎯 Goals
+
+- High-performance professional showcase (Lighthouse >90)
+- Jamstack SSR + Islands Architecture
+- Secure contact form with anti-spam protection
+- WCAG 2.1 Level AA accessibility
+- Comprehensive automated testing (350+ tests)
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **Framework**: Astro 5 (SSR + Islands Architecture)
+- **UI**: React 19, strict TypeScript, Tailwind CSS 4
+- **Animations**: Framer Motion, tsParticles, react-parallax-tilt
+- **Components**: Glassmorphism, ScrollReveal, AnimatedCounter, Terminal effect
+- **Fonts**: Inter + JetBrains Mono (variable, self-hosted, 82KB)
+
+### Backend (Edge Functions)
+
+- **API**: Astro SSR on Vercel Edge Functions
+- **Email**: Resend (primary) + SendGrid (fallback) with exponential backoff retry
+- **Anti-spam**: Cloudflare Turnstile + 3-Tier progressive Rate Limiting
+- **Validation**: Zod on both client AND server
+- **Monitoring**: Sentry (error tracking) + JSON structured logging
+
+### Infrastructure
+
+- **Hosting**: Vercel (Edge Network)
+- **i18n**: FR/EN with Accept-Language detection
+- **SEO**: Open Graph, JSON-LD (schema.org), dynamic XML sitemap, robots.txt
+- **Security**: CSP, HSTS, X-Frame-Options, X-Content-Type-Options
+- **CI/CD**: GitHub Actions + Lighthouse CI
+
+## 📦 Features
+
+- ✅ 8 bilingual pages (FR/EN) with hreflang
+- ✅ Interactive hero with particles and animated gradient
+- ✅ Secure contact form (Turnstile + Rate Limiting)
+- ✅ Project cards with 3D tilt and glassmorphism
+- ✅ Scroll reveal and parallax animations
+- ✅ Terminal typing effect and interactive timeline
+- ✅ Theme toggle (dark/light) with persistence
+- ✅ Complete design system (Badge, Button, Card, Input)
+- ✅ Astro Content Collections (MDX projects, JSON certs/skills)
+- ✅ OpenAPI 3.0 API contract with tests
+
+## 🧪 Testing
+
+- **Vitest**: 350+ unit tests (32 files)
+- **Playwright**: 120+ E2E tests + 18 axe-core accessibility tests
+- **Contract**: Automatic OpenAPI contract validation
+- **Pattern**: Strict TDD (Red → Green → Refactor)
+
+## 🚀 Performance
+
+- Lighthouse: >90 all categories
+- FCP: < 2s
+- Critical inline CSS < 14KB
+- Bundle splitting (React, Framer Motion, tsParticles)
+- LightningCSS minification
