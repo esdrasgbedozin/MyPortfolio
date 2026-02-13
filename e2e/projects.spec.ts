@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Projects Page (FR)', () => {
   test('should display page title and description', async ({ page }) => {
-    await page.goto('/fr/projets');
+    await page.goto('/fr/projects');
 
     const heading = page.getByRole('heading', { level: 1, name: 'Mes Projets' });
     await expect(heading).toBeVisible();
@@ -12,14 +12,14 @@ test.describe('Projects Page (FR)', () => {
   });
 
   test('should display project cards in grid', async ({ page }) => {
-    await page.goto('/fr/projets');
+    await page.goto('/fr/projects');
 
     const articles = page.locator('article');
     await expect(articles).toHaveCount(3);
   });
 
   test('should display project details', async ({ page }) => {
-    await page.goto('/fr/projets');
+    await page.goto('/fr/projects');
 
     // Portfolio project
     await expect(
@@ -38,7 +38,7 @@ test.describe('Projects Page (FR)', () => {
   });
 
   test('should display project links when provided', async ({ page }) => {
-    await page.goto('/fr/projets');
+    await page.goto('/fr/projects');
 
     // Repository link for Portfolio
     const repoLinks = page.getByRole('link', { name: /Code/ });
@@ -84,8 +84,8 @@ test.describe('Projects Page (EN)', () => {
 
 // FE-063: Test page détail projet
 test.describe('Project Detail Page (FR)', () => {
-  test('should display project detail page at /fr/projets/[slug]', async ({ page }) => {
-    await page.goto('/fr/projets/portfolio');
+  test('should display project detail page at /fr/projects/[slug]', async ({ page }) => {
+    await page.goto('/fr/projects/portfolio');
 
     // Check page title matches project title - use first() as MDX also has H1
     const heading = page.locator('main h1').filter({ hasText: 'Portfolio Professionnel' }).first();
@@ -93,7 +93,7 @@ test.describe('Project Detail Page (FR)', () => {
   });
 
   test('should display project metadata (dates, category, status)', async ({ page }) => {
-    await page.goto('/fr/projets/portfolio');
+    await page.goto('/fr/projects/portfolio');
 
     // Dates should be formatted in French
     await expect(page.getByText(/Démarré/)).toBeVisible();
@@ -106,7 +106,7 @@ test.describe('Project Detail Page (FR)', () => {
   });
 
   test('should display technologies badges', async ({ page }) => {
-    await page.goto('/fr/projets/portfolio');
+    await page.goto('/fr/projects/portfolio');
 
     // Tech badges are in header metadata section
     // Since tech names appear in description/MDX, look in the article header
@@ -117,7 +117,7 @@ test.describe('Project Detail Page (FR)', () => {
   });
 
   test('should render MDX content from project file', async ({ page }) => {
-    await page.goto('/fr/projets/portfolio');
+    await page.goto('/fr/projects/portfolio');
 
     // Check for content from MDX body
     await expect(page.locator('article.prose')).toBeVisible();
@@ -129,7 +129,7 @@ test.describe('Project Detail Page (FR)', () => {
   });
 
   test('should display GitHub link when available', async ({ page }) => {
-    await page.goto('/fr/projets/portfolio');
+    await page.goto('/fr/projects/portfolio');
 
     const githubLink = page.getByRole('link', { name: /Code Source/i });
     await expect(githubLink).toBeVisible();
@@ -140,14 +140,14 @@ test.describe('Project Detail Page (FR)', () => {
   });
 
   test('should display live demo link when available', async ({ page }) => {
-    await page.goto('/fr/projets/fitness-app'); // fitness-app has liveUrl
+    await page.goto('/fr/projects/fitness-app'); // fitness-app has liveUrl
 
     const demoLink = page.getByRole('link', { name: /Démo Live/i });
     await expect(demoLink).toBeVisible();
   });
 
   test('should handle project without endDate (in-progress)', async ({ page }) => {
-    await page.goto('/fr/projets/portfolio');
+    await page.goto('/fr/projects/portfolio');
 
     // Should show "Démarré: [date]" without "Terminé:"
     await expect(page.getByText(/Démarré/)).toBeVisible();

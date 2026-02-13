@@ -15,14 +15,14 @@ import { getCollection } from 'astro:content';
  */
 const SITE_URL = import.meta.env.SITE || 'https://portfolio.example.com';
 
-// Map FR paths to EN paths
-const PATH_MAP: Record<string, string> = {
-  '/projets': '/projects',
-  '/competences': '/skills',
-  '/contact': '/contact',
-  '/certifications': '/certifications',
-  '': '',
-};
+// Symmetric paths (same slug for both locales)
+const PATHS = [
+  { path: '/projects', priority: '0.8' },
+  { path: '/skills', priority: '0.8' },
+  { path: '/contact', priority: '0.8' },
+  { path: '/certifications', priority: '0.8' },
+  { path: '', priority: '1.0' },
+];
 
 function buildEntry(frUrl: string, enUrl: string, priority: string = '0.8'): string {
   return `
@@ -47,11 +47,11 @@ function buildEntry(frUrl: string, enUrl: string, priority: string = '0.8'): str
 export const GET: APIRoute = async () => {
   const entries: string[] = [];
 
-  // Static pages (FR/EN pairs)
-  Object.entries(PATH_MAP).forEach(([frPath, enPath]) => {
-    const frUrl = `${SITE_URL}/fr${frPath}`;
-    const enUrl = `${SITE_URL}/en${enPath}`;
-    entries.push(buildEntry(frUrl, enUrl));
+  // Static pages (FR/EN pairs — symmetric routes)
+  PATHS.forEach(({ path, priority }) => {
+    const frUrl = `${SITE_URL}/fr${path}`;
+    const enUrl = `${SITE_URL}/en${path}`;
+    entries.push(buildEntry(frUrl, enUrl, priority));
   });
 
   // Project detail pages (dynamic slugs from content collection)
@@ -66,7 +66,7 @@ export const GET: APIRoute = async () => {
     }
 
     for (const slug of slugs) {
-      const frUrl = `${SITE_URL}/fr/projets/${slug}`;
+      const frUrl = `${SITE_URL}/fr/projects/${slug}`;
       const enUrl = `${SITE_URL}/en/projects/${slug}`;
       entries.push(buildEntry(frUrl, enUrl, '0.6'));
     }

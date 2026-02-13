@@ -13,15 +13,15 @@ import AxeBuilder from '@axe-core/playwright';
 const pages = [
   { url: '/fr', name: 'Accueil FR' },
   { url: '/en', name: 'Home EN' },
-  { url: '/fr/projets', name: 'Projets FR' },
+  { url: '/fr/projects', name: 'Projets FR' },
   { url: '/en/projects', name: 'Projects EN' },
-  { url: '/fr/competences', name: 'Compétences FR' },
+  { url: '/fr/skills', name: 'Compétences FR' },
   { url: '/en/skills', name: 'Skills EN' },
   { url: '/fr/certifications', name: 'Certifications FR' },
   { url: '/en/certifications', name: 'Certifications EN' },
   { url: '/fr/contact', name: 'Contact FR' },
   { url: '/en/contact', name: 'Contact EN' },
-  { url: '/fr/a-propos', name: 'À Propos FR' },
+  { url: '/fr/about', name: 'À Propos FR' },
   { url: '/en/about', name: 'About EN' },
 ];
 

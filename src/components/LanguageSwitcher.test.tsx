@@ -11,8 +11,8 @@ describe('LanguageSwitcher', () => {
     Object.defineProperty(window, 'location', {
       writable: true,
       value: {
-        href: 'http://localhost:4321/fr/projets',
-        pathname: '/fr/projets',
+        href: 'http://localhost:4321/fr/projects',
+        pathname: '/fr/projects',
       },
     });
   });
@@ -71,7 +71,6 @@ describe('LanguageSwitcher', () => {
   });
 
   it('should navigate from /fr homepage to /en homepage', async () => {
-    // Set FR homepage path (no trailing segment)
     Object.defineProperty(window, 'location', {
       writable: true,
       value: {
@@ -85,7 +84,91 @@ describe('LanguageSwitcher', () => {
     const button = screen.getByRole('button');
     await userEvent.click(button);
 
-    // Should navigate to /en (not /fr with broken path)
     expect(window.location.href).toBe('/en/');
+  });
+
+  it('should swap /fr/skills to /en/skills (symmetric routes)', async () => {
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: {
+        href: 'http://localhost:4321/fr/skills',
+        pathname: '/fr/skills',
+      },
+    });
+
+    render(<LanguageSwitcher currentLocale="fr" />);
+
+    const button = screen.getByRole('button');
+    await userEvent.click(button);
+
+    expect(window.location.href).toBe('/en/skills');
+  });
+
+  it('should swap /en/skills to /fr/skills (symmetric routes)', async () => {
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: {
+        href: 'http://localhost:4321/en/skills',
+        pathname: '/en/skills',
+      },
+    });
+
+    render(<LanguageSwitcher currentLocale="en" />);
+
+    const button = screen.getByRole('button');
+    await userEvent.click(button);
+
+    expect(window.location.href).toBe('/fr/skills');
+  });
+
+  it('should swap /fr/projects to /en/projects', async () => {
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: {
+        href: 'http://localhost:4321/fr/projects',
+        pathname: '/fr/projects',
+      },
+    });
+
+    render(<LanguageSwitcher currentLocale="fr" />);
+
+    const button = screen.getByRole('button');
+    await userEvent.click(button);
+
+    expect(window.location.href).toBe('/en/projects');
+  });
+
+  it('should swap /en/about to /fr/about (symmetric routes)', async () => {
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: {
+        href: 'http://localhost:4321/en/about',
+        pathname: '/en/about',
+      },
+    });
+
+    render(<LanguageSwitcher currentLocale="en" />);
+
+    const button = screen.getByRole('button');
+    await userEvent.click(button);
+
+    expect(window.location.href).toBe('/fr/about');
+  });
+
+  it('should preserve sub-paths (e.g., /fr/projects/my-project)', async () => {
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: {
+        href: 'http://localhost:4321/fr/projects/my-project',
+        pathname: '/fr/projects/my-project',
+      },
+    });
+
+    render(<LanguageSwitcher currentLocale="fr" />);
+
+    const button = screen.getByRole('button');
+    await userEvent.click(button);
+
+    expect(window.location.href).toBe('/en/projects/my-project');
   });
 });

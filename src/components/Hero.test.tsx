@@ -50,13 +50,13 @@ describe('Hero Component', () => {
           title="John Doe"
           tagline="Software Engineer"
           description="Building amazing web applications"
-          primaryCta={{ label: 'View Projects', href: '/fr/projets' }}
+          primaryCta={{ label: 'View Projects', href: '/fr/projects' }}
         />
       );
 
       const link = getByRole('link', { name: 'View Projects' });
       expect(link).toBeDefined();
-      expect(link.getAttribute('href')).toBe('/fr/projets');
+      expect(link.getAttribute('href')).toBe('/fr/projects');
     });
 
     it('should render secondary CTA with correct link', () => {
@@ -80,7 +80,7 @@ describe('Hero Component', () => {
           title="John Doe"
           tagline="Software Engineer"
           description="Building amazing web applications"
-          primaryCta={{ label: 'View Projects', href: '/fr/projets' }}
+          primaryCta={{ label: 'View Projects', href: '/fr/projects' }}
           secondaryCta={{ label: 'Contact Me', href: '/fr/contact' }}
         />
       );

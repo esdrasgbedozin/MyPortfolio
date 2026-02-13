@@ -30,10 +30,10 @@ export function LanguageSwitcher({ currentLocale }: LanguageSwitcherProps): Reac
     // Get current pathname without locale prefix
     const currentPath = window.location.pathname;
 
-    // Extract path segment after locale (e.g., "/fr/projets" → "/projets", "/fr" → "")
+    // Extract path segment after locale (e.g., "/fr/projects" → "/projects", "/fr" → "")
     const pathWithoutLocale = currentPath.replace(new RegExp(`^/${currentLocale}/?`), '/');
 
-    // Use getLocalizedPath to build correct target path
+    // Build target path — routes are symmetric so simple locale swap works
     const targetPath = pathWithoutLocale === '/' ? '' : pathWithoutLocale.replace(/^\//, '');
     const newPath = getLocalizedPath(targetPath, targetLocale);
 

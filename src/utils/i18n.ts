@@ -33,9 +33,9 @@ export function getLocaleFromPath(pathname: string): Locale {
 
 /**
  * Get localized path
- * @param path - Path without locale (e.g., '/projets')
+ * @param path - Path without locale (e.g., '/projects')
  * @param locale - Target locale
- * @returns Localized path (e.g., '/fr/projets')
+ * @returns Localized path (e.g., '/fr/projects')
  */
 export function getLocalizedPath(path: string, locale: Locale): string {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;

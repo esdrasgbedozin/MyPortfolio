@@ -34,7 +34,7 @@ describe('i18n Utils', () => {
 
   describe('getLocaleFromPath', () => {
     it('should extract locale from path', () => {
-      expect(getLocaleFromPath('/fr/projets')).toBe('fr');
+      expect(getLocaleFromPath('/fr/projects')).toBe('fr');
       expect(getLocaleFromPath('/en/projects')).toBe('en');
     });
 
@@ -47,24 +47,24 @@ describe('i18n Utils', () => {
     });
 
     it('should handle paths without leading slash', () => {
-      expect(getLocaleFromPath('fr/projets')).toBe('fr');
+      expect(getLocaleFromPath('fr/projects')).toBe('fr');
       expect(getLocaleFromPath('en/projects')).toBe('en');
     });
   });
 
   describe('getLocalizedPath', () => {
     it('should create localized path', () => {
-      expect(getLocalizedPath('/projets', 'fr')).toBe('/fr/projets');
+      expect(getLocalizedPath('/projects', 'fr')).toBe('/fr/projects');
       expect(getLocalizedPath('/projects', 'en')).toBe('/en/projects');
     });
 
     it('should handle paths without leading slash', () => {
-      expect(getLocalizedPath('projets', 'fr')).toBe('/fr/projets');
+      expect(getLocalizedPath('projects', 'fr')).toBe('/fr/projects');
       expect(getLocalizedPath('projects', 'en')).toBe('/en/projects');
     });
 
     it('should handle nested paths', () => {
-      expect(getLocalizedPath('/projets/detail', 'fr')).toBe('/fr/projets/detail');
+      expect(getLocalizedPath('/projects/detail', 'fr')).toBe('/fr/projects/detail');
       expect(getLocalizedPath('/projects/detail', 'en')).toBe('/en/projects/detail');
     });
   });

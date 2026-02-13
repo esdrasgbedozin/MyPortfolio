@@ -20,7 +20,7 @@ const lang = 'fr' as const;
     title={tSync('hero.name', lang, translations)}
     tagline={tSync('hero.tagline', lang, translations)}
     description={tSync('hero.description', lang, translations)}
-    primaryCta={{ label: tSync('hero.cta.projects', lang, translations), href: '/fr/projets' }}
+    primaryCta={{ label: tSync('hero.cta.projects', lang, translations), href: '/fr/projects' }}
     secondaryCta={{ label: tSync('hero.cta.contact', lang, translations), href: '/fr/contact' }}
   />
 
@@ -41,7 +41,7 @@ const lang = 'fr' as const;
       <ScrollReveal delay={200} client:idle>
         <div class="flex justify-center">
           <a
-            href="/fr/projets"
+            href="/fr/projects"
             class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white rounded-lg font-medium hover:from-primary-500 hover:to-primary-400 transition-all hover:scale-105 shadow-lg hover:shadow-primary-500/50"
           >
             Voir tous les projets
@@ -75,7 +75,7 @@ const lang = 'fr' as const;
       <ScrollReveal delay={200} client:idle>
         <div class="flex justify-center">
           <a
-            href="/fr/competences"
+            href="/fr/skills"
             class="inline-flex items-center gap-2 px-6 py-3 border-2 border-neutral-700 text-neutral-200 rounded-lg font-medium hover:bg-neutral-800/50 hover:border-primary-500 transition-all backdrop-blur-sm"
           >
             Explorer mes compétences

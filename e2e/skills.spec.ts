@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Skills Page (FR)', () => {
   test('should display page title and description', async ({ page }) => {
-    await page.goto('/fr/competences');
+    await page.goto('/fr/skills');
 
     const heading = page.getByRole('heading', { level: 1, name: 'Compétences' });
     await expect(heading).toBeVisible();
@@ -12,7 +12,7 @@ test.describe('Skills Page (FR)', () => {
   });
 
   test('should display all skill categories', async ({ page }) => {
-    await page.goto('/fr/competences');
+    await page.goto('/fr/skills');
 
     await expect(
       page.getByRole('heading', { level: 2, name: 'Langages de programmation' })
@@ -28,7 +28,7 @@ test.describe('Skills Page (FR)', () => {
   });
 
   test('should display skill badges', async ({ page }) => {
-    await page.goto('/fr/competences');
+    await page.goto('/fr/skills');
 
     // Languages
     await expect(page.getByText('TypeScript')).toBeVisible();
