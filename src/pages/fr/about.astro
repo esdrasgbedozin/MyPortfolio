@@ -22,7 +22,7 @@ const allProjects = await getCollection('projects');
 
 const certs = certsEntry?.data ?? [];
 const skills = skillsEntry?.data ?? [];
-const frProjects = allProjects.filter((p) => p.id.endsWith('.fr'));
+const frProjects = allProjects.filter((p) => p.id.endsWith('.fr.mdx'));
 
 // Stats calculées dynamiquement
 const totalSkills = skills.reduce((acc, cat) => acc + cat.skills.length, 0);
