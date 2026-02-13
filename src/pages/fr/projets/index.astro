@@ -49,13 +49,17 @@ const projects: Project[] = sortedProjects.map((project) => {
 });
 ---
 
-<Layout title="Mes Projets - Portfolio" lang="fr">
+<Layout
+  title="Mes Projets - Portfolio"
+  description="Découvrez les projets d'Esdras GBEDOZIN : applications web full-stack, architectures cloud et solutions innovantes."
+  lang="fr"
+>
   <ParallaxBackground speed={0.3} variant="gradient" className="py-20" client:idle>
     <div class="container mx-auto px-4">
       <ScrollReveal delay={0} client:idle>
         <div class="text-center mb-16">
           <h1
-            class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-gradient-text"
+            class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 gradient-text bg-[length:200%_100%] animate-gradient-text"
           >
             Mes Projets
           </h1>

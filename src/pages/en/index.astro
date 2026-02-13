@@ -10,7 +10,11 @@ const translations = enTranslations;
 const lang = 'en' as const;
 ---
 
-<Layout title="Professional Portfolio - Home" lang={lang}>
+<Layout
+  title="Professional Portfolio - Home"
+  description="Esdras GBEDOZIN's Portfolio — Full-Stack Engineer & Cloud Architect. Projects, certifications and technical skills."
+  lang={lang}
+>
   <Hero
     client:idle
     title={tSync('hero.name', lang, translations)}
@@ -25,7 +29,7 @@ const lang = 'en' as const;
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <ScrollReveal delay={0} client:idle>
         <h2
-          class="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+          class="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text"
         >
           Featured Projects
         </h2>
@@ -59,7 +63,7 @@ const lang = 'en' as const;
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <ScrollReveal delay={0} client:idle>
         <h2
-          class="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary-400 to-purple-500 bg-clip-text text-transparent"
+          class="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text"
         >
           Technical Skills
         </h2>

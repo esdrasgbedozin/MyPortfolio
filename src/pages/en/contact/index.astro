@@ -6,13 +6,17 @@ import ScrollReveal from '../../../components/ScrollReveal';
 import ParallaxBackground from '../../../components/ParallaxBackground';
 ---
 
-<Layout title="Contact Me - Portfolio" lang="en">
+<Layout
+  title="Contact Me - Portfolio"
+  description="Contact Esdras GBEDOZIN for a project, opportunity or technical collaboration."
+  lang="en"
+>
   <ParallaxBackground variant="gradient" speed={0.3} className="min-h-screen" client:load>
     <div class="container mx-auto px-4 py-16 max-w-2xl">
       <ScrollReveal delay={0} client:load>
         <div class="text-center mb-12">
           <h1
-            class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 bg-clip-text text-transparent bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
+            class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 gradient-text bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
           >
             Contact Me
           </h1>

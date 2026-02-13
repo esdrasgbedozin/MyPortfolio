@@ -223,6 +223,17 @@ body {
   opacity: 0;
 }
 
+/* ============================================
+   GRADIENT TEXT (a11y-safe)
+   Uses -webkit-text-fill-color instead of color: transparent
+   so axe-core can still compute the fallback color for contrast.
+   ============================================ */
+.gradient-text {
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 /* Glassmorphism Effect */
 .glass-effect {
   background: rgba(255, 255, 255, 0.05);

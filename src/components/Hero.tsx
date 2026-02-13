@@ -43,7 +43,7 @@ export default function Hero({
       <div className="text-center max-w-4xl relative z-10">
         {/* Title with Animated Gradient */}
         <h1
-          className="text-5xl md:text-7xl font-bold mb-4 animate-gradient-text bg-gradient-to-r from-[var(--color-primary-400)] via-[var(--color-secondary-400)] to-[var(--color-primary-600)] bg-clip-text text-transparent"
+          className="text-5xl md:text-7xl font-bold mb-4 animate-gradient-text bg-gradient-to-r from-[var(--color-primary-400)] via-[var(--color-secondary-400)] to-[var(--color-primary-600)] gradient-text"
           style={{ backgroundSize: '200% auto' }}
         >
           {title}
