@@ -113,6 +113,9 @@ const websiteJsonLd = {
     <title>{title}</title>
   </head>
   <body class="bg-[var(--color-neutral-950)] text-[var(--color-neutral-100)]">
+    {/* Scroll Progress Indicator */}
+    <div class="scroll-progress" aria-hidden="true"></div>
+
     <!-- Skip to content link (WCAG 2.4.1) -->
     <a
       href="#main-content"
@@ -131,5 +134,23 @@ const websiteJsonLd = {
 
     <!-- Footer -->
     <Footer lang={lang} />
+
+    <!-- Scroll Progress Script -->
+    <script is:inline>
+      (function () {
+        const el = document.querySelector('.scroll-progress');
+        if (!el) {
+          return;
+        }
+        function update() {
+          const scrollTop = window.scrollY;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+          el.style.setProperty('--scroll-progress', String(progress));
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+      })();
+    </script>
   </body>
 </html>

@@ -35,41 +35,37 @@ export default function ProjectCard({
 }: ProjectCardProps): ReactElement {
   return (
     <Tilt
-      tiltMaxAngleX={8}
-      tiltMaxAngleY={8}
-      perspective={1000}
+      tiltMaxAngleX={6}
+      tiltMaxAngleY={6}
+      perspective={1200}
       scale={1.02}
-      transitionSpeed={450}
+      transitionSpeed={500}
       glareEnable={true}
-      glareMaxOpacity={0.15}
-      glareColor="#38bdf8"
+      glareMaxOpacity={0.08}
+      glareColor="#94a3b8"
       glarePosition="all"
-      className="w-full"
+      className="w-full h-full"
     >
-      <article className="glass-effect card-elevated group relative overflow-hidden rounded-xl p-6 h-full transition-all duration-300 border border-white/10 hover:border-primary-400/50">
-        {/* Gradient Border Animation (hidden, appears on hover) */}
-        <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <div className="absolute inset-0 rounded-xl p-[1px] bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 bg-[length:200%_100%] animate-[gradientShift_3s_linear_infinite]" />
-        </div>
+      <article className="glass-effect card-elevated group relative overflow-hidden rounded-xl p-6 h-full transition-all duration-500 border border-white/10 hover:border-neutral-400/25 hover:shadow-lg hover:shadow-primary-400/5">
+        {/* Subtle glow on hover */}
+        <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-primary-400/5 via-transparent to-purple-500/5" />
 
-        {/* Content Container */}
-        <div className="relative z-10">
+        {/* Content Container — flex column for uniform height */}
+        <div className="relative z-10 flex flex-col h-full">
           {/* Header */}
           <div className="flex justify-between items-start mb-4">
-            <h3 className="text-xl font-bold text-white group-hover:text-primary-300 transition-colors">
+            <h3 className="text-xl font-bold text-white group-hover:text-neutral-50 transition-colors duration-300">
               {title}
             </h3>
             <span
-              className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[status]}`}
+              className={`px-3 py-1 rounded-full text-xs font-medium border shrink-0 ml-3 ${statusColors[status]}`}
             >
               {status}
             </span>
           </div>
 
-          {/* Description */}
-          <p className="text-neutral-200 group-hover:text-white mb-4 leading-relaxed">
-            {description}
-          </p>
+          {/* Description — clamped to 3 lines for uniform height */}
+          <p className="text-neutral-300 mb-4 leading-relaxed line-clamp-3">{description}</p>
 
           {/* Technologies */}
           {technologies.length > 0 && (
@@ -78,7 +74,7 @@ export default function ProjectCard({
                 <span
                   key={tech}
                   data-testid="tech-badge"
-                  className="px-3 py-1 bg-neutral-800/50 backdrop-blur-sm text-neutral-200 group-hover:text-white rounded-md text-sm border border-neutral-700/50 hover:border-primary-400/50 transition-colors"
+                  className="px-3 py-1 bg-neutral-800/50 backdrop-blur-sm text-neutral-300 rounded-md text-sm border border-neutral-700/50 group-hover:border-neutral-600/50 transition-colors duration-300"
                 >
                   {tech}
                 </span>
@@ -86,9 +82,9 @@ export default function ProjectCard({
             </div>
           )}
 
-          {/* Footer */}
-          <div className="flex justify-between items-center mt-4 pt-4 border-t border-white/10">
-            <span className="text-sm text-neutral-400 group-hover:text-neutral-200">{period}</span>
+          {/* Footer — pushed to bottom */}
+          <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/10">
+            <span className="text-sm text-neutral-400">{period}</span>
 
             {/* Links */}
             {(demoUrl || repositoryUrl) && (
@@ -98,7 +94,7 @@ export default function ProjectCard({
                     href={demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-primary-400 hover:text-primary-300 transition-all hover:translate-x-1 font-medium"
+                    className="text-sm text-primary-400 hover:text-primary-300 transition-all duration-300 hover:translate-x-1 font-medium"
                   >
                     Demo →
                   </a>
@@ -108,7 +104,7 @@ export default function ProjectCard({
                     href={repositoryUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-primary-400 hover:text-primary-300 transition-all hover:translate-x-1 font-medium"
+                    className="text-sm text-primary-400 hover:text-primary-300 transition-all duration-300 hover:translate-x-1 font-medium"
                   >
                     Code →
                   </a>

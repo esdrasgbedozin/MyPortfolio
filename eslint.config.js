@@ -69,7 +69,18 @@ export default [
   {
     files: ['**/*.astro'],
     rules: {
-      // Règles spécifiques Astro si nécessaire
+      // Disable type-aware rules unsupported by astro parser
+      '@typescript-eslint/no-floating-promises': 'off',
+      '@typescript-eslint/strict-boolean-expressions': 'off',
+    },
+  },
+
+  // Disable type-aware rules for scripts extracted from .astro files
+  {
+    files: ['**/*.astro/*.ts', '**/*.astro/*.js'],
+    rules: {
+      '@typescript-eslint/no-floating-promises': 'off',
+      '@typescript-eslint/strict-boolean-expressions': 'off',
     },
   },
 ];
