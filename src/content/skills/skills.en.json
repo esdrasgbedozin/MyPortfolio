@@ -1,218 +1,119 @@
 [
   {
-    "category": "Programming Languages",
+    "category": "Cloud & Infrastructure",
     "skills": [
-      {
-        "name": "TypeScript",
-        "level": "expert",
-        "years": 5,
-        "logo": "/images/skills/typescript.svg"
-      },
-      {
-        "name": "JavaScript",
-        "level": "expert",
-        "years": 7,
-        "logo": "/images/skills/javascript.svg"
-      },
-      {
-        "name": "Python",
-        "level": "advanced",
-        "years": 4,
-        "logo": "/images/skills/python.svg"
-      },
-      {
-        "name": "Java",
-        "level": "advanced",
-        "years": 3,
-        "logo": "/images/skills/java.svg"
-      },
-      {
-        "name": "Go",
-        "level": "intermediate",
-        "years": 2,
-        "logo": "/images/skills/go.svg"
-      }
+      { "name": "Google Cloud Platform", "level": "advanced" },
+      { "name": "Cloud Run & Serverless", "level": "advanced" },
+      { "name": "Cloud Storage", "level": "advanced" },
+      { "name": "Firestore & Firebase", "level": "advanced" },
+      { "name": "Cloud SQL", "level": "intermediate" },
+      { "name": "Vertex AI & Document AI", "level": "intermediate" },
+      { "name": "Artifact Registry", "level": "intermediate" },
+      { "name": "AWS", "level": "intermediate" },
+      { "name": "Terraform", "level": "intermediate" },
+      { "name": "Docker & Docker Compose", "level": "advanced" },
+      { "name": "Kubernetes", "level": "intermediate" }
     ]
   },
   {
-    "category": "Frontend & Frameworks",
+    "category": "DevOps & CI/CD",
     "skills": [
-      {
-        "name": "React",
-        "level": "expert",
-        "years": 5,
-        "logo": "/images/skills/react.svg"
-      },
-      {
-        "name": "Next.js",
-        "level": "advanced",
-        "years": 3,
-        "logo": "/images/skills/nextjs.svg"
-      },
-      {
-        "name": "Astro",
-        "level": "advanced",
-        "years": 1,
-        "logo": "/images/skills/astro.svg"
-      },
-      {
-        "name": "Vue.js",
-        "level": "intermediate",
-        "years": 2,
-        "logo": "/images/skills/vue.svg"
-      },
-      {
-        "name": "Tailwind CSS",
-        "level": "expert",
-        "years": 4,
-        "logo": "/images/skills/tailwind.svg"
-      }
+      { "name": "Jenkins", "level": "advanced" },
+      { "name": "GitHub Actions", "level": "advanced" },
+      { "name": "Git", "level": "advanced" },
+      { "name": "DevSecOps", "level": "intermediate" },
+      { "name": "Grafana", "level": "intermediate" },
+      { "name": "Prometheus", "level": "intermediate" },
+      { "name": "SonarQube", "level": "intermediate" }
     ]
   },
   {
-    "category": "Backend & APIs",
+    "category": "Backend Development",
     "skills": [
-      {
-        "name": "Node.js",
-        "level": "expert",
-        "years": 6,
-        "logo": "/images/skills/nodejs.svg"
-      },
-      {
-        "name": "Express",
-        "level": "advanced",
-        "years": 5,
-        "logo": "/images/skills/express.svg"
-      },
-      {
-        "name": "FastAPI",
-        "level": "advanced",
-        "years": 2,
-        "logo": "/images/skills/fastapi.svg"
-      },
-      {
-        "name": "GraphQL",
-        "level": "intermediate",
-        "years": 2,
-        "logo": "/images/skills/graphql.svg"
-      },
-      {
-        "name": "REST APIs",
-        "level": "expert",
-        "years": 7,
-        "logo": "/images/skills/api.svg"
-      }
+      { "name": "Python", "level": "advanced" },
+      { "name": "Java", "level": "advanced" },
+      { "name": "JavaScript", "level": "advanced" },
+      { "name": "Bash", "level": "intermediate" },
+      { "name": "C / C++", "level": "intermediate" },
+      { "name": "SQL", "level": "advanced" },
+      { "name": "FastAPI", "level": "advanced" },
+      { "name": "Flask", "level": "intermediate" },
+      { "name": "Node.js", "level": "advanced" }
     ]
   },
   {
-    "category": "Cloud & DevOps",
+    "category": "Software Architecture",
     "skills": [
-      {
-        "name": "AWS",
-        "level": "expert",
-        "years": 5,
-        "logo": "/images/skills/aws.svg"
-      },
-      {
-        "name": "Google Cloud",
-        "level": "advanced",
-        "years": 3,
-        "logo": "/images/skills/gcp.svg"
-      },
-      {
-        "name": "Azure",
-        "level": "advanced",
-        "years": 2,
-        "logo": "/images/skills/azure.svg"
-      },
-      {
-        "name": "Docker",
-        "level": "expert",
-        "years": 5,
-        "logo": "/images/skills/docker.svg"
-      },
-      {
-        "name": "Kubernetes",
-        "level": "advanced",
-        "years": 3,
-        "logo": "/images/skills/kubernetes.svg"
-      },
-      {
-        "name": "Terraform",
-        "level": "advanced",
-        "years": 3,
-        "logo": "/images/skills/terraform.svg"
-      },
-      {
-        "name": "GitHub Actions",
-        "level": "advanced",
-        "years": 4,
-        "logo": "/images/skills/github-actions.svg"
-      }
+      { "name": "Microservices", "level": "advanced" },
+      { "name": "Cloud Native Architecture", "level": "advanced" },
+      { "name": "RESTful API", "level": "expert" },
+      { "name": "UML & Design Patterns", "level": "advanced" },
+      { "name": "Algorithms", "level": "advanced" }
     ]
   },
   {
-    "category": "Databases",
+    "category": "Frontend Development",
     "skills": [
-      {
-        "name": "PostgreSQL",
-        "level": "advanced",
-        "years": 5,
-        "logo": "/images/skills/postgresql.svg"
-      },
-      {
-        "name": "MongoDB",
-        "level": "advanced",
-        "years": 4,
-        "logo": "/images/skills/mongodb.svg"
-      },
-      {
-        "name": "Redis",
-        "level": "intermediate",
-        "years": 3,
-        "logo": "/images/skills/redis.svg"
-      },
-      {
-        "name": "DynamoDB",
-        "level": "intermediate",
-        "years": 2,
-        "logo": "/images/skills/dynamodb.svg"
-      }
+      { "name": "React.js", "level": "advanced" },
+      { "name": "Next.js", "level": "intermediate" },
+      { "name": "Angular", "level": "intermediate" },
+      { "name": "SAPUI5", "level": "intermediate" },
+      { "name": "Astro", "level": "advanced" },
+      { "name": "Vite", "level": "advanced" },
+      { "name": "Tailwind CSS", "level": "advanced" },
+      { "name": "TypeScript", "level": "advanced" }
     ]
   },
   {
-    "category": "Testing & Quality",
+    "category": "Quality & Testing",
     "skills": [
-      {
-        "name": "Vitest",
-        "level": "advanced",
-        "years": 2,
-        "logo": "/images/skills/vitest.svg"
-      },
-      {
-        "name": "Jest",
-        "level": "expert",
-        "years": 5,
-        "logo": "/images/skills/jest.svg"
-      },
-      {
-        "name": "Playwright",
-        "level": "advanced",
-        "years": 2,
-        "logo": "/images/skills/playwright.svg"
-      },
-      {
-        "name": "Cypress",
-        "level": "intermediate",
-        "years": 3,
-        "logo": "/images/skills/cypress.svg"
-      },
-      {
-        "name": "TDD",
-        "level": "expert",
-        "years": 6,
-        "logo": "/images/skills/tdd.svg"
-      }
+      { "name": "Selenium WebDriver", "level": "advanced" },
+      { "name": "Cypress", "level": "advanced" },
+      { "name": "Playwright", "level": "advanced" },
+      { "name": "PyTest", "level": "advanced" },
+      { "name": "JUnit", "level": "intermediate" },
+      { "name": "TDD", "level": "advanced" },
+      { "name": "Performance Testing", "level": "intermediate" }
+    ]
+  },
+  {
+    "category": "Data & Databases",
+    "skills": [
+      { "name": "PostgreSQL", "level": "advanced" },
+      { "name": "Cloud SQL", "level": "intermediate" },
+      { "name": "Firestore", "level": "advanced" },
+      { "name": "MongoDB", "level": "intermediate" },
+      { "name": "SAP HANA", "level": "intermediate" },
+      { "name": "SQLAlchemy", "level": "intermediate" }
+    ]
+  },
+  {
+    "category": "Security & Cryptography",
+    "skills": [
+      { "name": "AES-256-GCM", "level": "intermediate" },
+      { "name": "PBKDF2 / Bcrypt", "level": "intermediate" },
+      { "name": "JWT (Token Rotation)", "level": "advanced" },
+      { "name": "Cybersecurity", "level": "intermediate" },
+      { "name": "GDPR", "level": "intermediate" }
+    ]
+  },
+  {
+    "category": "Artificial Intelligence",
+    "skills": [
+      { "name": "Vertex AI", "level": "intermediate" },
+      { "name": "Gemini API", "level": "intermediate" },
+      { "name": "Document AI", "level": "intermediate" },
+      { "name": "Agentic AI", "level": "intermediate" },
+      { "name": "GitHub Copilot", "level": "advanced" },
+      { "name": "Claude Code", "level": "advanced" }
+    ]
+  },
+  {
+    "category": "Languages",
+    "skills": [
+      { "name": "French", "level": "expert" },
+      { "name": "English (C1 — TOEIC)", "level": "advanced" },
+      { "name": "German (A2)", "level": "beginner" }
     ]
   }
 ]
