@@ -1,8 +1,33 @@
 ---
+/**
+ * Page Compétences FR
+ * Charge les données depuis Content Collections (skills.fr.json)
+ */
+import { getEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import SkillBadge from '../../../components/SkillBadge';
 import ScrollReveal from '../../../components/ScrollReveal';
 import ParallaxBackground from '../../../components/ParallaxBackground';
+
+export const prerender = true;
+
+// Charger les compétences FR depuis Content Collections
+const skillsEntry = await getEntry('skills', 'skills.fr');
+const categories = skillsEntry?.data ?? [];
+
+/**
+ * Mapper le niveau de compétence vers le variant du badge
+ */
+function levelToVariant(level: string): 'primary' | 'secondary' | 'success' {
+  switch (level) {
+    case 'expert':
+      return 'success';
+    case 'advanced':
+      return 'primary';
+    default:
+      return 'secondary';
+  }
+}
 ---
 
 <Layout
@@ -26,100 +51,23 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
         </div>
       </ScrollReveal>
 
-      {/* Catégories de compétences */}
       <div class="space-y-12">
-        {/* Langages */}
-        <ScrollReveal delay={100} client:idle>
-          <div class="glass-effect rounded-xl p-8">
-            <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text"
-            >
-              Langages de programmation
-            </h2>
-            <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="primary">TypeScript</SkillBadge>
-              <SkillBadge variant="primary">JavaScript</SkillBadge>
-              <SkillBadge variant="primary">Python</SkillBadge>
-              <SkillBadge variant="primary">Java</SkillBadge>
-              <SkillBadge variant="secondary">C#</SkillBadge>
-              <SkillBadge variant="secondary">SQL</SkillBadge>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* Frameworks */}
-        <ScrollReveal delay={200} client:idle>
-          <div class="glass-effect rounded-xl p-8">
-            <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text"
-            >
-              Frameworks & Bibliothèques
-            </h2>
-            <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="primary">React</SkillBadge>
-              <SkillBadge variant="primary">Astro</SkillBadge>
-              <SkillBadge variant="primary">Next.js</SkillBadge>
-              <SkillBadge variant="primary">Node.js</SkillBadge>
-              <SkillBadge variant="secondary">Express</SkillBadge>
-              <SkillBadge variant="secondary">Spring Boot</SkillBadge>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* Cloud & DevOps */}
-        <ScrollReveal delay={300} client:idle>
-          <div class="glass-effect rounded-xl p-8">
-            <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text"
-            >
-              Cloud & DevOps
-            </h2>
-            <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="primary">Azure</SkillBadge>
-              <SkillBadge variant="primary">AWS</SkillBadge>
-              <SkillBadge variant="primary">Vercel</SkillBadge>
-              <SkillBadge variant="secondary">Docker</SkillBadge>
-              <SkillBadge variant="secondary">Kubernetes</SkillBadge>
-              <SkillBadge variant="secondary">GitHub Actions</SkillBadge>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* Bases de données */}
-        <ScrollReveal delay={400} client:idle>
-          <div class="glass-effect rounded-xl p-8">
-            <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text"
-            >
-              Bases de données
-            </h2>
-            <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="primary">PostgreSQL</SkillBadge>
-              <SkillBadge variant="primary">MongoDB</SkillBadge>
-              <SkillBadge variant="secondary">Redis</SkillBadge>
-              <SkillBadge variant="secondary">SQL Server</SkillBadge>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* Méthodologies */}
-        <ScrollReveal delay={500} client:idle>
-          <div class="glass-effect rounded-xl p-8">
-            <h2
-              class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text"
-            >
-              Méthodologies & Pratiques
-            </h2>
-            <div class="flex flex-wrap gap-3">
-              <SkillBadge variant="success">TDD</SkillBadge>
-              <SkillBadge variant="success">Agile / Scrum</SkillBadge>
-              <SkillBadge variant="success">CI/CD</SkillBadge>
-              <SkillBadge variant="success">SOLID Principles</SkillBadge>
-              <SkillBadge variant="secondary">Design Patterns</SkillBadge>
-              <SkillBadge variant="secondary">Clean Architecture</SkillBadge>
-            </div>
-          </div>
-        </ScrollReveal>
+        {
+          categories.map((cat, index) => (
+            <ScrollReveal delay={100 + index * 100} client:idle>
+              <div class="glass-effect rounded-xl p-8">
+                <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text">
+                  {cat.category}
+                </h2>
+                <div class="flex flex-wrap gap-3">
+                  {cat.skills.map((skill) => (
+                    <SkillBadge variant={levelToVariant(skill.level)}>{skill.name}</SkillBadge>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          ))
+        }
       </div>
     </div>
   </ParallaxBackground>

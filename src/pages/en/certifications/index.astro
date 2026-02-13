@@ -1,9 +1,34 @@
 ---
-// Phase 1-4: Visual enhancements (parallax, scroll reveal, glassmorphism)
+/**
+ * Certifications Page EN
+ * Loads data from Content Collections (certifications.en.json)
+ */
+import { getEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import Badge from '../../../components/Badge';
 import ScrollReveal from '../../../components/ScrollReveal';
 import ParallaxBackground from '../../../components/ParallaxBackground';
+
+export const prerender = true;
+
+// Load EN certifications from Content Collections
+const certEntry = await getEntry('certifications', 'certifications.en');
+const certifications = certEntry?.data ?? [];
+
+/**
+ * Format date in English (e.g. "January 2026")
+ */
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
+
+/**
+ * Check if a certification is active
+ */
+function isActive(cert: { expiryDate?: Date }): boolean {
+  if (!cert.expiryDate) return true;
+  return new Date(cert.expiryDate) > new Date();
+}
 ---
 
 <Layout
@@ -11,9 +36,9 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
   description="Esdras GBEDOZIN's professional certifications: Google Cloud, ISTQB, Voltaire and more."
   lang="en"
 >
-  <ParallaxBackground variant="dots" speed={0.3} className="min-h-screen" client:load>
+  <ParallaxBackground variant="dots" speed={0.3} className="min-h-screen" client:idle>
     <div class="container mx-auto px-4 py-16">
-      <ScrollReveal delay={0} client:load>
+      <ScrollReveal delay={0} client:idle>
         <div class="text-center mb-12">
           <h1
             class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 gradient-text bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
@@ -27,57 +52,43 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
         </div>
       </ScrollReveal>
 
-      {/* Responsive grid 1/2/3 columns */}
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Certification 1 - Example */}
-        <ScrollReveal delay={100} client:load>
-          <article
-            class="glass-effect card-elevated rounded-xl p-6 h-full hover:border-primary-400/50 transition-all duration-300"
-          >
-            <div class="flex items-start justify-between mb-4">
-              <h3 class="text-xl font-bold text-white">Azure Solutions Architect Expert</h3>
-              <Badge variant="success">Active</Badge>
-            </div>
-            <p class="text-sm text-neutral-400 mb-2 font-semibold">Microsoft</p>
-            <p class="text-sm text-neutral-300 mb-4">Obtained: January 2024</p>
-            <p class="text-sm text-primary-400 font-mono">ID: AZ-305-2024-001</p>
-          </article>
-        </ScrollReveal>
-
-        {/* Certification 2 - Example */}
-        <ScrollReveal delay={200} client:load>
-          <article
-            class="glass-effect card-elevated rounded-xl p-6 h-full hover:border-primary-400/50 transition-all duration-300"
-          >
-            <div class="flex items-start justify-between mb-4">
-              <h3 class="text-xl font-bold text-white">AWS Certified Developer</h3>
-              <Badge variant="success">Active</Badge>
-            </div>
-            <p class="text-sm text-neutral-400 mb-2 font-semibold">Amazon Web Services</p>
-            <p class="text-sm text-neutral-300 mb-4">Obtained: March 2023</p>
-            <p class="text-sm text-primary-400 font-mono">ID: AWS-DEV-2023-789</p>
-          </article>
-        </ScrollReveal>
-
-        {/* Certification 3 - Example */}
-        <ScrollReveal delay={300} client:load>
-          <article
-            class="glass-effect card-elevated rounded-xl p-6 h-full hover:border-primary-400/50 transition-all duration-300"
-          >
-            <div class="flex items-start justify-between mb-4">
-              <h3 class="text-xl font-bold text-white">Professional Scrum Master I</h3>
-              <Badge variant="success">Active</Badge>
-            </div>
-            <p class="text-sm text-neutral-400 mb-2 font-semibold">Scrum.org</p>
-            <p class="text-sm text-neutral-300 mb-4">Obtained: June 2023</p>
-            <p class="text-sm text-primary-400 font-mono">ID: PSM1-2023-456</p>
-          </article>
-        </ScrollReveal>
-      </div>
-
-      {/* Content Collections note */}
-      <div class="mt-12 text-center text-sm text-neutral-500">
-        <p>Note: Real certifications will be loaded via Content Collections (Phase 4)</p>
+        {
+          certifications.map((cert, index) => (
+            <ScrollReveal delay={100 + index * 100} client:idle>
+              <article class="glass-effect card-elevated rounded-xl p-6 h-full hover:border-primary-400/50 transition-all duration-300">
+                <div class="flex items-start justify-between mb-4">
+                  <h3 class="text-xl font-bold text-white">{cert.title}</h3>
+                  <Badge variant={isActive(cert) ? 'success' : 'default'}>
+                    {isActive(cert) ? 'Active' : 'Expired'}
+                  </Badge>
+                </div>
+                <p class="text-sm text-neutral-400 mb-2 font-semibold">{cert.organization}</p>
+                <p class="text-sm text-neutral-300 mb-4">
+                  Obtained: {formatDate(new Date(cert.date))}
+                </p>
+                {cert.description && (
+                  <p class="text-sm text-neutral-400 mb-4 leading-relaxed">{cert.description}</p>
+                )}
+                <div class="flex items-center gap-4 mt-auto">
+                  {cert.credentialId && (
+                    <p class="text-sm text-primary-400 font-mono">ID: {cert.credentialId}</p>
+                  )}
+                  {cert.credentialUrl && (
+                    <a
+                      href={cert.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-sm text-primary-400 hover:text-primary-300 transition-colors underline"
+                    >
+                      Verify →
+                    </a>
+                  )}
+                </div>
+              </article>
+            </ScrollReveal>
+          ))
+        }
       </div>
     </div>
   </ParallaxBackground>
