@@ -1,7 +1,7 @@
 ---
 /**
  * Page À Propos FR
- * Données dynamiques depuis Content Collections
+ * Données dynamiques depuis Content Collections + Expérience & Formation
  */
 import { getEntry, getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
@@ -38,6 +38,12 @@ const terminalLines = [
     content: 'Esdras GBEDOZIN\nIngénieur Informatique — Full-Stack & Cloud',
     delay: 100,
   },
+  { type: 'command' as const, content: 'cat experience.txt', delay: 800 },
+  {
+    type: 'output' as const,
+    content: `🏢 SAP — Ingénieur DevOps & Fullstack (Alternance)\n📍 Levallois-Perret, France | Sept. 2024 — Présent\n⚙️  1000+ jobs Jenkins migrés via IaC (Job DSL)\n🔧 SAPUI5, Docker, Shell, SAP HANA`,
+    delay: 100,
+  },
   { type: 'command' as const, content: 'cat skills.txt', delay: 800 },
   {
     type: 'output' as const,
@@ -52,10 +58,20 @@ const terminalLines = [
   },
 ];
 
-// Timeline construite depuis les certifications réelles
-const timelineItems = certs
+// Timeline mixte : expérience + formation + certifications clés
+const topCerts = certs
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  .map((cert) => ({
+  .slice(0, 5);
+
+const timelineItems = [
+  {
+    title: 'Ingénieur DevOps & Fullstack — SAP',
+    date: 'Sept. 2024 — Présent',
+    description:
+      "Migration de 1000+ jobs Jenkins via IaC (Job DSL). Fusion d'applications SAPUI5. Docker, DevSecOps, Scrum Master. SAP HANA.",
+    type: 'work' as const,
+  },
+  ...topCerts.map((cert) => ({
     title: cert.title,
     date: new Date(cert.date).toLocaleDateString('fr-FR', {
       year: 'numeric',
@@ -63,7 +79,15 @@ const timelineItems = certs
     }),
     description: cert.description ?? `Certification délivrée par ${cert.organization}`,
     type: 'certification' as const,
-  }));
+  })),
+  {
+    title: 'Ingénieur Généraliste — ESIGELEC',
+    date: '2023 — 2026',
+    description:
+      'Spécialisation Développement Logiciel – Tests & Qualité. Architecture, TDD, DevSecOps, Cloud (GCP/AWS), IA. Ambassadeur ESIGELEC.',
+    type: 'education' as const,
+  },
+];
 ---
 
 <Layout
@@ -82,14 +106,15 @@ const timelineItems = certs
         </h1>
         <p class="text-xl text-center text-neutral-400 max-w-3xl mx-auto leading-relaxed">
           Ingénieur informatique passionné par l'architecture cloud, le DevOps et le développement
-          Full-Stack. Je conçois des solutions cloud-native robustes avec Python, React et Google
-          Cloud Platform.
+          Full-Stack. Actuellement en alternance chez <strong class="text-neutral-200">SAP</strong>,
+          je conçois des solutions cloud-native robustes avec Python, React et Google Cloud
+          Platform.
         </p>
       </ScrollReveal>
     </div>
   </ParallaxBackground>
 
-  {/* Stats Section — données dynamiques */}
+  {/* Stats Section */}
   <section class="py-16 bg-neutral-950/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -118,8 +143,219 @@ const timelineItems = certs
     </div>
   </section>
 
-  {/* Terminal Section */}
+  {/* Experience Section */}
   <ParallaxBackground speed={0.2} variant="dots" className="py-24" client:idle>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ScrollReveal delay={0} client:idle>
+        <h2
+          class="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text"
+        >
+          Expérience Professionnelle
+        </h2>
+        <p class="text-center text-neutral-400 mb-16 max-w-2xl mx-auto">
+          Là où théorie et pratique se rencontrent
+        </p>
+      </ScrollReveal>
+
+      {/* SAP Card */}
+      <ScrollReveal delay={100} client:idle>
+        <div
+          class="glass-effect rounded-2xl p-8 md:p-10 border border-neutral-700/50 hover:border-primary-400/30 transition-all duration-500"
+        >
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-8">
+            <div>
+              <h3 class="text-2xl font-bold text-neutral-100 mb-2">Ingénieur DevOps & Fullstack</h3>
+              <p class="text-lg text-primary-400 font-medium">SAP — Levallois-Perret, France</p>
+            </div>
+            <span
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 text-green-400 text-sm font-medium border border-green-500/20 shrink-0"
+            >
+              <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+              Alternance · Sept. 2024 — Présent
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ScrollReveal delay={200} client:idle>
+              <div class="space-y-4">
+                <div class="flex items-start gap-3">
+                  <span class="text-primary-400 text-xl mt-0.5">⚙️</span>
+                  <div>
+                    <h4 class="font-semibold text-neutral-200 mb-1">Infrastructure CI/CD</h4>
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                      Migration d'un serveur Jenkins central. Transformation de <strong
+                        class="text-neutral-300">1000+ jobs</strong
+                      > via Infrastructure as Code (Job DSL). Versioning et reproductibilité des pipelines.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <span class="text-primary-400 text-xl mt-0.5">💻</span>
+                  <div>
+                    <h4 class="font-semibold text-neutral-200 mb-1">Développement Fullstack</h4>
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                      Fusion de deux applications internes en plateforme unifiée (SAPUI5,
+                      JavaScript). Réécriture Backend/Frontend pour réduire la dette technique.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={300} client:idle>
+              <div class="space-y-4">
+                <div class="flex items-start gap-3">
+                  <span class="text-primary-400 text-xl mt-0.5">🛡️</span>
+                  <div>
+                    <h4 class="font-semibold text-neutral-200 mb-1">DevSecOps & Qualité</h4>
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                      Conteneurisation Docker, scripts Shell, tests automatisés. Administration de
+                      bases SAP HANA (In-Memory).
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <span class="text-primary-400 text-xl mt-0.5">📋</span>
+                  <div>
+                    <h4 class="font-semibold text-neutral-200 mb-1">Gestion de Projet Agile</h4>
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                      Animation des cérémonies Scrum (Dailies, Rétrospectives). Gestion du backlog
+                      JIRA et coordination transverse.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          {/* Tech tags */}
+          <ScrollReveal delay={400} client:idle>
+            <div class="mt-8 pt-6 border-t border-neutral-700/50">
+              <div class="flex flex-wrap gap-2">
+                {
+                  [
+                    'Jenkins',
+                    'Job DSL',
+                    'Docker',
+                    'Shell',
+                    'SAPUI5',
+                    'JavaScript',
+                    'SAP HANA',
+                    'JIRA',
+                    'Scrum',
+                  ].map((tech) => (
+                    <span class="px-3 py-1 text-xs font-medium rounded-full bg-neutral-800/80 text-neutral-300 border border-neutral-700/50">
+                      {tech}
+                    </span>
+                  ))
+                }
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </ScrollReveal>
+    </div>
+  </ParallaxBackground>
+
+  {/* Education Section */}
+  <section class="py-24 bg-neutral-950/50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <ScrollReveal delay={0} client:idle>
+        <h2
+          class="text-4xl font-bold text-center mb-4 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text"
+        >
+          Formation
+        </h2>
+        <p class="text-center text-neutral-400 mb-16 max-w-2xl mx-auto">
+          Les fondations de mon expertise technique
+        </p>
+      </ScrollReveal>
+
+      <ScrollReveal delay={100} client:idle>
+        <div
+          class="glass-effect rounded-2xl p-8 md:p-10 border border-neutral-700/50 hover:border-purple-400/30 transition-all duration-500"
+        >
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-8">
+            <div>
+              <h3 class="text-2xl font-bold text-neutral-100 mb-2">
+                Ingénieur Généraliste <span class="text-neutral-500 font-normal"
+                  >(Grade de Master)</span
+                >
+              </h3>
+              <p class="text-lg text-purple-400 font-medium">ESIGELEC — Rouen, France</p>
+            </div>
+            <span
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 text-purple-400 text-sm font-medium border border-purple-500/20 shrink-0"
+            >
+              🎓 2023 — 2026
+            </span>
+          </div>
+
+          <p class="text-neutral-400 mb-6 leading-relaxed">
+            Spécialisation <strong class="text-neutral-200"
+              >Développement Logiciel – Tests & Qualité</strong
+            >. Cursus axé sur la conception, l'architecture et la fiabilisation des Systèmes
+            d'Information.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <ScrollReveal delay={200} client:idle>
+              <div class="rounded-xl bg-neutral-800/40 p-4 border border-neutral-700/30">
+                <span class="text-2xl mb-2 block">🏗️</span>
+                <h4 class="font-semibold text-neutral-200 text-sm mb-1">Architecture</h4>
+                <p class="text-neutral-500 text-xs">
+                  UML, Design Patterns, Algorithmique, SQL/NoSQL
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={250} client:idle>
+              <div class="rounded-xl bg-neutral-800/40 p-4 border border-neutral-700/30">
+                <span class="text-2xl mb-2 block">🧪</span>
+                <h4 class="font-semibold text-neutral-200 text-sm mb-1">Qualité & Tests</h4>
+                <p class="text-neutral-500 text-xs">
+                  TDD, QA, Performance Testing, Certification ISTQB
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={300} client:idle>
+              <div class="rounded-xl bg-neutral-800/40 p-4 border border-neutral-700/30">
+                <span class="text-2xl mb-2 block">🔐</span>
+                <h4 class="font-semibold text-neutral-200 text-sm mb-1">DevSecOps</h4>
+                <p class="text-neutral-500 text-xs">CI/CD, IaC, Cybersécurité, Conformité RGPD</p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={350} client:idle>
+              <div class="rounded-xl bg-neutral-800/40 p-4 border border-neutral-700/30">
+                <span class="text-2xl mb-2 block">☁️</span>
+                <h4 class="font-semibold text-neutral-200 text-sm mb-1">Cloud & IA</h4>
+                <p class="text-neutral-500 text-xs">
+                  GCP, AWS, Intelligence Artificielle, Cloud Computing
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          <ScrollReveal delay={400} client:idle>
+            <div class="mt-6 flex items-center gap-3 text-sm text-neutral-400">
+              <span class="text-purple-400">🎤</span>
+              <span
+                ><strong class="text-neutral-300">Ambassadeur ESIGELEC</strong> — Représentation lors
+                de salons, forums et journées portes ouvertes</span
+              >
+            </div>
+          </ScrollReveal>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  {/* Terminal Section */}
+  <ParallaxBackground speed={0.2} variant="grid" className="py-24" client:idle>
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <ScrollReveal delay={0} client:idle>
         <h2
@@ -135,7 +371,7 @@ const timelineItems = certs
     </div>
   </ParallaxBackground>
 
-  {/* Timeline Section — certifications réelles */}
+  {/* Timeline Section — parcours mixte */}
   <section class="py-24 bg-neutral-950/50">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <ScrollReveal delay={0} client:idle>
@@ -145,7 +381,7 @@ const timelineItems = certs
           Mon Parcours
         </h2>
         <p class="text-center text-neutral-400 mb-16 max-w-2xl mx-auto">
-          Certifications et accomplissements professionnels
+          Expériences, certifications et formation
         </p>
       </ScrollReveal>
 
