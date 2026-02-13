@@ -64,8 +64,8 @@ export default function ProjectCard({
             </span>
           </div>
 
-          {/* Description — clamped to 3 lines for uniform height */}
-          <p className="text-neutral-300 mb-4 leading-relaxed line-clamp-3">{description}</p>
+          {/* Description */}
+          <p className="text-neutral-300 mb-4 leading-relaxed">{description}</p>
 
           {/* Technologies */}
           {technologies.length > 0 && (
