@@ -1,0 +1,92 @@
+---
+title: Yumi — Intelligent Nutritional Assistant
+description: Intelligent nutritional assistant that analyzes food products in real-time through barcode scanning. Yumi uses a machine learning model (PyTorch MLP) to generate personalized nutritional scores tailored to each user based on their profile, health goals, dietary restrictions, and allergens. The application provides recommendations for healthier alternatives, generates optimized smart shopping baskets, and tracks scan history to guide users in their daily food choices. Integrates the Open Food Facts API for up-to-date product data.
+image: /images/projects/yumi.jpg
+tags: [web, data, backend]
+technologies:
+  [
+    React,
+    Python,
+    Flask,
+    PyTorch,
+    Machine Learning,
+    Vite,
+    Tailwind CSS,
+    scikit-learn,
+    NumPy,
+    Pandas,
+    Open Food Facts API,
+    Radix UI,
+    React Router,
+    ZXing,
+    Joblib,
+  ]
+category: web
+startDate: 2025-06-01
+status: in-progress
+featured: true
+---
+
+# Yumi — Intelligent Nutritional Assistant
+
+Nutritional assistant that analyzes food products in real-time through barcode scanning. Uses a PyTorch machine learning model to generate personalized nutritional scores based on each user's profile.
+
+## 🎯 Goals
+
+- Analyze food products through real-time barcode scanning
+- Generate personalized nutritional scores using machine learning
+- Suggest healthier alternatives tailored to the user's profile
+- Create optimized smart shopping baskets for balanced nutrition
+- Track scan history to support daily food choices
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+- **Framework**: React with Vite (ultra-fast build)
+- **UI**: Tailwind CSS + Radix UI (accessible components)
+- **Routing**: React Router
+- **Scanner**: ZXing (real-time barcode reading)
+
+### Backend & Artificial Intelligence
+
+- **Framework**: Flask (Python)
+- **ML Model**: PyTorch MLP (Multi-Layer Perceptron)
+- **Data Science**: scikit-learn, NumPy, Pandas
+- **Serialization**: Joblib (trained model persistence)
+- **External API**: Open Food Facts (up-to-date product data)
+
+## 🤖 Machine Learning
+
+- 🧠 PyTorch MLP model trained on nutritional data
+- 📊 Personalized nutritional score based on user profile
+- 🎯 Accounts for: health goals, dietary restrictions, allergens
+- 📈 Data preprocessing with scikit-learn (normalization, feature engineering)
+- 💾 Model persistence with Joblib for instant predictions
+
+## 📦 Features
+
+- ✅ Real-time barcode scanning (camera or manual input)
+- ✅ Personalized nutritional score via machine learning
+- ✅ Comprehensive user profile (goals, restrictions, allergens)
+- ✅ Healthier alternative recommendations
+- ✅ Optimized smart shopping baskets
+- ✅ Scan history with time tracking
+- ✅ Modern and responsive interface with Tailwind CSS
+- ✅ Open Food Facts integration for up-to-date data
+- ✅ Accessible components with Radix UI
+
+## 🚀 Architecture
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   React     │    │   Flask     │    │  PyTorch    │
+│  Frontend   │───▶│   Backend   │───▶│  ML Model   │
+│  + ZXing    │    │   + API     │    │  (MLP)      │
+└─────────────┘    └──────┬──────┘    └─────────────┘
+                          │
+                 ┌────────▼────────┐
+                 │  Open Food     │
+                 │  Facts API     │
+                 └────────────────┘
+```

@@ -1,0 +1,92 @@
+---
+title: Yumi — Assistant Nutritionnel Intelligent
+description: Assistant nutritionnel intelligent qui analyse les produits alimentaires en temps réel grâce au scan de codes-barres. Yumi utilise un modèle de machine learning (MLP PyTorch) pour générer un score nutritionnel personnalisé adapté à chaque utilisateur selon son profil, ses objectifs de santé, restrictions alimentaires et allergènes. L'application propose des recommandations d'alternatives plus saines, génère des paniers intelligents optimisés, et suit l'historique des scans pour accompagner les utilisateurs dans leurs choix alimentaires au quotidien. Intégration de l'API Open Food Facts pour des données produits actualisées.
+image: /images/projects/yumi.jpg
+tags: [web, data, backend]
+technologies:
+  [
+    React,
+    Python,
+    Flask,
+    PyTorch,
+    Machine Learning,
+    Vite,
+    Tailwind CSS,
+    scikit-learn,
+    NumPy,
+    Pandas,
+    Open Food Facts API,
+    Radix UI,
+    React Router,
+    ZXing,
+    Joblib,
+  ]
+category: web
+startDate: 2025-06-01
+status: in-progress
+featured: true
+---
+
+# Yumi — Assistant Nutritionnel Intelligent
+
+Assistant nutritionnel qui analyse les produits alimentaires en temps réel via le scan de codes-barres. Utilise un modèle de machine learning PyTorch pour générer des scores nutritionnels personnalisés selon le profil de chaque utilisateur.
+
+## 🎯 Objectifs
+
+- Analyser les produits alimentaires par scan de codes-barres en temps réel
+- Générer un score nutritionnel personnalisé grâce au machine learning
+- Proposer des alternatives plus saines adaptées au profil utilisateur
+- Créer des paniers intelligents optimisés pour une alimentation équilibrée
+- Suivre l'historique des scans pour accompagner les choix alimentaires
+
+## 🛠️ Stack Technique
+
+### Frontend
+
+- **Framework** : React avec Vite (build ultra-rapide)
+- **UI** : Tailwind CSS + Radix UI (composants accessibles)
+- **Routing** : React Router
+- **Scanner** : ZXing (lecture de codes-barres en temps réel)
+
+### Backend & Intelligence Artificielle
+
+- **Framework** : Flask (Python)
+- **Modèle ML** : PyTorch MLP (Multi-Layer Perceptron)
+- **Data Science** : scikit-learn, NumPy, Pandas
+- **Sérialisation** : Joblib (persistance des modèles entraînés)
+- **API externe** : Open Food Facts (données produits actualisées)
+
+## 🤖 Machine Learning
+
+- 🧠 Modèle MLP PyTorch entraîné sur des données nutritionnelles
+- 📊 Score nutritionnel personnalisé basé sur le profil utilisateur
+- 🎯 Prise en compte : objectifs de santé, restrictions alimentaires, allergènes
+- 📈 Prétraitement des données avec scikit-learn (normalisation, feature engineering)
+- 💾 Persistance des modèles avec Joblib pour des prédictions instantanées
+
+## 📦 Fonctionnalités
+
+- ✅ Scan de codes-barres en temps réel (caméra ou saisie manuelle)
+- ✅ Score nutritionnel personnalisé par machine learning
+- ✅ Profil utilisateur complet (objectifs, restrictions, allergènes)
+- ✅ Recommandations d'alternatives plus saines
+- ✅ Paniers intelligents optimisés
+- ✅ Historique des scans avec suivi dans le temps
+- ✅ Interface moderne et responsive avec Tailwind CSS
+- ✅ Intégration Open Food Facts pour données actualisées
+- ✅ Composants accessibles avec Radix UI
+
+## 🚀 Architecture
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   React     │    │   Flask     │    │  PyTorch    │
+│  Frontend   │───▶│   Backend   │───▶│  ML Model   │
+│  + ZXing    │    │   + API     │    │  (MLP)      │
+└─────────────┘    └──────┬──────┘    └─────────────┘
+                          │
+                 ┌────────▼────────┐
+                 │  Open Food     │
+                 │  Facts API     │
+                 └────────────────┘
+```
