@@ -108,6 +108,17 @@ const websiteJsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
 
+    <!-- Analytics: Plausible (privacy-friendly, no cookies) -->
+    {
+      import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN && (
+        <script
+          defer
+          data-domain={import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN}
+          src="https://plausible.io/js/script.js"
+        />
+      )
+    }
+
     <!-- Named slot for page-specific head elements -->
     <slot name="head" />
 
