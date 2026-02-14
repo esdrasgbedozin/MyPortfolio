@@ -72,7 +72,7 @@ export function ThemeToggle() {
       className="theme-toggle p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
       type="button"
     >
-      {isDark ? '☀' : '🌙'}
+      {isDark ? '🌙' : '☀'}
     </button>
   );
 }

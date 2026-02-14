@@ -146,9 +146,9 @@ describe('ThemeToggle - Epic 5.1 FE-066', () => {
     // ARRANGE
     render(<ThemeToggle />);
 
-    // ASSERT - Initial state is dark, should show sun icon (to switch to light)
+    // ASSERT - Initial state is dark, should show moon icon (indicative: dark mode active)
     const button = screen.getByRole('button', { name: /switch to light theme/i });
-    expect(button.textContent).toContain('☀'); // Sun icon for light mode
+    expect(button.textContent).toContain('🌙'); // Moon icon = dark mode active
   });
 
   it('should show moon icon when light theme active', () => {
@@ -159,8 +159,8 @@ describe('ThemeToggle - Epic 5.1 FE-066', () => {
     // ACT
     fireEvent.click(button); // Switch to light
 
-    // ASSERT - Light theme active, should show moon icon (to switch to dark)
-    expect(button.textContent).toContain('🌙'); // Moon icon for dark mode
+    // ASSERT - Light theme active, should show sun icon (indicative: light mode active)
+    expect(button.textContent).toContain('☀'); // Sun icon = light mode active
   });
 
   it('should have accessible label', () => {
@@ -211,6 +211,6 @@ describe('ThemeToggle - Epic 5.1 FE-066', () => {
     expect(document.documentElement.classList.contains('light')).toBe(true);
     expect(document.documentElement.classList.contains('dark')).toBe(false);
     const button = screen.getByRole('button', { name: /switch to dark theme/i });
-    expect(button.textContent).toContain('🌙'); // Moon icon for switching to dark
+    expect(button.textContent).toContain('☀'); // Sun icon = light mode active (indicative)
   });
 });
