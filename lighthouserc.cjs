@@ -9,9 +9,9 @@ module.exports = {
       url: [
         'http://localhost:4321/',
         'http://localhost:4321/fr/',
-        'http://localhost:4321/fr/projets',
+        'http://localhost:4321/fr/projects',
         'http://localhost:4321/fr/certifications',
-        'http://localhost:4321/fr/competences',
+        'http://localhost:4321/fr/skills',
         'http://localhost:4321/fr/contact',
         'http://localhost:4321/en/',
         'http://localhost:4321/en/projects',

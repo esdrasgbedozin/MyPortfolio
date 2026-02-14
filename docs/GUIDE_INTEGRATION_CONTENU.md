@@ -21,7 +21,7 @@ Ce guide vous aide à remplacer le contenu de démonstration par **VOS vraies in
 
 ### Fichiers à modifier
 
-- **FR** : `src/pages/fr/a-propos.astro`
+- **FR** : `src/pages/fr/about.astro`
 - **EN** : `src/pages/en/about.astro`
 
 ### Sections à personnaliser
@@ -148,7 +148,7 @@ status: 'in-progress' | 'completed' | 'archived';
 
 ### Fichiers à modifier
 
-- **FR** : `src/pages/fr/competences/index.astro`
+- **FR** : `src/pages/fr/skills/index.astro`
 - **EN** : `src/pages/en/skills/index.astro`
 
 ### Modifier vos compétences (lignes 35-120)
@@ -278,7 +278,7 @@ TURNSTILE_SECRET_KEY=0x4AAAAAAA...       # 👈 Votre secret key
   {/* 👈 Votre bio courte */}
   primaryCta={{
     label: 'Voir mes projets',
-    href: '/fr/projets',
+    href: '/fr/projects',
   }}
   secondaryCta={{
     label: 'Me contacter',
