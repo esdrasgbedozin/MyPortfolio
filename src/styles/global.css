@@ -452,3 +452,279 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+/* ========================================
+   WOW ANIMATIONS — Floating Orbs
+   ======================================== */
+@keyframes floatOrb1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(80px, -60px) scale(1.1);
+  }
+  50% {
+    transform: translate(-40px, -120px) scale(0.9);
+  }
+  75% {
+    transform: translate(-80px, 40px) scale(1.05);
+  }
+}
+
+@keyframes floatOrb2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-100px, 80px) scale(1.15);
+  }
+  66% {
+    transform: translate(60px, -40px) scale(0.85);
+  }
+}
+
+@keyframes floatOrb3 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  20% {
+    transform: translate(60px, 100px) scale(1.1);
+  }
+  40% {
+    transform: translate(-80px, 60px) scale(0.95);
+  }
+  60% {
+    transform: translate(-120px, -80px) scale(1.08);
+  }
+  80% {
+    transform: translate(40px, -60px) scale(0.92);
+  }
+}
+
+.floating-orbs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floating-orbs .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  will-change: transform;
+}
+
+.floating-orbs .orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.4), transparent 70%);
+  top: 10%;
+  left: 10%;
+  animation: floatOrb1 20s ease-in-out infinite;
+}
+
+.floating-orbs .orb-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.35), transparent 70%);
+  top: 40%;
+  right: 10%;
+  animation: floatOrb2 25s ease-in-out infinite;
+}
+
+.floating-orbs .orb-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent 70%);
+  bottom: 10%;
+  left: 30%;
+  animation: floatOrb3 30s ease-in-out infinite;
+}
+
+html.light .floating-orbs .orb {
+  opacity: 0.15;
+}
+
+/* Mobile: smaller orbs to avoid overflow & clutter */
+@media (max-width: 768px) {
+  .floating-orbs .orb-1 {
+    width: 200px;
+    height: 200px;
+  }
+  .floating-orbs .orb-2 {
+    width: 180px;
+    height: 180px;
+  }
+  .floating-orbs .orb-3 {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* ========================================
+   WOW ANIMATIONS — Profile Photo Ring
+   ======================================== */
+@keyframes rotateGradient {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(99, 102, 241, 0.3),
+      0 0 60px rgba(139, 92, 246, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(99, 102, 241, 0.5),
+      0 0 80px rgba(139, 92, 246, 0.25);
+  }
+}
+
+.profile-photo-ring {
+  position: relative;
+  display: inline-block;
+  padding: 4px;
+  border-radius: 50%;
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.profile-photo-ring::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--color-primary-400),
+    var(--color-purple-500),
+    var(--color-primary-600),
+    var(--color-purple-400),
+    var(--color-primary-400)
+  );
+  animation: rotateGradient 6s linear infinite;
+  z-index: -1;
+}
+
+.profile-photo-ring img {
+  border-radius: 50%;
+  display: block;
+  border: 3px solid var(--color-neutral-900);
+}
+
+html.light .profile-photo-ring img {
+  border-color: var(--color-neutral-100);
+}
+
+/* ========================================
+   WOW ANIMATIONS — Infinite Marquee
+   ======================================== */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-container {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 40s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ========================================
+   WOW ANIMATIONS — Text Reveal
+   ======================================== */
+@keyframes textRevealChar {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) rotateX(90deg);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+    filter: blur(0);
+  }
+}
+
+.text-reveal-char {
+  display: inline-block;
+  opacity: 0;
+  animation: textRevealChar 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ========================================
+   WOW ANIMATIONS — Magnetic Button
+   ======================================== */
+.magnetic-btn {
+  transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.magnetic-btn:hover {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   WOW ANIMATIONS — Glowing border on scroll
+   ======================================== */
+@keyframes borderPulse {
+  0%,
+  100% {
+    border-color: rgba(99, 102, 241, 0.15);
+  }
+  50% {
+    border-color: rgba(139, 92, 246, 0.35);
+  }
+}
+
+.card-glow-pulse {
+  animation: borderPulse 4s ease-in-out infinite;
+}
+
+/* ========================================
+   WOW ANIMATIONS — Floating badge
+   ======================================== */
+@keyframes floatBadge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.float-badge {
+  animation: floatBadge 3s ease-in-out infinite;
+}

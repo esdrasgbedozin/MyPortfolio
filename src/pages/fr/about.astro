@@ -135,24 +135,51 @@ const timelineItems = [
   description="À propos d'Esdras GBEDOZIN — Ingénieur Informatique spécialisé en Cloud, DevOps et développement Full-Stack. Parcours, certifications et expertise technique."
   lang={lang}
 >
-  {/* Hero Section */}
-  <ParallaxBackground speed={0.3} variant="gradient" className="py-24" client:idle>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <ScrollReveal delay={0} client:idle>
-        <h1
-          class="text-5xl md:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 gradient-text bg-[length:200%_100%] animate-gradient-text"
-        >
-          À Propos de Moi
-        </h1>
-        <p class="text-xl text-center text-neutral-400 max-w-3xl mx-auto leading-relaxed">
-          Ingénieur informatique passionné par l'architecture cloud, le DevOps et le développement
-          Full-Stack. Actuellement en alternance chez <strong class="text-neutral-200">SAP</strong>,
-          je conçois des solutions cloud-native robustes avec Python, React et Google Cloud
-          Platform.
-        </p>
-      </ScrollReveal>
+  {/* Hero Section with orbs and profile photo */}
+  <div class="relative">
+    <div class="floating-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
     </div>
-  </ParallaxBackground>
+    <ParallaxBackground speed={0.3} variant="gradient" className="py-24" client:idle>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+          {/* Profile Photo */}
+          <ScrollReveal delay={0} client:idle>
+            <div class="profile-photo-ring shrink-0">
+              <img
+                src="/images/profile.png"
+                alt="Esdras GBEDOZIN"
+                width="200"
+                height="200"
+                class="w-48 h-48 md:w-56 md:h-56 object-cover"
+                loading="eager"
+              />
+            </div>
+          </ScrollReveal>
+
+          {/* Text */}
+          <ScrollReveal delay={100} client:idle>
+            <div class="text-center md:text-left">
+              <h1
+                class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 gradient-text bg-[length:200%_100%] animate-gradient-text"
+              >
+                À Propos de Moi
+              </h1>
+              <p class="text-xl text-neutral-400 max-w-3xl leading-relaxed">
+                Ingénieur informatique passionné par l'architecture cloud, le DevOps et le
+                développement Full-Stack. Actuellement en alternance chez <strong
+                  class="text-neutral-200">SAP</strong
+                >, je conçois des solutions cloud-native robustes avec Python, React et Google Cloud
+                Platform.
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </div>
+    </ParallaxBackground>
+  </div>
 
   {/* Stats Section */}
   <section class="py-16 bg-neutral-950/50">

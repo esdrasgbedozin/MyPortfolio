@@ -6,6 +6,8 @@ import ScrollReveal from '../../components/ScrollReveal';
 import ParallaxBackground from '../../components/ParallaxBackground';
 import AnimatedCounter from '../../components/AnimatedCounter';
 import ProjectCard from '../../components/ProjectCard';
+import InfiniteMarquee from '../../components/InfiniteMarquee';
+import TextReveal from '../../components/TextReveal';
 import frTranslations from '../../i18n/fr.json';
 import { tSync } from '../../utils/i18n';
 
@@ -41,14 +43,46 @@ const statusMap = {
   description="Portfolio d'Esdras GBEDOZIN — Ingénieur Full-Stack & Architecte Cloud. Projets, certifications et compétences techniques."
   lang={lang}
 >
-  <Hero
-    client:idle
-    title={tSync('hero.name', lang, translations)}
-    tagline={tSync('hero.tagline', lang, translations)}
-    description={tSync('hero.description', lang, translations)}
-    primaryCta={{ label: tSync('hero.cta.projects', lang, translations), href: '/fr/projects' }}
-    secondaryCta={{ label: tSync('hero.cta.contact', lang, translations), href: '/fr/contact' }}
-  />
+  {/* Hero with floating orbs */}
+  <div class="relative">
+    <div class="floating-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+    <Hero
+      client:idle
+      title={tSync('hero.name', lang, translations)}
+      tagline={tSync('hero.tagline', lang, translations)}
+      description={tSync('hero.description', lang, translations)}
+      primaryCta={{ label: tSync('hero.cta.projects', lang, translations), href: '/fr/projects' }}
+      secondaryCta={{ label: tSync('hero.cta.contact', lang, translations), href: '/fr/contact' }}
+    />
+  </div>
+
+  {/* Tech Marquee — infinite scrolling tech stack */}
+  <section class="py-6 border-y border-neutral-800/50 bg-neutral-950/80 overflow-hidden">
+    <InfiniteMarquee
+      items={[
+        { label: 'React', icon: '⚛️' },
+        { label: 'TypeScript', icon: '🔷' },
+        { label: 'Python', icon: '🐍' },
+        { label: 'Astro', icon: '🚀' },
+        { label: 'Docker', icon: '🐳' },
+        { label: 'GCP', icon: '☁️' },
+        { label: 'Node.js', icon: '💚' },
+        { label: 'Jenkins', icon: '⚙️' },
+        { label: 'Tailwind CSS', icon: '🎨' },
+        { label: 'PostgreSQL', icon: '🐘' },
+        { label: 'Terraform', icon: '🏗️' },
+        { label: 'FastAPI', icon: '⚡' },
+        { label: 'Git', icon: '📝' },
+        { label: 'SAP HANA', icon: '💎' },
+      ]}
+      speed={35}
+      client:idle
+    />
+  </section>
 
   {/* Stats Section */}
   <section class="py-16 bg-neutral-950/50">

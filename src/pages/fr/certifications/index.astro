@@ -36,62 +36,71 @@ function isActive(cert: { expiryDate?: Date }): boolean {
   description="Certifications professionnelles d'Esdras GBEDOZIN : Google Cloud, ISTQB, Voltaire et plus."
   lang="fr"
 >
-  <ParallaxBackground variant="dots" speed={0.3} className="min-h-screen" client:idle>
-    <div class="container mx-auto px-4 py-16">
-      <ScrollReveal delay={0} client:idle>
-        <div class="text-center mb-12">
-          <h1
-            class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 gradient-text bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
-          >
-            Certifications
-          </h1>
-          <p class="text-lg text-neutral-300 max-w-2xl mx-auto">
-            Mes certifications professionnelles attestant de mes compétences techniques et de mon
-            engagement dans l'apprentissage continu.
-          </p>
-        </div>
-      </ScrollReveal>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {
-          certifications.map((cert, index) => (
-            <ScrollReveal delay={100 + index * 100} client:idle>
-              <article class="glass-effect card-elevated rounded-xl p-6 h-full flex flex-col hover:border-neutral-400/25 border border-transparent transition-all duration-500">
-                <div class="flex items-start justify-between mb-4">
-                  <h3 class="text-xl font-bold text-white">{cert.title}</h3>
-                  <Badge variant={isActive(cert) ? 'success' : 'default'}>
-                    {isActive(cert) ? 'Actif' : 'Expiré'}
-                  </Badge>
-                </div>
-                <p class="text-sm text-neutral-400 mb-2 font-semibold">{cert.organization}</p>
-                <p class="text-sm text-neutral-300 mb-4">
-                  Obtenue : {formatDate(new Date(cert.date))}
-                </p>
-                {cert.description && (
-                  <p class="text-sm text-neutral-400 mb-4 leading-relaxed line-clamp-2">
-                    {cert.description}
-                  </p>
-                )}
-                <div class="flex items-center gap-4 mt-auto pt-4 border-t border-white/5">
-                  {cert.credentialId && (
-                    <p class="text-sm text-primary-400 font-mono">ID : {cert.credentialId}</p>
-                  )}
-                  {cert.credentialUrl && (
-                    <a
-                      href={cert.credentialUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="text-sm text-primary-400 hover:text-primary-300 transition-colors underline"
-                    >
-                      Vérifier →
-                    </a>
-                  )}
-                </div>
-              </article>
-            </ScrollReveal>
-          ))
-        }
-      </div>
+  <div class="relative">
+    <div class="floating-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
     </div>
-  </ParallaxBackground>
+    <ParallaxBackground variant="dots" speed={0.3} className="min-h-screen" client:idle>
+      <div class="container mx-auto px-4 py-16">
+        <ScrollReveal delay={0} client:idle>
+          <div class="text-center mb-12">
+            <h1
+              class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 gradient-text bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
+            >
+              Certifications
+            </h1>
+            <p class="text-lg text-neutral-300 max-w-2xl mx-auto">
+              Mes certifications professionnelles attestant de mes compétences techniques et de mon
+              engagement dans l'apprentissage continu.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {
+            certifications.map((cert, index) => (
+              <ScrollReveal delay={100 + index * 100} client:idle>
+                <article class="glass-effect card-elevated rounded-xl p-6 h-full flex flex-col hover:border-neutral-400/25 border border-transparent transition-all duration-500 card-glow-pulse">
+                  <div class="flex items-start justify-between mb-4">
+                    <h3 class="text-xl font-bold text-white">{cert.title}</h3>
+                    <span class={isActive(cert) ? 'float-badge' : ''}>
+                      <Badge variant={isActive(cert) ? 'success' : 'default'}>
+                        {isActive(cert) ? 'Actif' : 'Expiré'}
+                      </Badge>
+                    </span>
+                  </div>
+                  <p class="text-sm text-neutral-400 mb-2 font-semibold">{cert.organization}</p>
+                  <p class="text-sm text-neutral-300 mb-4">
+                    Obtenue : {formatDate(new Date(cert.date))}
+                  </p>
+                  {cert.description && (
+                    <p class="text-sm text-neutral-400 mb-4 leading-relaxed line-clamp-2">
+                      {cert.description}
+                    </p>
+                  )}
+                  <div class="flex items-center gap-4 mt-auto pt-4 border-t border-white/5">
+                    {cert.credentialId && (
+                      <p class="text-sm text-primary-400 font-mono">ID : {cert.credentialId}</p>
+                    )}
+                    {cert.credentialUrl && (
+                      <a
+                        href={cert.credentialUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-sm text-primary-400 hover:text-primary-300 transition-colors underline"
+                      >
+                        Vérifier →
+                      </a>
+                    )}
+                  </div>
+                </article>
+              </ScrollReveal>
+            ))
+          }
+        </div>
+      </div>
+    </ParallaxBackground>
+  </div>
 </Layout>

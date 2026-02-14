@@ -54,24 +54,31 @@ const projects: Project[] = sortedProjects.map((project) => {
   description="Explore Esdras GBEDOZIN's projects: full-stack web applications, cloud architectures and innovative solutions."
   lang="en"
 >
-  <ParallaxBackground speed={0.3} variant="gradient" className="py-20" client:idle>
-    <div class="container mx-auto px-4">
-      <ScrollReveal delay={0} client:idle>
-        <div class="text-center mb-16">
-          <h1
-            class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 gradient-text bg-[length:200%_100%] animate-gradient-text"
-          >
-            My Projects
-          </h1>
-          <p class="text-xl text-neutral-400 max-w-3xl mx-auto leading-relaxed">
-            Discover my technical achievements: web applications, cloud architectures, and
-            innovative solutions built with passion.
-          </p>
-        </div>
-      </ScrollReveal>
-
-      {/* ProjectList React Island with filters - FE-073 */}
-      <ProjectList client:idle projects={projects} />
+  <div class="relative">
+    <div class="floating-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
     </div>
-  </ParallaxBackground>
+    <ParallaxBackground speed={0.3} variant="gradient" className="py-20" client:idle>
+      <div class="container mx-auto px-4">
+        <ScrollReveal delay={0} client:idle>
+          <div class="text-center mb-16">
+            <h1
+              class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 gradient-text bg-[length:200%_100%] animate-gradient-text"
+            >
+              My Projects
+            </h1>
+            <p class="text-xl text-neutral-400 max-w-3xl mx-auto leading-relaxed">
+              Discover my technical achievements: web applications, cloud architectures, and
+              innovative solutions built with passion.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* ProjectList React Island with filters - FE-073 */}
+        <ProjectList client:idle projects={projects} />
+      </div>
+    </ParallaxBackground>
+  </div>
 </Layout>

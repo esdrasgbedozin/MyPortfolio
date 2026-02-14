@@ -35,40 +35,47 @@ function levelToVariant(level: string): 'primary' | 'secondary' | 'success' {
   description="Esdras GBEDOZIN's technical skills: Cloud, DevOps, Backend, Frontend, AI and over 70 technologies mastered."
   lang="en"
 >
-  <ParallaxBackground variant="grid" speed={0.3} className="py-20" client:idle>
-    <div class="container mx-auto px-4">
-      <ScrollReveal delay={0} client:idle>
-        <div class="text-center mb-16">
-          <h1
-            class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 gradient-text bg-[length:200%_100%] animate-gradient-text"
-          >
-            Skills
-          </h1>
-          <p class="text-xl text-neutral-400 max-w-3xl mx-auto leading-relaxed">
-            Technologies, frameworks and methodologies I master to design and build innovative
-            technical solutions.
-          </p>
-        </div>
-      </ScrollReveal>
-
-      <div class="space-y-12">
-        {
-          categories.map((cat, index) => (
-            <ScrollReveal delay={100 + index * 100} client:idle>
-              <div class="glass-effect rounded-xl p-8">
-                <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text">
-                  {cat.category}
-                </h2>
-                <div class="flex flex-wrap gap-3">
-                  {cat.skills.map((skill) => (
-                    <SkillBadge variant={levelToVariant(skill.level)}>{skill.name}</SkillBadge>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          ))
-        }
-      </div>
+  <div class="relative">
+    <div class="floating-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
     </div>
-  </ParallaxBackground>
+    <ParallaxBackground variant="grid" speed={0.3} className="py-20" client:idle>
+      <div class="container mx-auto px-4">
+        <ScrollReveal delay={0} client:idle>
+          <div class="text-center mb-16">
+            <h1
+              class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary-400 via-purple-500 to-primary-400 gradient-text bg-[length:200%_100%] animate-gradient-text"
+            >
+              Skills
+            </h1>
+            <p class="text-xl text-neutral-400 max-w-3xl mx-auto leading-relaxed">
+              Technologies, frameworks and methodologies I master to design and build innovative
+              technical solutions.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div class="space-y-12">
+          {
+            categories.map((cat, index) => (
+              <ScrollReveal delay={100 + index * 100} client:idle>
+                <div class="glass-effect rounded-xl p-8">
+                  <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-primary-400 to-purple-500 gradient-text">
+                    {cat.category}
+                  </h2>
+                  <div class="flex flex-wrap gap-3">
+                    {cat.skills.map((skill) => (
+                      <SkillBadge variant={levelToVariant(skill.level)}>{skill.name}</SkillBadge>
+                    ))}
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))
+          }
+        </div>
+      </div>
+    </ParallaxBackground>
+  </div>
 </Layout>

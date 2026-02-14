@@ -11,28 +11,35 @@ import ParallaxBackground from '../../../components/ParallaxBackground';
   description="Contactez Esdras GBEDOZIN pour un projet, une opportunité ou une collaboration technique."
   lang="fr"
 >
-  <ParallaxBackground variant="gradient" speed={0.3} className="min-h-screen" client:load>
-    <div class="container mx-auto px-4 py-16 max-w-2xl">
-      <ScrollReveal delay={0} client:load>
-        <div class="text-center mb-12">
-          <h1
-            class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 gradient-text bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
-          >
-            Me Contacter
-          </h1>
-          <p class="text-lg text-neutral-300">
-            Vous avez un projet, une opportunité ou une question ? N'hésitez pas à me contacter, je
-            vous répondrai dans les plus brefs délais.
-          </p>
-        </div>
-      </ScrollReveal>
-
-      {/* Formulaire React avec validation - Epic 6.2 FE-080 */}
-      <ScrollReveal delay={200} client:load>
-        <div class="glass-effect card-elevated rounded-xl p-8">
-          <ContactForm client:load />
-        </div>
-      </ScrollReveal>
+  <div class="relative">
+    <div class="floating-orbs" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
     </div>
-  </ParallaxBackground>
+    <ParallaxBackground variant="gradient" speed={0.3} className="min-h-screen" client:load>
+      <div class="container mx-auto px-4 py-16 max-w-2xl">
+        <ScrollReveal delay={0} client:load>
+          <div class="text-center mb-12">
+            <h1
+              class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary-400 via-purple-400 to-primary-400 gradient-text bg-[length:200%_100%] animate-[gradientText_3s_ease-in-out_infinite]"
+            >
+              Me Contacter
+            </h1>
+            <p class="text-lg text-neutral-300">
+              Vous avez un projet, une opportunité ou une question ? N'hésitez pas à me contacter,
+              je vous répondrai dans les plus brefs délais.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* Formulaire React avec validation - Epic 6.2 FE-080 */}
+        <ScrollReveal delay={200} client:load>
+          <div class="glass-effect card-elevated rounded-xl p-8">
+            <ContactForm client:load />
+          </div>
+        </ScrollReveal>
+      </div>
+    </ParallaxBackground>
+  </div>
 </Layout>
