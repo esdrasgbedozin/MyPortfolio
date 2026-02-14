@@ -5,7 +5,7 @@ interface ImportMetaEnv {
   readonly RESEND_API_KEY: string;
   readonly SENDGRID_API_KEY: string;
   readonly EMAIL_FROM: string;
-  readonly EMAIL_TO: string;
+  readonly CONTACT_RECIPIENT_EMAIL: string;
   readonly LOG_LEVEL?: 'DEBUG' | 'INFO' | 'WARN' | 'ERROR';
 }
 

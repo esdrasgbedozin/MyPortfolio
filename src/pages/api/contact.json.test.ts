@@ -17,7 +17,7 @@ import { POST } from './contact.json';
 // Mock environment variables
 vi.stubEnv('TURNSTILE_SECRET_KEY', 'test-secret-key');
 vi.stubEnv('EMAIL_FROM', 'noreply@test.com');
-vi.stubEnv('EMAIL_TO', 'contact@test.com');
+vi.stubEnv('CONTACT_RECIPIENT_EMAIL', 'contact@test.com');
 vi.stubEnv('RESEND_API_KEY', 'test-resend-key');
 
 // Mock all services
