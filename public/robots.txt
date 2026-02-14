@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://portfolio.example.com/sitemap.xml
+Sitemap: https://esdrasgbedozin.dev/sitemap.xml
 
 # Disallow API endpoints from indexing
 Disallow: /api/

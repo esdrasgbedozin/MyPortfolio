@@ -21,7 +21,7 @@ jobs:
         run: |
           echo "🔍 Checking https://portfolio.com/api/health..."
 
-          response=$(curl -s -o /dev/null -w "%{http_code}" https://portfolio.com/api/health)
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://esdrasgbedozin.dev/api/health)
 
           if [ "$response" -ne 200 ]; then
             echo "❌ Health check FAILED: HTTP $response"

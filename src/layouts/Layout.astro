@@ -27,7 +27,7 @@ const frUrl = new URL(getLocalizedPath(currentPath, 'fr'), Astro.site);
 const enUrl = new URL(getLocalizedPath(currentPath, 'en'), Astro.site);
 
 // SEO: Open Graph (FE-105)
-const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://portfolio.example.com';
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://esdrasgbedozin.dev';
 const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImageUrl = ogImage
   ? new URL(ogImage, siteUrl).toString()

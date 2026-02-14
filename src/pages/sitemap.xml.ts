@@ -13,7 +13,7 @@ import { getCollection } from 'astro:content';
  * Site URL sourced from astro.config.mjs `site` property.
  * Update astro.config.mjs when deploying to production domain.
  */
-const SITE_URL = import.meta.env.SITE || 'https://portfolio.example.com';
+const SITE_URL = import.meta.env.SITE || 'https://esdrasgbedozin.dev';
 
 // Symmetric paths (same slug for both locales)
 const PATHS = [
