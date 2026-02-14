@@ -597,7 +597,7 @@ html.light .floating-orbs .orb {
   position: relative;
   display: inline-block;
   padding: 4px;
-  border-radius: 50%;
+  border-radius: 1rem;
   animation: pulseGlow 4s ease-in-out infinite;
 }
 
@@ -605,7 +605,7 @@ html.light .floating-orbs .orb {
   content: '';
   position: absolute;
   inset: -3px;
-  border-radius: 50%;
+  border-radius: 1rem;
   background: conic-gradient(
     from 0deg,
     var(--color-primary-400),
@@ -619,7 +619,7 @@ html.light .floating-orbs .orb {
 }
 
 .profile-photo-ring img {
-  border-radius: 50%;
+  border-radius: 0.75rem;
   display: block;
   border: 3px solid var(--color-neutral-900);
 }
