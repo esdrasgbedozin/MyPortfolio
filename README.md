@@ -69,7 +69,6 @@ src/
 │   ├── api/          # Edge Functions (contact.json, health)
 │   ├── fr/           # Pages françaises (8 pages)
 │   └── en/           # Pages anglaises (8 pages)
-├── schemas/          # Zod validation schemas
 ├── services/         # Business logic (Contact, Email, Turnstile, RateLimit)
 ├── styles/           # Global CSS + @font-face (Inter, JetBrains Mono)
 ├── types/            # TypeScript types
@@ -122,7 +121,7 @@ cp .env.example .env.local
 2. Settings → Environment Variables
 3. Ajouter chaque variable pour les scopes Production + Preview
 
-> 📖 Guide détaillé : [`docs/DEPLOYMENT_GUIDE.md`](docs/DEPLOYMENT_GUIDE.md)
+> 📖 Guide détaillé : [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
 
 ---
 
@@ -166,15 +165,15 @@ pnpm test:contract
 
 ## 📖 Documentation
 
-| Document                                                       | Description                               |
-| -------------------------------------------------------------- | ----------------------------------------- |
-| [`00_BIBLE_PROJET.md`](00_BIBLE_PROJET.md)                     | Vision, KPIs, scope fonctionnel           |
-| [`01_ARCHITECTURE_TECHNIQUE.md`](01_ARCHITECTURE_TECHNIQUE.md) | Architecture Jamstack, patterns, sécurité |
-| [`02_NORMES_OPERATIONNELLES.md`](02_NORMES_OPERATIONNELLES.md) | SOLID, TDD, gestion erreurs RFC 7807      |
-| [`openapi.yaml`](openapi.yaml)                                 | Contrat API OpenAPI 3.0                   |
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)                 | Architecture détaillée des services       |
-| [`docs/DEPLOYMENT_GUIDE.md`](docs/DEPLOYMENT_GUIDE.md)         | Guide de déploiement Vercel               |
-| [`MONITORING.md`](MONITORING.md)                               | Monitoring Sentry + alertes               |
+| Document                                                         | Description                               |
+| ---------------------------------------------------------------- | ----------------------------------------- |
+| [`00_BIBLE_PROJET_CONDENSE.md`](00_BIBLE_PROJET_CONDENSE.md)     | Vision, KPIs, scope fonctionnel           |
+| [`01_ARCHITECTURE_TECHNIQUE.md`](01_ARCHITECTURE_TECHNIQUE.md)   | Architecture Jamstack, patterns, sécurité |
+| [`02_NORMES_OPERATIONNELLES.md`](02_NORMES_OPERATIONNELLES.md)   | SOLID, TDD, gestion erreurs RFC 7807      |
+| [`openapi.yaml`](openapi.yaml)                                   | Contrat API OpenAPI 3.0                   |
+| [`docs/ARCHITECTURE_PATTERNS.md`](docs/ARCHITECTURE_PATTERNS.md) | Architecture détaillée des services       |
+| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)                       | Guide de déploiement Vercel               |
+| [`docs/MONITORING_ALERTES.md`](docs/MONITORING_ALERTES.md)       | Monitoring Sentry + alertes               |
 
 ---
 

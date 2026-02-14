@@ -31,6 +31,9 @@ test-results/
 playwright-report/
 playwright/.cache/
 
+# lighthouse
+.lighthouseci/
+
 # vercel
 .vercel
 bundle-stats.html

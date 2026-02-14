@@ -31,11 +31,10 @@ Confirme que tu as compris ce protocole et mets-toi en attente de la première l
 
 Avant de proposer du code, des changements d'architecture ou des solutions, tu DOIS croiser ta logique avec les documents suivants (La Bible) :
 
-1.  **00_BIBLE_PROJET.md** : Vision, KPIs & Scope Fonctionnel.
+1.  **00_BIBLE_PROJET_CONDENSE.md** : Vision, KPIs & Scope Fonctionnel.
 2.  **01_ARCHITECTURE_TECHNIQUE.md** : Jamstack, Astro, Vercel & patterns de Sécurité.
 3.  **02_NORMES_OPERATIONNELLES.md** : Principes SOLID, TDD, Gestion d'erreurs (RFC 7807).
 4.  **openapi.yaml** : Le contrat strict pour les interactions API.
-5.  **Roadmaps (04, 05, 06)** : La séquence d'implémentation.
 
 ## 🧠 CADRE DE DÉCISION (Esprit Critique)
 
