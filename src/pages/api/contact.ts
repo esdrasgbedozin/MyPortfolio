@@ -1,5 +1,5 @@
 /**
- * API Endpoint : POST /api/contact.json
+ * API Endpoint : POST /api/contact
  * Epic 3.1 - EF-031 & EF-032
  * Epic 3.2 - EF-034, EF-036, EF-038, EF-040 (Error Handling)
  * Epic 3.3 - EF-043, EF-044, EF-045 (Logging & RequestId)
@@ -20,7 +20,7 @@ import { Sentry } from '../../utils/sentry';
 import { validateEnv } from '../../utils/validateEnv';
 
 /**
- * POST /api/contact.json
+ * POST /api/contact
  * Traite une demande de contact
  */
 export async function POST(context: APIContext): Promise<Response> {
@@ -38,10 +38,7 @@ export async function POST(context: APIContext): Promise<Response> {
         requestId,
       });
       Sentry.captureException(envError);
-      const configError = new InternalServerError(
-        'Server configuration error',
-        '/api/contact.json'
-      );
+      const configError = new InternalServerError('Server configuration error', '/api/contact');
       return configError.toResponse();
     }
   }
@@ -55,7 +52,7 @@ export async function POST(context: APIContext): Promise<Response> {
   });
 
   // EF-049e: Set Sentry tags for filtering
-  Sentry.setTag('endpoint', '/api/contact.json');
+  Sentry.setTag('endpoint', '/api/contact');
   Sentry.setTag('requestId', requestId);
 
   try {

@@ -100,7 +100,7 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
 
     // Sinon, appeler l'API
     try {
-      const response = await api.post<ContactFormResponse>('/contact.json', {
+      const response = await api.post<ContactFormResponse>('/contact', {
         ...data,
         turnstileToken, // Include Turnstile token in API request
       });

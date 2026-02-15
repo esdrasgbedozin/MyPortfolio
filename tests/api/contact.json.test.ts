@@ -1,5 +1,5 @@
 /**
- * Tests pour l'endpoint /api/contact.json
+ * Tests pour l'endpoint /api/contact
  * Epic 3.1 - EF-030 à EF-032
  *
  * Cas nominal :
@@ -12,7 +12,7 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { APIContext } from 'astro';
-import { POST } from '../../src/pages/api/contact.json';
+import { POST } from '../../src/pages/api/contact';
 
 // Mock environment variables
 vi.stubEnv('TURNSTILE_SECRET_KEY', 'test-secret-key');
@@ -31,7 +31,7 @@ vi.mock('../../src/services/ContactService', () => ({
   }),
 }));
 
-describe('POST /api/contact.json - Epic 3.1', () => {
+describe('POST /api/contact - Epic 3.1', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

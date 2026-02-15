@@ -35,7 +35,7 @@ test.describe('API /api/contact - E2E Workflow', () => {
       turnstileToken: 'mock-token-valid-12345',
     };
 
-    const response = await apiContext.post('/api/contact.json', {
+    const response = await apiContext.post('/api/contact', {
       data: payload,
     });
 
@@ -61,7 +61,7 @@ test.describe('API /api/contact - E2E Workflow', () => {
       turnstileToken: 'mock-token-12345',
     };
 
-    const response = await apiContext.post('/api/contact.json', {
+    const response = await apiContext.post('/api/contact', {
       data: payload,
     });
 
@@ -85,7 +85,7 @@ test.describe('API /api/contact - E2E Workflow', () => {
       turnstileToken: 'mock-token-12345',
     };
 
-    const response = await apiContext.post('/api/contact.json', {
+    const response = await apiContext.post('/api/contact', {
       data: payload,
     });
 
@@ -104,7 +104,7 @@ test.describe('API /api/contact - E2E Workflow', () => {
       turnstileToken: 'mock-token-12345',
     };
 
-    const response = await apiContext.post('/api/contact.json', {
+    const response = await apiContext.post('/api/contact', {
       data: payload,
     });
 
@@ -129,7 +129,7 @@ test.describe('API /api/contact - E2E Workflow', () => {
       turnstileToken: 'FORCE_INVALID_TOKEN',
     };
 
-    const response = await apiContext.post('/api/contact.json', {
+    const response = await apiContext.post('/api/contact', {
       data: payload,
     });
 
@@ -148,7 +148,7 @@ test.describe('API /api/contact - E2E Workflow', () => {
       turnstileToken: 'mock-token-12345',
     };
 
-    const response = await apiContext.post('/api/contact.json', {
+    const response = await apiContext.post('/api/contact', {
       data: payload,
     });
 
@@ -182,7 +182,7 @@ test.describe('API /api/contact - E2E Workflow', () => {
       turnstileToken: 'mock-token-12345',
     };
 
-    const response = await apiContext.post('/api/contact.json', {
+    const response = await apiContext.post('/api/contact', {
       data: payload,
     });
 

@@ -7,7 +7,7 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { APIContext } from 'astro';
-import { POST } from '../../src/pages/api/contact.json';
+import { POST } from '../../src/pages/api/contact';
 import {
   ValidationError,
   TurnstileError,
@@ -27,7 +27,7 @@ vi.mock('../../src/services/ContactService', () => {
   };
 });
 
-describe('POST /api/contact.json - Epic 3.2 Error Handling', () => {
+describe('POST /api/contact - Epic 3.2 Error Handling', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

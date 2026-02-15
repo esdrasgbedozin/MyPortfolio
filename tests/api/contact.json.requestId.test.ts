@@ -7,7 +7,7 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { APIContext } from 'astro';
-import { POST } from '../../src/pages/api/contact.json';
+import { POST } from '../../src/pages/api/contact';
 import { logger } from '../../src/utils/logger';
 
 // Mock ContactService
@@ -31,7 +31,7 @@ vi.mock('../../src/utils/logger', () => ({
   },
 }));
 
-describe('POST /api/contact.json - Epic 3.3 EF-044 RequestId', () => {
+describe('POST /api/contact - Epic 3.3 EF-044 RequestId', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -88,7 +88,7 @@ describe('POST /api/contact.json - Epic 3.3 EF-044 RequestId', () => {
           turnstileToken: 'test-token',
         }),
         method: 'POST',
-        url: 'http://localhost:4321/api/contact.json',
+        url: 'http://localhost:4321/api/contact',
         headers: new Headers({
           'User-Agent': 'test-agent',
         }),

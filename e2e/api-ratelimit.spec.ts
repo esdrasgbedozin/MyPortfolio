@@ -37,7 +37,7 @@ test.describe('API Rate Limiting - E2E', () => {
 
     // Envoyer 6 requêtes
     for (let i = 1; i <= 6; i++) {
-      const response = await apiContext.post('/api/contact.json', {
+      const response = await apiContext.post('/api/contact', {
         data: {
           ...payload,
           message: `Rate limit test - Request ${i}`,
@@ -83,7 +83,7 @@ test.describe('API Rate Limiting - E2E', () => {
     // Faire plusieurs requêtes pour déclencher rate limit
     let response429;
     for (let i = 0; i < 10; i++) {
-      const response = await apiContext.post('/api/contact.json', {
+      const response = await apiContext.post('/api/contact', {
         data: payload,
       });
 
@@ -136,7 +136,7 @@ test.describe('API Rate Limiting - Different IPs', () => {
       turnstileToken: 'mock-token-ip',
     };
 
-    const response = await fetch('http://localhost:4321/api/contact.json', {
+    const response = await fetch('http://localhost:4321/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
