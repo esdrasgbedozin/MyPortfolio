@@ -12,7 +12,7 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { APIContext } from 'astro';
-import { POST } from './contact.json';
+import { POST } from '../../src/pages/api/contact.json';
 
 // Mock environment variables
 vi.stubEnv('TURNSTILE_SECRET_KEY', 'test-secret-key');
@@ -21,7 +21,7 @@ vi.stubEnv('CONTACT_RECIPIENT_EMAIL', 'contact@test.com');
 vi.stubEnv('RESEND_API_KEY', 'test-resend-key');
 
 // Mock all services
-vi.mock('../../services/ContactService', () => ({
+vi.mock('../../src/services/ContactService', () => ({
   ContactService: vi.fn(function () {
     return {
       processContactRequest: vi.fn().mockResolvedValue({
@@ -72,7 +72,7 @@ describe('POST /api/contact.json - Epic 3.1', () => {
 
     it('should call ContactService to process request', async () => {
       // Arrange
-      const { ContactService } = await import('../../services/ContactService');
+      const { ContactService } = await import('../../src/services/ContactService');
 
       const mockRequest = {
         method: 'POST',

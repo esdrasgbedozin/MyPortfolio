@@ -13,7 +13,7 @@ import type { APIContext } from 'astro';
  */
 
 // Mock Sentry module
-vi.mock('../../utils/sentry', () => ({
+vi.mock('../../src/utils/sentry', () => ({
   Sentry: {
     captureException: vi.fn(),
     setContext: vi.fn(),
@@ -34,7 +34,7 @@ describe('POST /api/contact.json - Sentry Integration', () => {
 
   it('should capture exception in Sentry when unexpected error occurs', async () => {
     // ARRANGE
-    const { Sentry } = await import('../../utils/sentry');
+    const { Sentry } = await import('../../src/utils/sentry');
     const mockContext: Partial<APIContext> = {
       request: new Request('http://localhost:4321/api/contact.json', {
         method: 'POST',
@@ -51,7 +51,7 @@ describe('POST /api/contact.json - Sentry Integration', () => {
     };
 
     // ACT
-    const { POST } = await import('./contact.json');
+    const { POST } = await import('../../src/pages/api/contact.json');
     const response = await POST(mockContext as APIContext);
 
     // ASSERT
@@ -64,7 +64,7 @@ describe('POST /api/contact.json - Sentry Integration', () => {
 
   it('should set Sentry context with requestId and IP', async () => {
     // ARRANGE
-    const { Sentry } = await import('../../utils/sentry');
+    const { Sentry } = await import('../../src/utils/sentry');
     const mockContext: Partial<APIContext> = {
       request: new Request('http://localhost:4321/api/contact.json', {
         method: 'POST',
@@ -80,7 +80,7 @@ describe('POST /api/contact.json - Sentry Integration', () => {
     };
 
     // ACT
-    const { POST } = await import('./contact.json');
+    const { POST } = await import('../../src/pages/api/contact.json');
     await POST(mockContext as APIContext);
 
     // ASSERT
@@ -98,7 +98,7 @@ describe('POST /api/contact.json - Sentry Integration', () => {
   // because they're handled in the ApiError instanceof check)
   it.skip('should not call Sentry for validation errors (4xx)', async () => {
     // ARRANGE
-    const { Sentry } = await import('../../utils/sentry');
+    const { Sentry } = await import('../../src/utils/sentry');
     const mockContext: Partial<APIContext> = {
       request: new Request('http://localhost:4321/api/contact.json', {
         method: 'POST',
@@ -119,7 +119,7 @@ describe('POST /api/contact.json - Sentry Integration', () => {
     vi.clearAllMocks();
 
     // ACT
-    const { POST } = await import('./contact.json');
+    const { POST } = await import('../../src/pages/api/contact.json');
     const response = await POST(mockContext as APIContext);
 
     // ASSERT

@@ -20,7 +20,7 @@ describe('GET /api/health', () => {
     };
 
     // ACT
-    const { GET } = await import('./health');
+    const { GET } = await import('../../src/pages/api/health');
     const response = await GET(mockContext as APIContext);
 
     // ASSERT
@@ -46,7 +46,7 @@ describe('GET /api/health', () => {
     };
 
     // ACT
-    const { GET } = await import('./health');
+    const { GET } = await import('../../src/pages/api/health');
     const response = await GET(mockContext as APIContext);
 
     // ASSERT
@@ -63,7 +63,7 @@ describe('GET /api/health', () => {
     };
 
     // ACT
-    const { GET } = await import('./health');
+    const { GET } = await import('../../src/pages/api/health');
     const response = await GET(mockContext as APIContext);
 
     // ASSERT
@@ -90,7 +90,7 @@ describe('GET /api/health - Dependency Checks', () => {
     };
 
     // ACT
-    const { GET } = await import('./health');
+    const { GET } = await import('../../src/pages/api/health');
     const response = await GET(mockContext as APIContext);
 
     // ASSERT
@@ -111,7 +111,7 @@ describe('GET /api/health - Dependency Checks', () => {
     };
 
     // ACT
-    const { GET } = await import('./health');
+    const { GET } = await import('../../src/pages/api/health');
     const response = await GET(mockContext as APIContext);
 
     // ASSERT
@@ -135,7 +135,7 @@ describe('GET /api/health - Dependency Checks', () => {
     };
 
     // ACT
-    const { GET } = await import('./health');
+    const { GET } = await import('../../src/pages/api/health');
     const response = await GET(mockContext as APIContext);
 
     // ASSERT

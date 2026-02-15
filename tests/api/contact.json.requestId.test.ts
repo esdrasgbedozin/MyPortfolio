@@ -7,12 +7,12 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { APIContext } from 'astro';
-import { POST } from './contact.json';
-import { logger } from '../../utils/logger';
+import { POST } from '../../src/pages/api/contact.json';
+import { logger } from '../../src/utils/logger';
 
 // Mock ContactService
 const mockProcessContactRequest = vi.fn();
-vi.mock('../../services/ContactService', () => {
+vi.mock('../../src/services/ContactService', () => {
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ContactService: vi.fn(function (this: any) {
@@ -22,7 +22,7 @@ vi.mock('../../services/ContactService', () => {
 });
 
 // Mock logger to capture calls
-vi.mock('../../utils/logger', () => ({
+vi.mock('../../src/utils/logger', () => ({
   logger: {
     info: vi.fn(),
     warn: vi.fn(),

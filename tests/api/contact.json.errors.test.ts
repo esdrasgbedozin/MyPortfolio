@@ -7,13 +7,18 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { APIContext } from 'astro';
-import { POST } from './contact.json';
-import { ValidationError, TurnstileError, RateLimitError, EmailError } from '../../errors/ApiError';
+import { POST } from '../../src/pages/api/contact.json';
+import {
+  ValidationError,
+  TurnstileError,
+  RateLimitError,
+  EmailError,
+} from '../../src/errors/ApiError';
 
 // Mock ContactService with different behaviors per test
 const mockProcessContactRequest = vi.fn();
 
-vi.mock('../../services/ContactService', () => {
+vi.mock('../../src/services/ContactService', () => {
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ContactService: vi.fn(function (this: any) {
