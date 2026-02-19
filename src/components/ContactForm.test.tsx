@@ -76,7 +76,7 @@ describe('ContactForm - Epic 6.2 FE-078', () => {
     const submitButton = screen.getByRole('button', { name: /envoyer/i });
     await user.click(submitButton);
 
-    expect(await screen.findByText(/message est requis/i)).toBeInTheDocument();
+    expect(await screen.findByText(/message.*10 caractères/i)).toBeInTheDocument();
   });
 
   it('should show error when name exceeds max length (100 chars)', async () => {
@@ -92,17 +92,17 @@ describe('ContactForm - Epic 6.2 FE-078', () => {
     expect(await screen.findByText(/nom.*100 caractères/i)).toBeInTheDocument();
   });
 
-  it('should show error when message exceeds max length (1000 chars)', async () => {
+  it('should show error when message exceeds max length (2000 chars)', async () => {
     const user = userEvent.setup();
     render(<ContactForm />);
 
     const messageInput = screen.getByLabelText(/message/i);
     const submitButton = screen.getByRole('button', { name: /envoyer/i });
 
-    await user.type(messageInput, 'A'.repeat(1001));
+    await user.type(messageInput, 'A'.repeat(2001));
     await user.click(submitButton);
 
-    expect(await screen.findByText(/message.*1000 caractères/i)).toBeInTheDocument();
+    expect(await screen.findByText(/message.*2000 caractères/i)).toBeInTheDocument();
   });
 
   it('should accept valid form data', async () => {

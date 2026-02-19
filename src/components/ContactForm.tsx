@@ -19,8 +19,8 @@ const contactFormSchema = z.object({
   email: z.string().min(1, "L'email est requis").email("L'email est invalide"),
   message: z
     .string()
-    .min(1, 'Le message est requis')
-    .max(1000, 'Le message ne peut pas dépasser 1000 caractères'),
+    .min(10, 'Le message doit contenir au moins 10 caractères')
+    .max(2000, 'Le message ne peut pas dépasser 2000 caractères'),
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -122,6 +122,8 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
           setErrorMessage('Trop de requêtes. Veuillez réessayer dans quelques minutes.');
         } else if (error.status === 400) {
           setErrorMessage('Données invalides. Veuillez vérifier le formulaire.');
+        } else if (error.status === 403) {
+          setErrorMessage('Vérification anti-spam échouée. Veuillez réessayer.');
         } else {
           setErrorMessage(error.message || "Erreur lors de l'envoi du message.");
         }
