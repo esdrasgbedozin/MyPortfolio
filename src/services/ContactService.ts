@@ -110,12 +110,12 @@ export class ContactService {
    * @throws {RateLimitError} Si le rate limit est dépassé
    */
   private async checkRateLimit(clientIp: string): Promise<void> {
-    const isRateLimited = await this.rateLimitService.isRateLimited(clientIp);
+    const rateLimitResult = await this.rateLimitService.isRateLimited(clientIp);
 
-    if (isRateLimited) {
+    if (rateLimitResult.limited) {
       throw new RateLimitError(
         'Too many requests from this IP. Please try again later.',
-        3600,
+        rateLimitResult.retryAfter || 3600,
         '/api/contact'
       );
     }
