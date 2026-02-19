@@ -11,7 +11,9 @@ export default defineConfig({
   output: 'server',
 
   adapter: vercel({
-    edgeMiddleware: true,
+    // edgeMiddleware disabled: the generated edge fetch() does not forward
+    // HTTP method/body to the Node.js render function, breaking POST endpoints.
+    // Security headers middleware runs in the Node.js serverless function instead.
   }),
 
   site: 'https://esdrasgbedozin.dev', // FE-094/095: Base URL for canonical/sitemap
