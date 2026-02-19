@@ -26,21 +26,21 @@ interface Props {
 const { lang = 'fr' } = Astro.props;
 const translations = lang === 'fr' ? frTranslations : enTranslations;
 
-// Liens sociaux (à configurer avec vraies URLs plus tard)
+// Liens sociaux
 const socialLinks = [
   {
     name: 'GitHub',
-    url: 'https://github.com/username',
+    url: 'https://github.com/esdrasgbedozin',
     ariaLabel: tSync('footer.social.github', lang, translations),
   },
   {
     name: 'LinkedIn',
-    url: 'https://linkedin.com/in/username',
+    url: 'https://linkedin.com/in/esdras-gbedozin-24b3a3271',
     ariaLabel: tSync('footer.social.linkedin', lang, translations),
   },
   {
     name: 'Email',
-    url: 'mailto:contact@example.com',
+    url: 'mailto:ogbedozin@gmail.com',
     ariaLabel: tSync('footer.social.email', lang, translations),
   },
 ];
