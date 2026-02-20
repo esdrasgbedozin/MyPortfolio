@@ -11,19 +11,43 @@ import { Turnstile } from '@marsidev/react-turnstile';
 import { api, ApiError } from '../services/api';
 
 // Zod schema validation (conformément RFC 7807 + SOLID)
-const contactFormSchema = z.object({
-  name: z
-    .string()
-    .min(1, 'Le nom est requis')
-    .max(100, 'Le nom ne peut pas dépasser 100 caractères'),
-  email: z.string().min(1, "L'email est requis").email("L'email est invalide"),
-  message: z
-    .string()
-    .min(10, 'Le message doit contenir au moins 10 caractères')
-    .max(2000, 'Le message ne peut pas dépasser 2000 caractères'),
-});
+const createContactFormSchema = (
+  locale: 'fr' | 'en' = 'fr'
+): z.ZodObject<{
+  name: z.ZodString;
+  email: z.ZodString;
+  message: z.ZodString;
+}> => {
+  const messages = {
+    fr: {
+      nameRequired: 'Le nom est requis',
+      nameMax: 'Le nom ne peut pas dépasser 100 caractères',
+      emailRequired: "L'email est requis",
+      emailInvalid: "L'email est invalide",
+      messageMin: 'Le message doit contenir au moins 10 caractères',
+      messageMax: 'Le message ne peut pas dépasser 2000 caractères',
+    },
+    en: {
+      nameRequired: 'Name is required',
+      nameMax: 'Name cannot exceed 100 characters',
+      emailRequired: 'Email is required',
+      emailInvalid: 'Email is invalid',
+      messageMin: 'Message must contain at least 10 characters',
+      messageMax: 'Message cannot exceed 2000 characters',
+    },
+  };
+  const m = messages[locale];
+  return z.object({
+    name: z.string().min(1, m.nameRequired).max(100, m.nameMax),
+    email: z.string().min(1, m.emailRequired).email(m.emailInvalid),
+    message: z.string().min(10, m.messageMin).max(2000, m.messageMax),
+  });
+};
 
-export type ContactFormData = z.infer<typeof contactFormSchema>;
+// Keep a default schema for type inference only
+const _contactFormSchema = createContactFormSchema('fr');
+
+export type ContactFormData = z.infer<typeof _contactFormSchema>;
 
 /**
  * Cloudflare Turnstile test sitekey (always passes)
@@ -41,6 +65,7 @@ interface ContactFormResponse {
 }
 
 interface ContactFormProps {
+  locale?: 'fr' | 'en';
   onSubmit?: (data: ContactFormData) => void | Promise<void>;
   onSuccess?: (response: ContactFormResponse) => void;
   onError?: (error: ApiError) => void;
@@ -57,14 +82,58 @@ type SubmissionStatus = 'idle' | 'loading' | 'success' | 'error';
  * @returns JSX.Element
  */
 // eslint-disable-next-line max-lines-per-function
-export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps): React.JSX.Element {
+export function ContactForm({
+  locale = 'fr',
+  onSubmit,
+  onSuccess,
+  onError,
+}: ContactFormProps): React.JSX.Element {
   const [status, setStatus] = useState<SubmissionStatus>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [turnstileToken, setTurnstileToken] = useState<string>('');
 
+  const schema = createContactFormSchema(locale);
+
+  const labels = {
+    fr: {
+      name: 'Nom',
+      email: 'Email',
+      message: 'Message',
+      submit: 'Envoyer',
+      sending: 'Envoi en cours...',
+      retry: 'Réessayer',
+      successDefault: 'Message envoyé avec succès !',
+      successApi: 'Votre message a été envoyé avec succès !',
+      errorDefault: 'Une erreur est survenue. Veuillez réessayer.',
+      errorGeneric: 'Une erreur est survenue',
+      errorSending: "Erreur lors de l'envoi du message.",
+      errorRateLimit: 'Trop de requêtes. Veuillez réessayer dans quelques minutes.',
+      errorValidation: 'Données invalides. Veuillez vérifier le formulaire.',
+      errorTurnstile: 'Vérification anti-spam échouée. Veuillez réessayer.',
+    },
+    en: {
+      name: 'Name',
+      email: 'Email',
+      message: 'Message',
+      submit: 'Send',
+      sending: 'Sending...',
+      retry: 'Try again',
+      successDefault: 'Message sent successfully!',
+      successApi: 'Your message has been sent successfully!',
+      errorDefault: 'An error occurred. Please try again.',
+      errorGeneric: 'An error occurred',
+      errorSending: 'Error sending message.',
+      errorRateLimit: 'Too many requests. Please try again in a few minutes.',
+      errorValidation: 'Invalid data. Please check the form.',
+      errorTurnstile: 'Anti-spam verification failed. Please try again.',
+    },
+  };
+
+  const t = labels[locale];
+
   const { register, handleSubmit, formState, reset } = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
+    resolver: zodResolver(schema),
     mode: 'onSubmit',
     reValidateMode: 'onChange',
   });
@@ -83,11 +152,11 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
       try {
         await onSubmit(data);
         setStatus('success');
-        setSuccessMessage('Message envoyé avec succès !');
+        setSuccessMessage(t.successDefault);
         reset(); // Clear form après succès
       } catch (error) {
         setStatus('error');
-        setErrorMessage(error instanceof Error ? error.message : 'Une erreur est survenue');
+        setErrorMessage(error instanceof Error ? error.message : t.errorGeneric);
         // Avaler l'erreur silencieusement si pas de handler onError
         if (error instanceof ApiError && onError) {
           onError(error);
@@ -106,7 +175,7 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
       });
 
       setStatus('success');
-      setSuccessMessage(response.message || 'Votre message a été envoyé avec succès !');
+      setSuccessMessage(response.message || t.successApi);
       reset(); // Clear form après succès
       setTurnstileToken(''); // Reset Turnstile token
 
@@ -119,20 +188,20 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
       if (error instanceof ApiError) {
         // Gérer les différents codes d'erreur
         if (error.status === 429) {
-          setErrorMessage('Trop de requêtes. Veuillez réessayer dans quelques minutes.');
+          setErrorMessage(t.errorRateLimit);
         } else if (error.status === 400) {
-          setErrorMessage('Données invalides. Veuillez vérifier le formulaire.');
+          setErrorMessage(t.errorValidation);
         } else if (error.status === 403) {
-          setErrorMessage('Vérification anti-spam échouée. Veuillez réessayer.');
+          setErrorMessage(t.errorTurnstile);
         } else {
-          setErrorMessage(error.message || "Erreur lors de l'envoi du message.");
+          setErrorMessage(error.message || t.errorSending);
         }
 
         if (onError) {
           onError(error);
         }
       } else {
-        setErrorMessage('Une erreur est survenue. Veuillez réessayer.');
+        setErrorMessage(t.errorDefault);
       }
     }
   };
@@ -163,7 +232,7 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
             onClick={() => setStatus('idle')}
             className="mt-2 text-sm text-red-400 hover:text-red-300 underline"
           >
-            Réessayer
+            {t.retry}
           </button>
         </div>
       )}
@@ -171,7 +240,7 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
       {/* Nom */}
       <div>
         <label htmlFor="name" className="block text-sm font-medium mb-2">
-          Nom
+          {t.name}
         </label>
         <input
           id="name"
@@ -192,7 +261,7 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
       {/* Email */}
       <div>
         <label htmlFor="email" className="block text-sm font-medium mb-2">
-          Email
+          {t.email}
         </label>
         <input
           id="email"
@@ -213,7 +282,7 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
       {/* Message */}
       <div>
         <label htmlFor="message" className="block text-sm font-medium mb-2">
-          Message
+          {t.message}
         </label>
         <textarea
           id="message"
@@ -275,10 +344,10 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
-            <span>Envoi en cours...</span>
+            <span>{t.sending}</span>
           </>
         ) : (
-          'Envoyer'
+          t.submit
         )}
       </button>
     </form>
