@@ -14,6 +14,7 @@ interface HeroProps {
   title: string;
   tagline: string;
   description: string;
+  scrollLabel?: string;
   primaryCta?: {
     label: string;
     href: string;
@@ -28,6 +29,7 @@ export default function Hero({
   title,
   tagline,
   description,
+  scrollLabel = 'Découvrir',
   primaryCta,
   secondaryCta,
 }: HeroProps): ReactElement {
@@ -43,7 +45,7 @@ export default function Hero({
       <div className="text-center max-w-4xl relative z-10">
         {/* Title with Animated Gradient */}
         <h1
-          className="text-5xl md:text-7xl font-bold mb-4 animate-gradient-text bg-gradient-to-r from-[var(--color-primary-400)] via-[var(--color-secondary-400)] to-[var(--color-primary-600)] gradient-text"
+          className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 animate-gradient-text bg-gradient-to-r from-[var(--color-primary-400)] via-[var(--color-secondary-400)] to-[var(--color-primary-600)] gradient-text"
           style={{ backgroundSize: '200% auto' }}
         >
           {title}
@@ -51,7 +53,7 @@ export default function Hero({
 
         {/* Tagline with Fade-in */}
         <p
-          className="text-2xl md:text-3xl text-[var(--color-neutral-300)] mb-6 animate-fade-in-up"
+          className="text-lg sm:text-2xl md:text-3xl text-[var(--color-neutral-300)] mb-6 animate-fade-in-up"
           style={{ animationDelay: '0.2s' }}
         >
           {tagline}
@@ -74,7 +76,7 @@ export default function Hero({
             {primaryCta && (
               <a
                 href={primaryCta.href}
-                className="group relative px-8 py-4 bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-600)] text-white rounded-lg font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[var(--color-primary-500)]/50"
+                className="group relative px-5 py-3 md:px-8 md:py-4 bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-600)] text-white rounded-lg font-semibold text-base md:text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[var(--color-primary-500)]/50"
               >
                 <span className="relative z-10">{primaryCta.label}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-primary-600)] to-[var(--color-secondary-600)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -83,7 +85,7 @@ export default function Hero({
             {secondaryCta && (
               <a
                 href={secondaryCta.href}
-                className="group relative px-8 py-4 border-2 border-[var(--color-primary-500)] text-[var(--color-primary-500)] rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[var(--color-primary-500)]/30 hover:border-transparent"
+                className="group relative px-5 py-3 md:px-8 md:py-4 border-2 border-[var(--color-primary-500)] text-[var(--color-primary-500)] rounded-lg font-semibold text-base md:text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[var(--color-primary-500)]/30 hover:border-transparent"
               >
                 <span className="relative z-10 group-hover:text-white transition-colors duration-300">
                   {secondaryCta.label}
@@ -112,7 +114,7 @@ export default function Hero({
             />
           </svg>
           <p className="text-sm text-[var(--color-neutral-400)]" style={{ opacity: 0.8 }}>
-            Découvrir
+            {scrollLabel}
           </p>
         </div>
       </div>

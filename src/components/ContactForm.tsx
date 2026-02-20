@@ -142,26 +142,26 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
       {/* Success Message */}
       {status === 'success' && (
         <div
-          className="p-4 bg-green-50 border border-green-200 rounded-lg"
+          className="p-4 bg-green-900/30 border border-green-500/30 rounded-lg"
           role="alert"
           aria-live="polite"
         >
-          <p className="text-green-800 text-sm font-medium">✓ {successMessage}</p>
+          <p className="text-green-400 text-sm font-medium">✓ {successMessage}</p>
         </div>
       )}
 
       {/* Error Message */}
       {status === 'error' && (
         <div
-          className="p-4 bg-red-50 border border-red-200 rounded-lg"
+          className="p-4 bg-red-900/30 border border-red-500/30 rounded-lg"
           role="alert"
           aria-live="assertive"
         >
-          <p className="text-red-800 text-sm font-medium">✗ {errorMessage}</p>
+          <p className="text-red-400 text-sm font-medium">✗ {errorMessage}</p>
           <button
             type="button"
             onClick={() => setStatus('idle')}
-            className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
+            className="mt-2 text-sm text-red-400 hover:text-red-300 underline"
           >
             Réessayer
           </button>
@@ -178,12 +178,12 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
           type="text"
           {...register('name')}
           disabled={status === 'loading'}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-2 border border-[var(--color-neutral-700)] bg-[var(--color-neutral-900)] text-[var(--color-neutral-100)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary-500)] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[var(--color-neutral-500)]"
           aria-invalid={errors.name ? 'true' : 'false'}
           aria-describedby={errors.name ? 'name-error' : undefined}
         />
         {errors.name && (
-          <p id="name-error" className="mt-1 text-sm text-red-600" role="alert">
+          <p id="name-error" className="mt-1 text-sm text-red-400" role="alert">
             {errors.name.message}
           </p>
         )}
@@ -199,12 +199,12 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
           type="email"
           {...register('email')}
           disabled={status === 'loading'}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-2 border border-[var(--color-neutral-700)] bg-[var(--color-neutral-900)] text-[var(--color-neutral-100)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary-500)] focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[var(--color-neutral-500)]"
           aria-invalid={errors.email ? 'true' : 'false'}
           aria-describedby={errors.email ? 'email-error' : undefined}
         />
         {errors.email && (
-          <p id="email-error" className="mt-1 text-sm text-red-600" role="alert">
+          <p id="email-error" className="mt-1 text-sm text-red-400" role="alert">
             {errors.email.message}
           </p>
         )}
@@ -220,12 +220,12 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
           rows={5}
           {...register('message')}
           disabled={status === 'loading'}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-2 border border-[var(--color-neutral-700)] bg-[var(--color-neutral-900)] text-[var(--color-neutral-100)] rounded-lg focus:ring-2 focus:ring-[var(--color-primary-500)] focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed placeholder:text-[var(--color-neutral-500)]"
           aria-invalid={errors.message ? 'true' : 'false'}
           aria-describedby={errors.message ? 'message-error' : undefined}
         />
         {errors.message && (
-          <p id="message-error" className="mt-1 text-sm text-red-600" role="alert">
+          <p id="message-error" className="mt-1 text-sm text-red-400" role="alert">
             {errors.message.message}
           </p>
         )}
@@ -249,7 +249,7 @@ export function ContactForm({ onSubmit, onSuccess, onError }: ContactFormProps):
       <button
         type="submit"
         disabled={status === 'loading' || !turnstileToken}
-        className="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="w-full px-6 py-3 bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-600)] text-white font-medium rounded-lg hover:from-[var(--color-primary-600)] hover:to-[var(--color-primary-700)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-500)] focus:ring-offset-2 focus:ring-offset-[var(--color-neutral-950)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         aria-busy={status === 'loading'}
       >
         {status === 'loading' ? (

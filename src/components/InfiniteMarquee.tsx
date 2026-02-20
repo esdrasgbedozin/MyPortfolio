@@ -6,9 +6,11 @@
  * @module components/InfiniteMarquee
  */
 
+import type { ReactNode } from 'react';
+
 interface MarqueeItem {
   label: string;
-  icon?: string;
+  icon?: ReactNode;
 }
 
 interface InfiniteMarqueeProps {
@@ -43,7 +45,7 @@ export default function InfiniteMarquee({
             key={`${item.label}-${i}`}
             className="flex items-center gap-2 px-6 py-3 mx-2 rounded-full bg-neutral-800/60 border border-neutral-700/40 backdrop-blur-sm whitespace-nowrap select-none"
           >
-            {item.icon && <span className="text-lg">{item.icon}</span>}
+            {item.icon && <span className="text-lg flex items-center">{item.icon}</span>}
             <span className="text-sm font-medium text-neutral-300">{item.label}</span>
           </div>
         ))}

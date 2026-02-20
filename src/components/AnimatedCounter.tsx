@@ -74,7 +74,7 @@ export default function AnimatedCounter({
 
   return (
     <div ref={ref} className={`text-center ${className}`}>
-      <div className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary-400 to-purple-500 gradient-text mb-2">
+      <div className="text-3xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary-400 to-purple-500 gradient-text mb-2">
         {isVisible && (
           <CountUp
             start={start}

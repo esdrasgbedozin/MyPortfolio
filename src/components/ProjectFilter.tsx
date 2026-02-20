@@ -54,7 +54,7 @@ export function ProjectFilter({ technologies, categories, onFilterChange }: Proj
         </button>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 w-full md:w-auto">
           <span className="text-[var(--color-neutral-400)] text-sm self-center mr-2">
             Categories:
           </span>
@@ -75,7 +75,7 @@ export function ProjectFilter({ technologies, categories, onFilterChange }: Proj
         </div>
 
         {/* Technology Filters */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 w-full md:w-auto">
           <span className="text-[var(--color-neutral-400)] text-sm self-center mr-2">
             Technologies:
           </span>

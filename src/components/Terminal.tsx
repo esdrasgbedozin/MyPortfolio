@@ -77,7 +77,9 @@ export default function Terminal({
   }, [visibleLines, lines]);
 
   return (
-    <div className={`glass-effect rounded-xl p-6 font-mono text-sm overflow-hidden ${className}`}>
+    <div
+      className={`glass-effect rounded-xl p-4 md:p-6 font-mono text-sm overflow-x-auto ${className}`}
+    >
       {/* Terminal Header */}
       <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
         <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -96,7 +98,9 @@ export default function Terminal({
                 <span className="text-neutral-200">{line.content}</span>
               </div>
             ) : (
-              <div className="text-neutral-400 ml-4 whitespace-pre-line">{line.content}</div>
+              <div className="text-neutral-400 ml-4 whitespace-pre-line break-words">
+                {line.content}
+              </div>
             )}
           </div>
         ))}

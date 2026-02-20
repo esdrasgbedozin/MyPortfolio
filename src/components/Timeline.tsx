@@ -82,8 +82,8 @@ export default function Timeline({
           return (
             <ScrollReveal key={index} delay={index * 100} distance={40}>
               <div
-                className={`flex ${alignment} items-center gap-8 ${
-                  linePosition === 'center' ? '' : 'ml-12'
+                className={`flex ${alignment} items-center gap-4 md:gap-8 ${
+                  linePosition === 'center' ? '' : 'ml-8 md:ml-12'
                 }`}
               >
                 {/* Timeline Dot */}
@@ -91,7 +91,7 @@ export default function Timeline({
                   className={`relative flex-shrink-0 ${linePosition === 'center' ? 'order-2' : ''}`}
                 >
                   <div
-                    className={`w-12 h-12 rounded-full bg-gradient-to-br ${
+                    className={`w-8 h-8 md:w-12 md:h-12 rounded-full bg-gradient-to-br ${
                       typeColors[item.type ?? 'work']
                     } flex items-center justify-center shadow-lg ring-4 ring-black/20`}
                   >
