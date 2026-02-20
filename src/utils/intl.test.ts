@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatDate, formatNumber } from './intl';
+import { formatDate, formatNumber, formatCurrency, formatRelativeTime } from './intl';
 
 describe('Intl Utils', () => {
   describe('formatDate', () => {
@@ -53,6 +53,81 @@ describe('Intl Utils', () => {
     it('should handle integers without decimals', () => {
       expect(formatNumber(100, 'fr')).toBe('100');
       expect(formatNumber(100, 'en')).toBe('100');
+    });
+  });
+
+  describe('formatCurrency', () => {
+    it('should format currency in French locale (EUR)', () => {
+      const result = formatCurrency(1234.56, 'fr');
+      // FR EUR format: "1 234,56 €" (with narrow no-break space)
+      expect(result).toContain('€');
+      expect(result).toContain('234');
+    });
+
+    it('should format currency in English locale (EUR)', () => {
+      const result = formatCurrency(1234.56, 'en');
+      expect(result).toContain('€');
+      expect(result).toContain('1,234.56');
+    });
+
+    it('should support USD currency', () => {
+      const result = formatCurrency(1234.56, 'en', 'USD');
+      expect(result).toContain('$');
+      expect(result).toContain('1,234.56');
+    });
+
+    it('should handle zero amount', () => {
+      const result = formatCurrency(0, 'fr');
+      expect(result).toContain('0');
+      expect(result).toContain('€');
+    });
+  });
+
+  describe('formatRelativeTime', () => {
+    it('should format today as "today" or equivalent', () => {
+      const now = new Date();
+      const result = formatRelativeTime(now, 'en');
+      expect(result).toBe('today');
+    });
+
+    it('should format today in French', () => {
+      const now = new Date();
+      const result = formatRelativeTime(now, 'fr');
+      // Intl may use typographic apostrophe (U+2019) — just check it contains "aujourd"
+      expect(result).toContain('aujourd');
+    });
+
+    it('should format days ago', () => {
+      const threeDaysAgo = new Date();
+      threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+      const result = formatRelativeTime(threeDaysAgo, 'en');
+      expect(result).toBe('3 days ago');
+    });
+
+    it('should format weeks ago', () => {
+      const twoWeeksAgo = new Date();
+      twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+      const result = formatRelativeTime(twoWeeksAgo, 'en');
+      expect(result).toBe('2 weeks ago');
+    });
+
+    it('should format months ago', () => {
+      const twoMonthsAgo = new Date();
+      twoMonthsAgo.setDate(twoMonthsAgo.getDate() - 60);
+      const result = formatRelativeTime(twoMonthsAgo, 'en');
+      expect(result).toBe('2 months ago');
+    });
+
+    it('should format years ago', () => {
+      const twoYearsAgo = new Date();
+      twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+      const result = formatRelativeTime(twoYearsAgo, 'en');
+      expect(result).toBe('2 years ago');
+    });
+
+    it('should accept string dates', () => {
+      const result = formatRelativeTime('2020-01-01', 'en');
+      expect(result).toContain('years ago');
     });
   });
 });
