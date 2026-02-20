@@ -20,16 +20,6 @@ import { Sentry } from '../../utils/sentry';
 import { validateEnv } from '../../utils/validateEnv';
 
 /**
- * GET /api/contact - Health check for contact endpoint
- */
-export async function GET(): Promise<Response> {
-  return new Response(JSON.stringify({ status: 'contact endpoint available', method: 'GET' }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
-}
-
-/**
  * POST /api/contact
  * Traite une demande de contact
  */

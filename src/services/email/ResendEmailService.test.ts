@@ -99,7 +99,7 @@ describe('ResendEmailService', () => {
 
       expect(mockSend).toHaveBeenCalledWith(
         expect.objectContaining({
-          from: 'noreply@portfolio.dev',
+          from: 'onboarding@resend.dev',
         })
       );
     });

@@ -129,7 +129,7 @@ export class ContactService {
     try {
       const emailService = createEmailService();
       await emailService.send({
-        from: process.env.EMAIL_FROM || 'noreply@example.com',
+        from: process.env.EMAIL_FROM || 'onboarding@resend.dev',
         to: process.env.CONTACT_RECIPIENT_EMAIL || 'ogbedozin@gmail.com',
         subject: `Contact from ${request.name}`,
         text: `Nouveau message de contact\n\nNom: ${request.name}\nEmail: ${request.email}\nMessage: ${request.message}`,

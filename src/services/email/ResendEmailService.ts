@@ -41,7 +41,7 @@ export class ResendEmailService implements EmailService {
    * @param defaultFrom - Adresse email par défaut de l'expéditeur
    * @throws {Error} Si la clé API est manquante
    */
-  constructor(apiKey: string, defaultFrom: string = 'noreply@portfolio.dev') {
+  constructor(apiKey: string, defaultFrom: string = 'onboarding@resend.dev') {
     if (!apiKey || apiKey.trim() === '') {
       throw new Error('Resend API key is required');
     }

@@ -95,7 +95,7 @@ export class ValidationError extends ApiError {
   constructor(detail: string, fieldErrors?: Record<string, string[]>, instance?: string) {
     super(
       400,
-      'https://api.example.com/errors/validation-error',
+      'https://esdrasgbedozin.dev/errors/validation-error',
       'Validation Failed',
       detail,
       instance,
@@ -112,7 +112,7 @@ export class TurnstileError extends ApiError {
   constructor(detail: string = 'Anti-spam verification failed', instance?: string) {
     super(
       403,
-      'https://api.example.com/errors/turnstile-error',
+      'https://esdrasgbedozin.dev/errors/turnstile-error',
       'Turnstile Verification Failed',
       detail,
       instance
@@ -134,7 +134,7 @@ export class RateLimitError extends ApiError {
   ) {
     super(
       429,
-      'https://api.example.com/errors/rate-limit-error',
+      'https://esdrasgbedozin.dev/errors/rate-limit-error',
       'Rate Limit Exceeded',
       detail,
       instance,
@@ -165,7 +165,7 @@ export class EmailError extends ApiError {
   constructor(detail: string = 'Failed to send email', instance?: string) {
     super(
       500,
-      'https://api.example.com/errors/email-error',
+      'https://esdrasgbedozin.dev/errors/email-error',
       'Email Sending Failed',
       detail,
       instance
@@ -181,7 +181,7 @@ export class InternalServerError extends ApiError {
   constructor(detail: string = 'An unexpected error occurred', instance?: string) {
     super(
       500,
-      'https://api.example.com/errors/internal-server-error',
+      'https://esdrasgbedozin.dev/errors/internal-server-error',
       'Internal Server Error',
       detail,
       instance

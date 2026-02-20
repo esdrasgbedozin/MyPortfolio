@@ -22,12 +22,12 @@ info:
     email: ogbedozin@gmail.com
   license:
     name: Propriétaire
-    url: https://portfolio.dev/license
+    url: https://esdrasgbedozin.dev/license
 
 servers:
-  - url: https://portfolio.dev/api
+  - url: https://esdrasgbedozin.dev/api
     description: Production (Vercel)
-  - url: https://preview-{branch}.portfolio.dev/api
+  - url: https://preview-{branch}.esdrasgbedozin.dev/api
     description: Preview Deployments (Vercel)
     variables:
       branch:
@@ -142,7 +142,7 @@ components:
           type: string
           format: uri
           description: URL de la démo live (optionnel)
-          example: 'https://demo.portfolio.dev'
+          example: 'https://demo.esdrasgbedozin.dev'
         repositoryUrl:
           type: string
           format: uri
@@ -154,7 +154,7 @@ components:
           items:
             type: string
             format: uri
-          example: ['https://portfolio.dev/images/projects/portfolio-1.jpg']
+          example: ['https://esdrasgbedozin.dev/images/projects/portfolio-1.jpg']
         metrics:
           type: object
           description: Métriques techniques (optionnel)
@@ -226,7 +226,7 @@ components:
           type: string
           format: uri
           description: URL du badge numérique (optionnel)
-          example: 'https://portfolio.dev/badges/aws-saa.png'
+          example: 'https://esdrasgbedozin.dev/badges/aws-saa.png'
         score:
           type: integer
           description: Score obtenu (optionnel)
@@ -394,7 +394,7 @@ components:
           type: string
           format: uri
           description: URI identifiant le type d'erreur
-          example: 'https://portfolio.dev/errors/validation-error'
+          example: 'https://esdrasgbedozin.dev/errors/validation-error'
         title:
           type: string
           description: Résumé court lisible par l'humain
@@ -422,7 +422,7 @@ components:
           description: Nombre de secondes avant de réessayer (pour rate limiting)
           example: 3600
       example:
-        type: 'https://portfolio.dev/errors/validation-error'
+        type: 'https://esdrasgbedozin.dev/errors/validation-error'
         title: 'Validation Error'
         status: 400
         detail: 'Invalid input data'
@@ -482,7 +482,7 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           example:
-            type: 'https://portfolio.dev/errors/validation-error'
+            type: 'https://esdrasgbedozin.dev/errors/validation-error'
             title: 'Validation Error'
             status: 400
             detail: 'Invalid input data'
@@ -499,7 +499,7 @@ components:
             captchaInvalid:
               summary: CAPTCHA invalide
               value:
-                type: 'https://portfolio.dev/errors/captcha-invalid'
+                type: 'https://esdrasgbedozin.dev/errors/captcha-invalid'
                 title: 'Captcha Validation Failed'
                 status: 403
                 detail: 'The captcha challenge was not completed successfully.'
@@ -507,7 +507,7 @@ components:
             rateLimit:
               summary: Rate limit dépassé
               value:
-                type: 'https://portfolio.dev/errors/rate-limit'
+                type: 'https://esdrasgbedozin.dev/errors/rate-limit'
                 title: 'Rate Limit Exceeded'
                 status: 429
                 detail: 'Too many requests. Please try again later.'
@@ -521,7 +521,7 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           example:
-            type: 'https://portfolio.dev/errors/internal-error'
+            type: 'https://esdrasgbedozin.dev/errors/internal-error'
             title: 'Internal Server Error'
             status: 500
             detail: 'An unexpected error occurred.'

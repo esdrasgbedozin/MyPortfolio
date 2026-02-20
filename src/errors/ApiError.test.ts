@@ -18,7 +18,7 @@ describe('ApiError - RFC 7807 Error Classes', () => {
     it('should create ApiError with all properties', () => {
       const error = new ApiError(
         400,
-        'https://api.example.com/errors/test',
+        'https://esdrasgbedozin.dev/errors/test',
         'Test Error',
         'This is a test error',
         '/api/test',
@@ -28,7 +28,7 @@ describe('ApiError - RFC 7807 Error Classes', () => {
       expect(error).toBeInstanceOf(Error);
       expect(error.name).toBe('ApiError');
       expect(error.status).toBe(400);
-      expect(error.type).toBe('https://api.example.com/errors/test');
+      expect(error.type).toBe('https://esdrasgbedozin.dev/errors/test');
       expect(error.title).toBe('Test Error');
       expect(error.detail).toBe('This is a test error');
       expect(error.instance).toBe('/api/test');
@@ -38,7 +38,7 @@ describe('ApiError - RFC 7807 Error Classes', () => {
     it('should convert to RFC 7807 Problem Details format', () => {
       const error = new ApiError(
         400,
-        'https://api.example.com/errors/test',
+        'https://esdrasgbedozin.dev/errors/test',
         'Test Error',
         'This is a test error',
         '/api/test',
@@ -48,7 +48,7 @@ describe('ApiError - RFC 7807 Error Classes', () => {
       const problemDetails = error.toProblemDetails();
 
       expect(problemDetails).toEqual({
-        type: 'https://api.example.com/errors/test',
+        type: 'https://esdrasgbedozin.dev/errors/test',
         title: 'Test Error',
         status: 400,
         detail: 'This is a test error',
@@ -60,7 +60,7 @@ describe('ApiError - RFC 7807 Error Classes', () => {
     it('should convert to HTTP Response', async () => {
       const error = new ApiError(
         400,
-        'https://api.example.com/errors/test',
+        'https://esdrasgbedozin.dev/errors/test',
         'Test Error',
         'This is a test error'
       );
@@ -72,7 +72,7 @@ describe('ApiError - RFC 7807 Error Classes', () => {
 
       const body = await response.json();
       expect(body).toEqual({
-        type: 'https://api.example.com/errors/test',
+        type: 'https://esdrasgbedozin.dev/errors/test',
         title: 'Test Error',
         status: 400,
         detail: 'This is a test error',
@@ -135,7 +135,7 @@ describe('ApiError - RFC 7807 Error Classes', () => {
       expect(response.status).toBe(403);
       const body = await response.json();
       expect(body.status).toBe(403);
-      expect(body.type).toBe('https://api.example.com/errors/turnstile-error');
+      expect(body.type).toBe('https://esdrasgbedozin.dev/errors/turnstile-error');
     });
   });
 
@@ -196,7 +196,7 @@ describe('ApiError - RFC 7807 Error Classes', () => {
       expect(response.status).toBe(500);
       const body = await response.json();
       expect(body.status).toBe(500);
-      expect(body.type).toBe('https://api.example.com/errors/email-error');
+      expect(body.type).toBe('https://esdrasgbedozin.dev/errors/email-error');
     });
   });
 
@@ -225,7 +225,7 @@ describe('ApiError - RFC 7807 Error Classes', () => {
       expect(response.status).toBe(500);
       const body = await response.json();
       expect(body.status).toBe(500);
-      expect(body.type).toBe('https://api.example.com/errors/internal-server-error');
+      expect(body.type).toBe('https://esdrasgbedozin.dev/errors/internal-server-error');
     });
   });
 });

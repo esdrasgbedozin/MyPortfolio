@@ -16,7 +16,7 @@ import type { EmailService, EmailPayload, EmailSendResult } from './EmailService
 export class SendGridEmailService implements EmailService {
   private readonly defaultFrom: string;
 
-  constructor(apiKey: string, defaultFrom: string = 'noreply@portfolio.dev') {
+  constructor(apiKey: string, defaultFrom: string = 'onboarding@resend.dev') {
     if (!apiKey || apiKey.trim() === '') {
       throw new Error('SendGrid API key is required');
     }
