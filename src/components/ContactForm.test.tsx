@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { ContactForm } from './ContactForm';
 
@@ -99,7 +99,8 @@ describe('ContactForm - Epic 6.2 FE-078', () => {
     const messageInput = screen.getByLabelText(/message/i);
     const submitButton = screen.getByRole('button', { name: /envoyer/i });
 
-    await user.type(messageInput, 'A'.repeat(2001));
+    // Use fireEvent for speed — typing 2001 chars via userEvent is too slow for CI
+    fireEvent.change(messageInput, { target: { value: 'A'.repeat(2001) } });
     await user.click(submitButton);
 
     expect(await screen.findByText(/message.*2000 caractères/i)).toBeInTheDocument();
