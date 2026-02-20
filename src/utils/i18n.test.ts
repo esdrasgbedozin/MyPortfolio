@@ -6,6 +6,7 @@ import {
   getLocaleFromPath,
   getLocalizedPath,
   tSync,
+  t,
 } from './i18n';
 
 describe('i18n Utils', () => {
@@ -86,6 +87,37 @@ describe('i18n Utils', () => {
     it('should handle nested keys', () => {
       const dict = { footer: { social: { github: 'Voir mon profil GitHub' } } };
       expect(tSync('footer.social.github', 'fr', dict)).toBe('Voir mon profil GitHub');
+    });
+  });
+
+  describe('t (async)', () => {
+    it('should translate a key in French', async () => {
+      const result = await t('nav.home', 'fr');
+      expect(typeof result).toBe('string');
+      expect(result).not.toBe('nav.home'); // Should resolve to actual translation
+    });
+
+    it('should translate a key in English', async () => {
+      const result = await t('nav.home', 'en');
+      expect(typeof result).toBe('string');
+      expect(result).not.toBe('nav.home');
+    });
+
+    it('should return key when translation not found', async () => {
+      const result = await t('nonexistent.key.here', 'fr');
+      expect(result).toBe('nonexistent.key.here');
+    });
+
+    it('should use default locale (fr) when not specified', async () => {
+      const result = await t('nav.home');
+      expect(typeof result).toBe('string');
+      expect(result).not.toBe('nav.home');
+    });
+
+    it('should cache dictionaries on subsequent calls', async () => {
+      const result1 = await t('nav.home', 'fr');
+      const result2 = await t('nav.home', 'fr');
+      expect(result1).toBe(result2);
     });
   });
 });

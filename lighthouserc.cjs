@@ -1,7 +1,6 @@
 // Epic 6.1 - EF-064/065: Lighthouse CI Configuration
 // Performance budgets pour Portfolio Pro
-// NOTE: LHCI runs against dev server in CI — budgets are calibrated for dev mode.
-// Production builds (SSG via Vercel) will score significantly better.
+// Runs against production build preview server for accurate scoring.
 module.exports = {
   ci: {
     collect: {
@@ -18,8 +17,8 @@ module.exports = {
       ],
       // Nombre de runs pour moyenne
       numberOfRuns: 1, // 1 seul run pour tests locaux (3 en CI)
-      // Serveur local Astro dev
-      startServerCommand: 'pnpm dev --host',
+      // Production build preview server
+      startServerCommand: 'pnpm preview --host',
       startServerReadyPattern: 'Local:.*4321',
       startServerReadyTimeout: 60000,
       // Options Lighthouse
@@ -40,25 +39,25 @@ module.exports = {
     },
     assert: {
       // Scores minimums (0-1 scale)
-      // Dev mode budgets — production will exceed these thresholds
+      // Production build budgets
       assertions: {
-        // Category scores (relaxed for dev mode + CI runners)
-        'categories:performance': ['warn', { minScore: 0.6 }],
+        // Category scores
+        'categories:performance': ['warn', { minScore: 0.8 }],
         'categories:accessibility': ['error', { minScore: 0.9 }],
-        'categories:best-practices': ['warn', { minScore: 0.7 }],
+        'categories:best-practices': ['warn', { minScore: 0.8 }],
         'categories:seo': ['error', { minScore: 0.9 }],
 
-        // Core Web Vitals (relaxed for dev server on CI)
-        'first-contentful-paint': ['warn', { maxNumericValue: 4000 }],
-        'largest-contentful-paint': ['warn', { maxNumericValue: 5000 }],
+        // Core Web Vitals
+        'first-contentful-paint': ['warn', { maxNumericValue: 3000 }],
+        'largest-contentful-paint': ['warn', { maxNumericValue: 4000 }],
         'cumulative-layout-shift': ['error', { maxNumericValue: 0.1 }],
-        'total-blocking-time': ['warn', { maxNumericValue: 600 }],
-        'speed-index': ['warn', { maxNumericValue: 5000 }],
+        'total-blocking-time': ['warn', { maxNumericValue: 400 }],
+        'speed-index': ['warn', { maxNumericValue: 4000 }],
 
-        // Resource Budgets (dev mode serves unminified/unbundled code)
-        'resource-summary:document:size': ['warn', { maxNumericValue: 250000 }],
-        'resource-summary:script:size': ['warn', { maxNumericValue: 4000000 }],
-        'resource-summary:stylesheet:size': ['warn', { maxNumericValue: 100000 }],
+        // Resource Budgets (production build — smaller bundles)
+        'resource-summary:document:size': ['warn', { maxNumericValue: 150000 }],
+        'resource-summary:script:size': ['warn', { maxNumericValue: 2000000 }],
+        'resource-summary:stylesheet:size': ['warn', { maxNumericValue: 80000 }],
         'resource-summary:image:size': ['error', { maxNumericValue: 500000 }],
         'resource-summary:font:size': ['error', { maxNumericValue: 200000 }],
 

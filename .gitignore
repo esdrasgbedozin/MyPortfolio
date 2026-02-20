@@ -37,3 +37,6 @@ playwright/.cache/
 # vercel
 .vercel
 bundle-stats.html
+
+# Coverage reports
+coverage/
