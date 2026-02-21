@@ -31,7 +31,7 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, '') || 'https://esdrasgbed
 const pageUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImageUrl = ogImage
   ? new URL(ogImage, siteUrl).toString()
-  : new URL('/og-default.svg', siteUrl).toString();
+  : new URL('/og-default.png', siteUrl).toString();
 
 // SEO: JSON-LD Structured Data (FE-107)
 const personJsonLd = {

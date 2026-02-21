@@ -100,7 +100,7 @@ Filters:
   - Tag status_code: 500|502|503|504
   - Tag endpoint: /api/contact.json
 Actions:
-  - Send email to: team@portfolio.com
+  - Send email to: ogbedozin@gmail.com
   - Send Slack notification: #alerts-production
   - Create PagerDuty incident: High Priority
 Frequency: Immediately (no throttling)
@@ -117,7 +117,7 @@ Filters:
   - Environment: production
   - Tag endpoint: /api/contact.json
 Actions:
-  - Send email to: team@portfolio.com
+  - Send email to: ogbedozin@gmail.com
   - Send Slack notification: #monitoring
 Frequency: Max 1 alert per hour
 ```
@@ -134,7 +134,7 @@ Filters:
   - Tag error_type: RateLimitError
   - Tag status_code: 429
 Actions:
-  - Send email to: security@portfolio.com
+  - Send email to: ogbedozin@gmail.com
   - Log to security audit trail
 Frequency: Max 1 alert per 3 hours
 ```
@@ -150,7 +150,7 @@ Filters:
   - Environment: production
   - Is unhandled: true
 Actions:
-  - Send email to: dev@portfolio.com
+  - Send email to: ogbedozin@gmail.com
   - Create GitHub issue automatically
 Frequency: Daily digest (aggregated)
 ```
@@ -188,7 +188,7 @@ Frequency: Max 1 alert per 30 minutes
 Notification: Build Failed
 Trigger: When deployment build fails
 Delivery:
-  - Email: team@portfolio.com
+  - Email: ogbedozin@gmail.com
   - Webhook: https://hooks.slack.com/services/T00/B00/XXX (Slack incoming webhook)
   - GitHub Check: Failed (visible in PR)
 ```
@@ -216,7 +216,7 @@ Filters:
   - Environment: Production only
 Delivery:
   - Slack: #deployments
-  - GitHub Comment: '✅ Deployed to https://portfolio.com'
+  - GitHub Comment: '✅ Deployed to https://esdrasgbedozin.dev'
 ```
 
 ### 2.2 Vercel Checks (Health Monitoring)
@@ -227,7 +227,7 @@ Delivery:
 
 ```yaml
 Check Name: API Health Endpoint
-URL: https://portfolio.com/api/health
+URL: https://esdrasgbedozin.dev/api/health
 Method: GET
 Expected Status: 200
 Expected Body Contains: "status":"healthy"
@@ -236,7 +236,7 @@ Regions: All (Washington DC, Frankfurt, Singapore)
 Timeout: 10s
 Retry: 3 times before alert
 Notification:
-  - Email: ops@portfolio.com (after 2 consecutive failures)
+  - Email: ogbedozin@gmail.com (after 2 consecutive failures)
   - PagerDuty: Create incident (after 3 consecutive failures)
 ```
 
@@ -288,7 +288,7 @@ jobs:
       - name: Check API Health
         id: health
         run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" https://portfolio.com/api/health)
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://esdrasgbedozin.dev/api/health)
 
           if [ "$response" -ne 200 ]; then
             echo "❌ Health check FAILED: HTTP $response"
@@ -311,7 +311,7 @@ jobs:
               body: `## Health Check Failure
               
               **Time**: ${new Date().toISOString()}
-              **Endpoint**: https://portfolio.com/api/health
+              **Endpoint**: https://esdrasgbedozin.dev/api/health
               **Status**: Failed to return HTTP 200
               
               ### Possible Causes
@@ -344,7 +344,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*🚨 Production Health Check Failed*\n\n*Endpoint*: https://portfolio.com/api/health\n*Time*: ${{ github.event.repository.updated_at }}\n\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow Run>"
+                    "text": "*🚨 Production Health Check Failed*\n\n*Endpoint*: https://esdrasgbedozin.dev/api/health\n*Time*: ${{ github.event.repository.updated_at }}\n\n<https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Workflow Run>"
                   }
                 }
               ]
@@ -369,7 +369,7 @@ strategy:
 steps:
   - name: Health Check (${{ matrix.region.name }})
     run: |
-      curl -x ${{ matrix.region.proxy }} -f https://portfolio.com/api/health || exit 1
+      curl -x ${{ matrix.region.proxy }} -f https://esdrasgbedozin.dev/api/health || exit 1
 ```
 
 ---
@@ -554,7 +554,7 @@ steps:
 1. **Test manuel**
 
    ```bash
-   curl -v https://portfolio.com/api/health
+   curl -v https://esdrasgbedozin.dev/api/health
    ```
 
 2. **Check Vercel Function Logs**
@@ -638,7 +638,7 @@ Example: (1 - 0.999) * 100,000 req/month = 100 erreurs autorisées
 
   ```bash
   # Forcer erreur 500
-  curl -X POST https://portfolio.com/api/contact.json \
+  curl -X POST https://esdrasgbedozin.dev/api/contact.json \
     -H "Content-Type: application/json" \
     -d '{"trigger_error": true}'
 
@@ -650,7 +650,7 @@ Example: (1 - 0.999) * 100,000 req/month = 100 erreurs autorisées
 
   ```bash
   # Doit retourner HTTP 200 + JSON
-  curl https://portfolio.com/api/health
+  curl https://esdrasgbedozin.dev/api/health
 
   # Expected output:
   # {"status":"healthy","timestamp":"2026-02-01T12:00:00.000Z"}
@@ -679,7 +679,7 @@ Example: (1 - 0.999) * 100,000 req/month = 100 erreurs autorisées
 
 ### Contacts
 
-- **Email Équipe** : team@portfolio.com
+- **Email Équipe** : ogbedozin@gmail.com
 - **Slack Channel** : `#alerts-production`
 - **On-Call Rotation** : [PagerDuty Schedule](https://portfolio.pagerduty.com/schedules)
 

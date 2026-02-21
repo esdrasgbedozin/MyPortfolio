@@ -197,4 +197,4 @@ Le projet se déploie automatiquement sur Vercel :
 
 ## 📄 Licence
 
-Projet personnel — © 2025 Esdras GBEDOZIN
+Projet personnel — © 2025–2026 Esdras GBEDOZIN

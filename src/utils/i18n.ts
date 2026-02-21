@@ -98,8 +98,8 @@ export async function t(key: string, locale: Locale = DEFAULT_LOCALE): Promise<s
     const dict = await loadTranslations(locale);
     const value = getNestedValue(dict, key);
     return value ?? key;
-  } catch (error) {
-    console.error(`Translation error for key "${key}":`, error);
+  } catch {
+    // Structured logging not available in browser context — fallback gracefully
     return key;
   }
 }

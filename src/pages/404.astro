@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Detect preferred language from Accept-Language header
+const acceptLang = Astro.request.headers.get('accept-language') || '';
+const prefersFr = acceptLang.toLowerCase().startsWith('fr');
+const lang = prefersFr ? 'fr' : 'en';
+
+const labels = {
+  fr: {
+    title: 'Page introuvable',
+    heading: '404',
+    message: 'Oups ! Cette page n\u2019existe pas ou a été déplacée.',
+    home: 'Retour à l\u2019accueil',
+    description: 'Page non trouvée - Portfolio Esdras GBEDOZIN',
+  },
+  en: {
+    title: 'Page Not Found',
+    heading: '404',
+    message: 'Oops! This page doesn\u2019t exist or has been moved.',
+    home: 'Back to Home',
+    description: 'Page Not Found - Portfolio Esdras GBEDOZIN',
+  },
+};
+
+const t = labels[lang];
+---
+
+<Layout title={t.title} description={t.description} lang={lang}>
+  <main class="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">
+    <h1
+      class="bg-gradient-to-r from-[var(--color-primary-400)] to-[var(--color-accent-400)] bg-clip-text text-8xl font-bold text-transparent sm:text-9xl"
+    >
+      {t.heading}
+    </h1>
+    <p class="mt-4 max-w-md text-lg text-[var(--color-neutral-400)]">
+      {t.message}
+    </p>
+    <a
+      href={`/${lang}/`}
+      class="mt-8 inline-flex items-center gap-2 rounded-full bg-[var(--color-primary-600)] px-6 py-3 font-medium text-white transition-colors hover:bg-[var(--color-primary-500)]"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+          clip-rule="evenodd"></path>
+      </svg>
+      {t.home}
+    </a>
+  </main>
+</Layout>

@@ -39,7 +39,7 @@ if (SENTRY_DSN) {
     integrations: [Sentry.httpIntegration()],
   });
 } else {
-  console.warn('[Sentry] SENTRY_DSN not configured. Error tracking disabled.');
+  // Sentry DSN not configured — error tracking disabled (expected in dev/test)
 }
 
 export { Sentry };
