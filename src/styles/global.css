@@ -162,18 +162,6 @@ html.light {
   --border-color: #e5e5e5;
 }
 
-/* Light Mode (prefers-color-scheme auto support) */
-@media (prefers-color-scheme: light) {
-  :root:not(.dark) {
-    color-scheme: light;
-    --bg-primary: var(--color-neutral-50);
-    --bg-secondary: var(--color-neutral-100);
-    --text-primary: var(--color-neutral-900);
-    --text-secondary: var(--color-neutral-600);
-    --border-color: var(--color-neutral-200);
-  }
-}
-
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -317,19 +305,6 @@ html.light .glass-effect {
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
-/* Light Mode — prefers-color-scheme auto support */
-@media (prefers-color-scheme: light) {
-  :root:not(.dark) .glass-effect {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  }
-}
-
 /* Elevated Card with Deep Shadows */
 .card-elevated {
   box-shadow:
@@ -398,12 +373,7 @@ html.light .card-elevated {
 }
 
 html.light .shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(0, 0, 0, 0.04) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.04) 50%, transparent 100%);
   background-size: 1000px 100%;
 }
 

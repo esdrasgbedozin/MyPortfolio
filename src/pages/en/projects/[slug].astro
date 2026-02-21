@@ -176,7 +176,7 @@ const ogImage = project.image
     </header>
 
     {/* MDX Content */}
-    <article class="prose prose-lg dark:prose-invert max-w-none">
+    <article class="prose prose-lg max-w-none">
       <Content />
     </article>
   </article>
@@ -185,7 +185,18 @@ const ogImage = project.image
 <style>
   /* Prose styling for MDX content - Tailwind v4 compatible */
   :global(.prose) {
-    color: var(--color-text);
+    color: var(--color-neutral-200);
+  }
+  :global(.prose h2),
+  :global(.prose h3),
+  :global(.prose h4) {
+    color: var(--color-neutral-100);
+  }
+  :global(.prose strong) {
+    color: var(--color-neutral-100);
+  }
+  :global(.prose a) {
+    color: var(--color-primary-400);
   }
   :global(.prose h2) {
     font-size: 1.875rem;
@@ -223,9 +234,6 @@ const ogImage = project.image
     padding: 1rem;
     border-radius: 0.5rem;
     overflow-x: auto;
-  }
-  :global(.prose a) {
-    color: var(--color-primary);
   }
   :global(.prose a:hover) {
     text-decoration: underline;
