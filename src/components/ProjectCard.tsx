@@ -46,7 +46,7 @@ export default function ProjectCard({
       glarePosition="all"
       className="w-full h-full"
     >
-      <article className="glass-effect card-elevated group relative overflow-hidden rounded-xl p-6 h-full transition-all duration-500 border border-white/10 hover:border-neutral-400/25 hover:shadow-lg hover:shadow-primary-400/5">
+      <article className="glass-effect card-elevated group relative overflow-hidden rounded-xl p-6 h-full transition-all duration-500 border border-[var(--color-neutral-50)]/10 hover:border-neutral-400/25 hover:shadow-lg hover:shadow-primary-400/5">
         {/* Subtle glow on hover */}
         <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-primary-400/5 via-transparent to-purple-500/5" />
 
@@ -54,7 +54,7 @@ export default function ProjectCard({
         <div className="relative z-10 flex flex-col h-full">
           {/* Header */}
           <div className="flex justify-between items-start mb-4">
-            <h3 className="text-xl font-bold text-white group-hover:text-neutral-50 transition-colors duration-300">
+            <h3 className="text-xl font-bold text-[var(--color-neutral-50)] group-hover:text-neutral-50 transition-colors duration-300">
               {title}
             </h3>
             <span
@@ -83,7 +83,7 @@ export default function ProjectCard({
           )}
 
           {/* Footer — pushed to bottom */}
-          <div className="flex justify-between items-center mt-auto pt-4 border-t border-white/10">
+          <div className="flex justify-between items-center mt-auto pt-4 border-t border-[var(--color-neutral-50)]/10">
             <span className="text-sm text-neutral-400">{period}</span>
 
             {/* Links */}

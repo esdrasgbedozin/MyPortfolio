@@ -142,16 +142,19 @@ describe('ThemeToggle - Epic 5.1 FE-066', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(false);
   });
 
-  it('should show sun icon when dark theme active', () => {
+  it('should show moon icon when dark theme active', () => {
     // ARRANGE
     render(<ThemeToggle />);
 
-    // ASSERT - Initial state is dark, should show moon icon (indicative: dark mode active)
+    // ASSERT - Initial state is dark, should show moon SVG
     const button = screen.getByRole('button', { name: /switch to light theme/i });
-    expect(button.textContent).toContain('🌙'); // Moon icon = dark mode active
+    const svg = button.querySelector('svg');
+    expect(svg).toBeDefined();
+    // Moon icon has a path with 'M21 12.79'
+    expect(svg?.querySelector('path')?.getAttribute('d')).toContain('21 12.79');
   });
 
-  it('should show moon icon when light theme active', () => {
+  it('should show sun icon when light theme active', () => {
     // ARRANGE
     render(<ThemeToggle />);
     const button = screen.getByRole('button', { name: /switch to light theme/i });
@@ -159,8 +162,10 @@ describe('ThemeToggle - Epic 5.1 FE-066', () => {
     // ACT
     fireEvent.click(button); // Switch to light
 
-    // ASSERT - Light theme active, should show sun icon (indicative: light mode active)
-    expect(button.textContent).toContain('☀'); // Sun icon = light mode active
+    // ASSERT - Light theme active, should show sun SVG (has circle + lines)
+    const svg = button.querySelector('svg');
+    expect(svg).toBeDefined();
+    expect(svg?.querySelector('circle')).toBeDefined();
   });
 
   it('should have accessible label', () => {
@@ -211,6 +216,7 @@ describe('ThemeToggle - Epic 5.1 FE-066', () => {
     expect(document.documentElement.classList.contains('light')).toBe(true);
     expect(document.documentElement.classList.contains('dark')).toBe(false);
     const button = screen.getByRole('button', { name: /switch to dark theme/i });
-    expect(button.textContent).toContain('☀'); // Sun icon = light mode active (indicative)
+    // Sun SVG has a circle element
+    expect(button.querySelector('svg circle')).toBeDefined();
   });
 });

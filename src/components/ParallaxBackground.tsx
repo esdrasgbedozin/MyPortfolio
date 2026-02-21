@@ -45,13 +45,13 @@ export default function ParallaxBackground({
       filter: 'blur(60px)',
     },
     dots: {
-      backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+      backgroundImage: 'radial-gradient(var(--pattern-color) 1px, transparent 1px)',
       backgroundSize: '20px 20px',
     },
     grid: {
       backgroundImage: `
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
+        linear-gradient(var(--pattern-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--pattern-color) 1px, transparent 1px)
       `,
       backgroundSize: '50px 50px',
     },

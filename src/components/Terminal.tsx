@@ -81,7 +81,7 @@ export default function Terminal({
       className={`glass-effect rounded-xl p-4 md:p-6 font-mono text-sm overflow-x-auto ${className}`}
     >
       {/* Terminal Header */}
-      <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
+      <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[var(--color-neutral-50)]/10">
         <div className="w-3 h-3 rounded-full bg-red-500"></div>
         <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
         <div className="w-3 h-3 rounded-full bg-green-500"></div>
