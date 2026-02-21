@@ -1,12 +1,14 @@
 // Epic 6.1 - EF-064/065: Lighthouse CI Configuration
 // Performance budgets pour Portfolio Pro
-// Runs against production build preview server for accurate scoring.
+// Runs against pre-rendered static output via `serve` package.
+// The @astrojs/vercel adapter does not support `astro preview`,
+// so we serve .vercel/output/static/ directly.
 module.exports = {
   ci: {
     collect: {
-      // URLs à tester
+      // URLs à tester (all pre-rendered pages)
+      // Note: Root / is a server-side redirect (not pre-rendered), excluded.
       url: [
-        'http://localhost:4321/',
         'http://localhost:4321/fr/',
         'http://localhost:4321/fr/projects',
         'http://localhost:4321/fr/certifications',
@@ -17,9 +19,9 @@ module.exports = {
       ],
       // Nombre de runs pour moyenne
       numberOfRuns: 1, // 1 seul run pour tests locaux (3 en CI)
-      // Production build preview server
-      startServerCommand: 'pnpm preview --host',
-      startServerReadyPattern: 'Local:.*4321',
+      // Serve pre-rendered static output (Vercel adapter build)
+      startServerCommand: 'npx serve .vercel/output/static -l 4321',
+      startServerReadyPattern: 'Accepting connections|Local',
       startServerReadyTimeout: 60000,
       // Options Lighthouse
       settings: {

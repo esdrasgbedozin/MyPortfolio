@@ -7,6 +7,7 @@
     "dev:mock": "concurrently \"astro dev\" \"prism mock openapi.yaml\"",
     "build": "astro build",
     "preview": "astro preview",
+    "preview:static": "serve .vercel/output/static -l 4321",
     "astro": "astro",
     "lint": "eslint . --ext .ts,.tsx,.astro",
     "lint:fix": "eslint . --ext .ts,.tsx,.astro --fix",
@@ -85,6 +86,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "rollup-plugin-visualizer": "^6.0.5",
+    "serve": "^14.2.5",
     "swagger-ui-react": "^5.31.0",
     "vitest": "^4.0.18"
   }

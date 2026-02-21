@@ -138,6 +138,13 @@ jobs:
           path: dist/
           retention-days: 1
 
+      - name: Upload static output for Lighthouse
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-static
+          path: .vercel/output/static/
+          retention-days: 1
+
   lighthouse:
     name: Lighthouse CI Performance Tests
     runs-on: ubuntu-latest
@@ -159,11 +166,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Download build artifacts
+      - name: Download static build output
         uses: actions/download-artifact@v4
         with:
-          name: build-dist
-          path: dist/
+          name: build-static
+          path: .vercel/output/static/
 
       - name: Run Lighthouse CI
         run: pnpm run lhci:ci
