@@ -100,6 +100,7 @@
   --text-primary: var(--color-neutral-50);
   --text-secondary: var(--color-neutral-400);
   --border-color: var(--color-neutral-800);
+  --pattern-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Light Mode — swap the neutral scale for a clean inversion */
@@ -119,10 +120,40 @@ html.light {
   --color-neutral-100: #171717;
   --color-neutral-50: #0a0a0a;
 
-  /* Darker primaries for light background contrast */
+  /* Darker primaries for text contrast on white */
   --color-primary-300: #0284c7;
   --color-primary-400: #0369a1;
   --color-primary-500: #0284c7;
+
+  /* Primary dark shades → light for hero/section backgrounds */
+  --color-primary-800: #e0f2fe;
+  --color-primary-900: #f0f9ff;
+  --color-primary-950: #f0f9ff;
+
+  /* Secondary: darker for text, lighter for backgrounds */
+  --color-secondary-400: #a21caf;
+  --color-secondary-500: #9333ea;
+  --color-secondary-600: #7e22ce;
+  --color-secondary-800: #fae8ff;
+  --color-secondary-900: #fdf4ff;
+
+  /* Semantic colors: WCAG AA contrast on white backgrounds */
+  --color-green-400: #15803d;
+  --color-green-500: #16a34a;
+  --color-green-900: #f0fdf4;
+  --color-red-400: #b91c1c;
+  --color-red-500: #dc2626;
+  --color-red-300: #991b1b;
+  --color-red-900: #fef2f2;
+  --color-yellow-400: #a16207;
+  --color-yellow-500: #ca8a04;
+  --color-blue-400: #1d4ed8;
+  --color-purple-500: #7c3aed;
+  --color-gray-400: #4b5563;
+  --color-gray-700: #d1d5db;
+
+  /* Pattern overlay for dot/grid backgrounds */
+  --pattern-color: rgba(0, 0, 0, 0.06);
 
   --bg-primary: #fafafa;
   --bg-secondary: #f5f5f5;
@@ -263,24 +294,8 @@ body {
   background-clip: text;
 }
 
-/* ============================================
-   LIGHT MODE — global overrides for hardcoded colors
-   ============================================ */
-html.light {
-  /* Override Tailwind's text-white to become dark text in light mode */
-  --tw-text-white: #171717;
-
-  /* Gradient text uses darker shades for light backgrounds */
-  & .gradient-text {
-    --tw-gradient-from: #0369a1;
-    --tw-gradient-to: #7c3aed;
-  }
-
-  /* text-white override for all elements using the class */
-  & .text-white {
-    color: #171717;
-  }
-}
+/* Light mode text-white override removed — colors now handled via CSS variable inversion.
+   Buttons keep white text on colored backgrounds; neutral backgrounds use inverted CSS vars. */
 
 /* Glassmorphism Effect */
 .glass-effect {
@@ -380,6 +395,16 @@ html.light .card-elevated {
   );
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
+}
+
+html.light .shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.04) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
 }
 
 /* Gradient Border Effect */
@@ -552,7 +577,20 @@ select {
 }
 
 html.light .floating-orbs .orb {
-  opacity: 0.15;
+  opacity: 0.12;
+  filter: blur(100px);
+}
+
+html.light .floating-orbs .orb-1 {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.25), transparent 70%);
+}
+
+html.light .floating-orbs .orb-2 {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2), transparent 70%);
+}
+
+html.light .floating-orbs .orb-3 {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent 70%);
 }
 
 /* Mobile: smaller orbs to avoid overflow & clutter */
