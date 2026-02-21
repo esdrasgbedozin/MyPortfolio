@@ -3,6 +3,7 @@ import type { ReactElement } from 'react';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 import type { ISourceOptions } from '@tsparticles/engine';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 /**
  * ParticlesBackground Component
@@ -28,6 +29,7 @@ export default function ParticlesBackground({
   particleCount = 80,
   interactive = true,
 }: ParticlesBackgroundProps): ReactElement | null {
+  const prefersReducedMotion = useReducedMotion();
   const [init, setInit] = useState(false);
 
   // Init particles engine once
@@ -103,8 +105,9 @@ export default function ParticlesBackground({
     detectRetina: true,
   };
 
-  if (!init) {
-    return null; // Don't render until engine loaded
+  // Respect prefers-reduced-motion: skip particle rendering entirely
+  if (prefersReducedMotion || !init) {
+    return null;
   }
 
   return <Particles id="tsparticles" options={options} className="absolute inset-0 -z-10" />;

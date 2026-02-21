@@ -1,7 +1,7 @@
 {
   "name": "portfolio-esdras-gbedozin",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "dev:mock": "concurrently \"astro dev\" \"prism mock openapi.yaml\"",
@@ -43,7 +43,6 @@
     "@marsidev/react-turnstile": "^1.4.2",
     "@sendgrid/mail": "^8.1.6",
     "@sentry/astro": "^10.38.0",
-    "@sentry/node": "^10.38.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tsparticles/engine": "^3.9.1",
     "@tsparticles/react": "^3.0.0",

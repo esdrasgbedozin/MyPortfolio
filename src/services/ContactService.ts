@@ -24,6 +24,7 @@ import {
   EmailError,
   InternalServerError,
 } from '../errors/ApiError';
+import { logger } from '../utils/logger';
 
 export interface ContactRequest {
   name: string;
@@ -142,7 +143,9 @@ export class ContactService {
       `,
       });
     } catch (error) {
-      console.error('Email sending failed:', error);
+      logger.error('Email sending failed', error instanceof Error ? error : undefined, {
+        context: 'ContactService',
+      });
       throw new EmailError('Failed to send email. Please try again later.', '/api/contact');
     }
   }
@@ -163,7 +166,9 @@ export class ContactService {
     }
 
     // Wrap unknown errors
-    console.error('Unexpected error in ContactService:', error);
+    logger.error('Unexpected error in ContactService', error instanceof Error ? error : undefined, {
+      context: 'ContactService',
+    });
     throw new InternalServerError(
       'An unexpected error occurred while processing your request',
       '/api/contact'

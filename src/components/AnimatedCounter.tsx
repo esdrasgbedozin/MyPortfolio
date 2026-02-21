@@ -6,6 +6,7 @@
 
 import CountUp from 'react-countup';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 import type { ReactElement } from 'react';
 
 interface AnimatedCounterProps {
@@ -70,12 +71,13 @@ export default function AnimatedCounter({
   label,
   className = '',
 }: AnimatedCounterProps): ReactElement {
+  const prefersReducedMotion = useReducedMotion();
   const { ref, isVisible } = useScrollReveal({ threshold: 0.5, once: true });
 
   return (
     <div ref={ref} className={`text-center ${className}`}>
       <div className="text-3xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-primary-400 to-purple-500 gradient-text mb-2">
-        {isVisible && (
+        {isVisible && !prefersReducedMotion && (
           <CountUp
             start={start}
             end={end}
@@ -85,6 +87,13 @@ export default function AnimatedCounter({
             prefix={prefix}
             suffix={suffix}
           />
+        )}
+        {isVisible && prefersReducedMotion && (
+          <span>
+            {prefix}
+            {end}
+            {suffix}
+          </span>
         )}
         {!isVisible && (
           <span>

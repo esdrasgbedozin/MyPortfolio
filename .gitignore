@@ -40,3 +40,7 @@ bundle-stats.html
 
 # Coverage reports
 coverage/
+
+# Logs
+logs.txt
+*.log

@@ -8,15 +8,17 @@
  */
 
 import { useEffect, useRef } from 'react';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 export default function CursorGlow() {
+  const prefersReducedMotion = useReducedMotion();
   const glowRef = useRef<HTMLDivElement>(null);
   const posRef = useRef({ x: -200, y: -200 });
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
-    // Skip on touch-only devices
-    if (typeof window === 'undefined') {
+    // Skip on touch-only devices or when user prefers reduced motion
+    if (typeof window === 'undefined' || prefersReducedMotion) {
       return;
     }
     const isTouchOnly = window.matchMedia('(hover: none)').matches;
@@ -48,7 +50,7 @@ export default function CursorGlow() {
       window.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <div
