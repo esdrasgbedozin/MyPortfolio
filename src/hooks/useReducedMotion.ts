@@ -16,15 +16,13 @@ const QUERY = '(prefers-reduced-motion: reduce)';
 
 /**
  * @returns `true` when the user prefers reduced motion, `false` otherwise.
- *          Defaults to `false` during SSR (no `window`).
+ *          Always starts as `false` to match the SSR-rendered HTML and avoid
+ *          React hydration mismatch (Error #418). The real value is picked up
+ *          in a `useEffect` that fires after hydration.
  */
 export function useReducedMotion(): boolean {
-  const [prefersReduced, setPrefersReduced] = useState(() => {
-    if (typeof window === 'undefined') {
-      return false;
-    }
-    return window.matchMedia(QUERY).matches;
-  });
+  // Always initialise to `false` so the first client render matches SSR.
+  const [prefersReduced, setPrefersReduced] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -32,6 +30,9 @@ export function useReducedMotion(): boolean {
     }
 
     const mql = window.matchMedia(QUERY);
+    // Sync immediately on mount (post-hydration)
+    setPrefersReduced(mql.matches);
+
     const handler = (e: MediaQueryListEvent): void => {
       setPrefersReduced(e.matches);
     };

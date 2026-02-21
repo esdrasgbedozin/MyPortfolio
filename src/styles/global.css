@@ -450,6 +450,18 @@ select {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Force visibility on elements that start at opacity: 0 and rely on CSS
+     animations to become visible. With animation-duration ~0, the forwards
+     fill-mode may never apply, leaving content permanently invisible. */
+  .animate-fade-in-up,
+  .animate-fade-in-left,
+  .animate-fade-in-right,
+  .animate-scale-in {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
 }
 
 /* ========================================

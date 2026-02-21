@@ -33,7 +33,10 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
   const { threshold = 0.2, rootMargin = '0px', once = true } = options;
 
   const prefersReducedMotion = useReducedMotion();
-  const [isVisible, setIsVisible] = useState(prefersReducedMotion);
+  // Always start invisible (matches SSR output) to prevent hydration mismatch.
+  // When prefersReducedMotion becomes true after hydration, the effect below
+  // will immediately flip isVisible to true.
+  const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<T>(null);
 
   useEffect(() => {
