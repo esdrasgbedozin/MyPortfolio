@@ -5,6 +5,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
+import { useReducedMotion } from './useReducedMotion';
 
 interface UseScrollRevealOptions {
   /**
@@ -31,10 +32,17 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
 ) {
   const { threshold = 0.2, rootMargin = '0px', once = true } = options;
 
-  const [isVisible, setIsVisible] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const [isVisible, setIsVisible] = useState(prefersReducedMotion);
   const ref = useRef<T>(null);
 
   useEffect(() => {
+    // Skip observation when user prefers reduced motion — show immediately
+    if (prefersReducedMotion) {
+      setIsVisible(true);
+      return;
+    }
+
     const element = ref.current;
     if (!element) {
       return;
@@ -59,7 +67,7 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
     return () => {
       observer.disconnect();
     };
-  }, [threshold, rootMargin, once]);
+  }, [threshold, rootMargin, once, prefersReducedMotion]);
 
   return { ref, isVisible };
 }
