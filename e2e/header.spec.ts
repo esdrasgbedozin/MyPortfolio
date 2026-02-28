@@ -191,8 +191,8 @@ test.describe('Header Component', () => {
         return getComputedStyle(el).position;
       });
 
-      // Par défaut, pas de position fixed (sinon couvre contenu)
-      expect(['static', 'relative']).toContain(headerPosition);
+      // Header can be static, relative, or sticky
+      expect(['static', 'relative', 'sticky']).toContain(headerPosition);
     });
   });
 

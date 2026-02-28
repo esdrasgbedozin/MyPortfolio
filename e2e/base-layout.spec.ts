@@ -128,7 +128,9 @@ test.describe('BaseLayout Component', () => {
     });
 
     test('should set dark mode by default (Dark Mode First)', async ({ page }) => {
-      await page.goto('/');
+      // Emulate dark color scheme to ensure dark mode is selected
+      await page.emulateMedia({ colorScheme: 'dark' });
+      await page.goto('/fr');
 
       const dataTheme = await page.locator('html').getAttribute('data-theme');
       expect(dataTheme).toBe('dark');

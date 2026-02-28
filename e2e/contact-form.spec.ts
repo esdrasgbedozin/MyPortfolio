@@ -8,7 +8,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('ContactForm E2E - Integration', () => {
   test('should render ContactForm component on test page', async ({ page }) => {
-    await page.goto('/test/contact-form');
+    await page.goto('/fr/contact');
 
     // Attendre l'hydratation React
     await page.waitForSelector('input[name="name"]', { state: 'visible', timeout: 15000 });
@@ -21,7 +21,7 @@ test.describe('ContactForm E2E - Integration', () => {
   });
 
   test('should allow typing in form fields', async ({ page }) => {
-    await page.goto('/test/contact-form');
+    await page.goto('/fr/contact');
     await page.waitForSelector('input[name="name"]', { state: 'visible', timeout: 15000 });
 
     // Remplir les champs
@@ -36,7 +36,7 @@ test.describe('ContactForm E2E - Integration', () => {
   });
 
   test('should show validation error on submit with empty fields', async ({ page }) => {
-    await page.goto('/test/contact-form');
+    await page.goto('/fr/contact');
     await page.waitForSelector('button[type="submit"]', { state: 'visible', timeout: 15000 });
 
     // Soumettre formulaire vide
@@ -73,7 +73,7 @@ test.describe('ContactForm E2E - Integration', () => {
   });
 
   test('should render Turnstile widget on contact form - Epic 6.2 FE-083', async ({ page }) => {
-    await page.goto('/test/contact-form');
+    await page.goto('/fr/contact');
     await page.waitForSelector('input[name="name"]', { state: 'visible', timeout: 15000 });
 
     // Vérifier que le widget Turnstile est présent (div avec id cf-turnstile)

@@ -33,7 +33,10 @@ test.describe('Accessibility - WCAG 2.1 AA', () => {
       await browserPage.goto(page.url);
 
       // Wait for page to be fully loaded
-      await browserPage.waitForLoadState('networkidle');
+      // Use 'load' instead of 'networkidle' because Turnstile widget keeps network active
+      await browserPage.waitForLoadState('load');
+      // Give React islands time to hydrate
+      await browserPage.waitForTimeout(2000);
 
       const accessibilityScanResults = await new AxeBuilder({ page: browserPage })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
@@ -66,7 +69,8 @@ test.describe('Accessibility - WCAG 2.1 AA', () => {
 
   test('should have correct heading hierarchy on homepage', async ({ page: browserPage }) => {
     await browserPage.goto('/fr');
-    await browserPage.waitForLoadState('networkidle');
+    await browserPage.waitForLoadState('load');
+    await browserPage.waitForTimeout(1000);
 
     // Check that h1 exists
     const h1 = browserPage.locator('h1');
@@ -97,7 +101,8 @@ test.describe('Accessibility - WCAG 2.1 AA', () => {
 
   test('should support keyboard navigation', async ({ page: browserPage }) => {
     await browserPage.goto('/fr');
-    await browserPage.waitForLoadState('networkidle');
+    await browserPage.waitForLoadState('load');
+    await browserPage.waitForTimeout(1000);
 
     // Tab through the page - skip-to-content link should be first
     await browserPage.keyboard.press('Tab');
@@ -114,7 +119,8 @@ test.describe('Accessibility - WCAG 2.1 AA', () => {
 
   test('should have sufficient color contrast', async ({ page: browserPage }) => {
     await browserPage.goto('/fr');
-    await browserPage.waitForLoadState('networkidle');
+    await browserPage.waitForLoadState('load');
+    await browserPage.waitForTimeout(1000);
 
     const accessibilityScanResults = await new AxeBuilder({ page: browserPage })
       .withRules(['color-contrast'])
@@ -144,7 +150,8 @@ test.describe('Accessibility - WCAG 2.1 AA', () => {
     page: browserPage,
   }) => {
     await browserPage.goto('/fr/contact');
-    await browserPage.waitForLoadState('networkidle');
+    await browserPage.waitForLoadState('load');
+    await browserPage.waitForTimeout(2000);
 
     const accessibilityScanResults = await new AxeBuilder({ page: browserPage })
       .withRules([
@@ -164,7 +171,8 @@ test.describe('Accessibility - WCAG 2.1 AA', () => {
     // Emulate reduced motion preference
     await browserPage.emulateMedia({ reducedMotion: 'reduce' });
     await browserPage.goto('/fr');
-    await browserPage.waitForLoadState('networkidle');
+    await browserPage.waitForLoadState('load');
+    await browserPage.waitForTimeout(1000);
 
     // Verify page loads without issues with reduced motion
     const h1 = browserPage.locator('h1');

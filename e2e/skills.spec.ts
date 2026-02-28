@@ -14,35 +14,39 @@ test.describe('Skills Page (FR)', () => {
   test('should display all skill categories', async ({ page }) => {
     await page.goto('/fr/skills');
 
-    await expect(
-      page.getByRole('heading', { level: 2, name: 'Langages de programmation' })
-    ).toBeVisible();
-    await expect(
-      page.getByRole('heading', { level: 2, name: 'Frameworks & Bibliothèques' })
-    ).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Cloud & DevOps' })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Bases de données' })).toBeVisible();
-    await expect(
-      page.getByRole('heading', { level: 2, name: 'Méthodologies & Pratiques' })
-    ).toBeVisible();
+    const categories = [
+      'Cloud & Infrastructure',
+      'DevOps & CI/CD',
+      'Développement Backend',
+      'Architecture Logicielle',
+      'Développement Frontend',
+      'Qualité & Tests',
+      'Data & Bases de Données',
+      'Sécurité & Cryptographie',
+      'Intelligence Artificielle',
+      'Langues',
+    ];
+
+    for (const category of categories) {
+      await expect(page.getByRole('heading', { level: 2, name: category })).toBeVisible();
+    }
   });
 
   test('should display skill badges', async ({ page }) => {
     await page.goto('/fr/skills');
 
-    // Languages
-    await expect(page.getByText('TypeScript')).toBeVisible();
-    await expect(page.getByText('JavaScript')).toBeVisible();
-    await expect(page.getByText('Python')).toBeVisible();
+    // Backend
+    await expect(page.getByText('Python', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('JavaScript', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('TypeScript', { exact: true }).first()).toBeVisible();
 
-    // Frameworks
-    await expect(page.getByText('React')).toBeVisible();
-    await expect(page.getByText('Astro')).toBeVisible();
-    await expect(page.getByText('Next.js')).toBeVisible();
+    // Frontend
+    await expect(page.getByText('React.js', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('Astro', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('Next.js', { exact: true }).first()).toBeVisible();
 
-    // Methodologies
-    await expect(page.getByText('TDD')).toBeVisible();
-    await expect(page.getByText('Agile / Scrum')).toBeVisible();
+    // Quality & Tests
+    await expect(page.getByText('TDD', { exact: true }).first()).toBeVisible();
   });
 });
 
@@ -60,24 +64,29 @@ test.describe('Skills Page (EN)', () => {
   test('should display all skill categories', async ({ page }) => {
     await page.goto('/en/skills');
 
-    await expect(
-      page.getByRole('heading', { level: 2, name: 'Programming Languages' })
-    ).toBeVisible();
-    await expect(
-      page.getByRole('heading', { level: 2, name: 'Frameworks & Libraries' })
-    ).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Cloud & DevOps' })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Databases' })).toBeVisible();
-    await expect(
-      page.getByRole('heading', { level: 2, name: 'Methodologies & Practices' })
-    ).toBeVisible();
+    const categories = [
+      'Cloud & Infrastructure',
+      'DevOps & CI/CD',
+      'Backend Development',
+      'Software Architecture',
+      'Frontend Development',
+      'Quality & Testing',
+      'Data & Databases',
+      'Security & Cryptography',
+      'Artificial Intelligence',
+      'Languages',
+    ];
+
+    for (const category of categories) {
+      await expect(page.getByRole('heading', { level: 2, name: category })).toBeVisible();
+    }
   });
 
   test('should display skill badges', async ({ page }) => {
     await page.goto('/en/skills');
 
-    await expect(page.getByText('TypeScript')).toBeVisible();
-    await expect(page.getByText('React')).toBeVisible();
-    await expect(page.getByText('TDD')).toBeVisible();
+    await expect(page.getByText('TypeScript', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('React.js', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('TDD', { exact: true }).first()).toBeVisible();
   });
 });

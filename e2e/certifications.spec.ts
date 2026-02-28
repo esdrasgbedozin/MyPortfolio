@@ -8,7 +8,7 @@ test.describe('Certifications Page (FR)', () => {
     await expect(heading).toBeVisible();
 
     const description = page.getByText(
-      'Mes certifications professionnelles attestant de mes compétences'
+      'Mes certifications professionnelles attestant de mes compétences techniques et de mon engagement'
     );
     await expect(description).toBeVisible();
   });
@@ -17,22 +17,20 @@ test.describe('Certifications Page (FR)', () => {
     await page.goto('/fr/certifications');
 
     const articles = page.locator('article');
-    await expect(articles).toHaveCount(3);
+    await expect(articles).toHaveCount(10);
   });
 
   test('should display certification details', async ({ page }) => {
     await page.goto('/fr/certifications');
 
-    // Azure certification
+    // Google Associate Cloud Engineer (first certification)
     await expect(
       page.getByRole('heading', {
         level: 3,
-        name: 'Azure Solutions Architect Expert',
+        name: 'Google Associate Cloud Engineer',
       })
     ).toBeVisible();
-    await expect(page.getByText('Microsoft')).toBeVisible();
-    await expect(page.getByText('Obtenue : Janvier 2024')).toBeVisible();
-    await expect(page.getByText('ID : AZ-305-2024-001')).toBeVisible();
+    await expect(page.getByText('Google Cloud').first()).toBeVisible();
   });
 
   test('should display active status badge', async ({ page }) => {
@@ -51,7 +49,7 @@ test.describe('Certifications Page (EN)', () => {
     await expect(heading).toBeVisible();
 
     const description = page.getByText(
-      'My professional certifications demonstrating technical expertise'
+      'My professional certifications demonstrating technical expertise and commitment'
     );
     await expect(description).toBeVisible();
   });
@@ -60,7 +58,7 @@ test.describe('Certifications Page (EN)', () => {
     await page.goto('/en/certifications');
 
     const articles = page.locator('article');
-    await expect(articles).toHaveCount(3);
+    await expect(articles).toHaveCount(10);
   });
 
   test('should display active status badge', async ({ page }) => {

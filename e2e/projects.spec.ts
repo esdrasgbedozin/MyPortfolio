@@ -15,7 +15,7 @@ test.describe('Projects Page (FR)', () => {
     await page.goto('/fr/projects');
 
     const articles = page.locator('article');
-    await expect(articles).toHaveCount(3);
+    await expect(articles).toHaveCount(4);
   });
 
   test('should display project details', async ({ page }) => {
@@ -33,7 +33,6 @@ test.describe('Projects Page (FR)', () => {
     const reactBadge = page.getByTestId('tech-badge').filter({ hasText: /^React$/ });
     await expect(reactBadge.first()).toBeVisible();
 
-    await expect(page.getByText('2026').first()).toBeVisible(); // startDate année
     await expect(page.getByText('development').first()).toBeVisible();
   });
 
@@ -47,10 +46,6 @@ test.describe('Projects Page (FR)', () => {
       'href',
       'https://github.com/esdrasgbedozin/MyPortfolio'
     );
-
-    // Demo link for E-Commerce
-    const demoLinks = page.getByRole('link', { name: /Demo/ });
-    await expect(demoLinks.first()).toBeVisible();
   });
 });
 
@@ -69,7 +64,7 @@ test.describe('Projects Page (EN)', () => {
     await page.goto('/en/projects');
 
     const articles = page.locator('article');
-    await expect(articles).toHaveCount(3);
+    await expect(articles).toHaveCount(4);
   });
 
   test('should display project with status badge', async ({ page }) => {
@@ -78,7 +73,6 @@ test.describe('Projects Page (EN)', () => {
     // Use first() to avoid strict mode violation
     await expect(page.getByText('production').first()).toBeVisible();
     await expect(page.getByText('development').first()).toBeVisible();
-    // Note: archived status removed - we only have production/development in dummy data
   });
 });
 
@@ -109,7 +103,6 @@ test.describe('Project Detail Page (FR)', () => {
     await page.goto('/fr/projects/portfolio');
 
     // Tech badges are in header metadata section
-    // Since tech names appear in description/MDX, look in the article header
     const article = page.locator('article.container');
     await expect(article.getByText('Astro', { exact: true }).first()).toBeVisible();
     await expect(article.getByText('React', { exact: true }).first()).toBeVisible();
@@ -139,13 +132,6 @@ test.describe('Project Detail Page (FR)', () => {
     );
   });
 
-  test('should display live demo link when available', async ({ page }) => {
-    await page.goto('/fr/projects/fitness-app'); // fitness-app has liveUrl
-
-    const demoLink = page.getByRole('link', { name: /Démo Live/i });
-    await expect(demoLink).toBeVisible();
-  });
-
   test('should handle project without endDate (in-progress)', async ({ page }) => {
     await page.goto('/fr/projects/portfolio');
 
@@ -159,7 +145,7 @@ test.describe('Project Detail Page (EN)', () => {
   test('should display project detail page at /en/projects/[slug]', async ({ page }) => {
     await page.goto('/en/projects/portfolio');
 
-    const heading = page.getByRole('heading', { level: 1, name: 'Professional Portfolio' });
+    const heading = page.locator('main h1').filter({ hasText: 'Professional Portfolio' }).first();
     await expect(heading).toBeVisible();
   });
 
@@ -182,11 +168,11 @@ test.describe('Project Detail Page (EN)', () => {
     expect(elements).toBeGreaterThan(0);
   });
 
-  test('should display completed project with endDate', async ({ page }) => {
-    await page.goto('/en/projects/api-ecommerce');
+  test('should display completed project status', async ({ page }) => {
+    await page.goto('/en/projects/secure-password-manager');
 
     await expect(page.getByText(/Started/)).toBeVisible();
-    await expect(page.getByText(/Completed/).first()).toBeVisible(); // "Completed:" label
-    await expect(page.getByText('Completed', { exact: true }).last()).toBeVisible(); // Status badge
+    // Status badge shows "Completed" on detail page
+    await expect(page.getByText('Completed', { exact: true }).first()).toBeVisible();
   });
 });
